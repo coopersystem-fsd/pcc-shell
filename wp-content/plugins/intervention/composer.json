@@ -1,0 +1,38 @@
+{
+  "name": "soberwp/intervention",
+  "type": "wordpress-plugin",
+  "license": "MIT",
+  "description": "WordPress plugin containing modules to cleanup and customize wp-admin.",
+  "homepage": "https://github.com/soberwp",
+  "authors": [
+    {
+      "name": "Darren Jacoby",
+      "email": "darren@jacoby.co.za",
+      "homepage": "https://twitter.com/withjacoby"
+    }
+  ],
+  "keywords": [
+    "wordpress"
+  ],
+  "support": {
+    "issues": "https://github.com/soberwp/intervention/issues"
+  },
+  "require": {
+    "php": ">=5.4.0",
+    "composer/installers": "~1.0"
+  },
+  "require-dev": {
+    "squizlabs/php_codesniffer": "2.*"
+  },
+  "autoload": {
+    "psr-4": {
+      "Sober\\Intervention\\": "src/",
+      "Sober\\Intervention\\Module\\": "src/modules/"
+    }
+  },
+  "scripts": {
+    "test": [
+      "vendor/bin/phpcs --extensions=php --ignore=vendor/ ."
+    ]
+  }
+}
