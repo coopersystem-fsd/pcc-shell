@@ -1,0 +1,9 @@
+.wpgmza-marker-library-dialog iframe
+{
+	width: 100%;
+	height: 80vh;
+}
+
+input#wpgmza_add_address_map_editor {
+    width: 80% !important;
+}
