@@ -1,10 +1,10 @@
 === Koko Analytics ===
 Contributors: Ibericode, DvanKooten
-Donate link: https://kokoanalytics.com/
+Donate link: https://opencollective.com/koko-analytics
 Tags: analytics, statistics, stats, koko
 Requires at least: 5.0
 Tested up to: 6.0
-Stable tag: 1.0.32
+Stable tag: 1.0.33
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 Requires PHP: 5.3
@@ -40,7 +40,7 @@ You can contribute to Koko Analytics in many different ways. For example:
 - Write about the plugin on your blog or share it on social media.
 - [Vote on features in the GitHub issue list](https://github.com/ibericode/koko-analytics/issues?q=is%3Aopen+is%3Aissue+label%3A%22feature+suggestion%22).
 - [Translate the plugin into your language](https://translate.wordpress.org/projects/wp-plugins/koko-analytics/stable/) using your WordPress.org account.
-
+- Help fund the plugin through our [OpenCollective intiative](https://opencollective.com/koko-analytics).
 
 == Installation ==
 
@@ -98,6 +98,15 @@ A visitor represents the number of sessions during which your website or a speci
 
 
 == Changelog ==
+
+#### 1.0.33 - Aug 17, 2022
+
+- Always show at least 1 visitor if pageviews were recorded that day.
+- Decrease Cache-Control header of REST API responses to 60s.
+- Add button to reset all statistics.
+- Add filter `koko_analytics_url_aggregations` to modify or add URL aggregations for referrer URL's.
+- Created an initiative on OpenCollective for others to help fund development and support costs of Koko Analytics. Please visit [https://opencollective.com/koko-analytics](https://opencollective.com/koko-analytics) for more details.
+
 
 #### 1.0.32 - Jun 2, 2022
 
