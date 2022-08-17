@@ -1,0 +1,20 @@
+{
+  "id": "core",
+  "type": "recommended",
+  "status": "always-active",
+  "title": "Core",
+  "scheduling": {
+    "clear-locks": {
+      "schedule": "daily",
+      "type": "recurring"
+    },
+    "clear-tokens": {
+      "schedule": "daily",
+      "type": "recurring"
+    },
+    "purge-lockouts": {
+      "schedule": "daily",
+      "type": "recurring"
+    }
+  }
+}

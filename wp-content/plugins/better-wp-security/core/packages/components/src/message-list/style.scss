@@ -1,0 +1,79 @@
+$types: (
+        error: (primary: #551515, secondary: #F7ABAB, icon: '\f534'),
+        info: (primary: #005169, secondary: #ecfaff, icon: '\f348'),
+        warning: (primary: #a9582e, secondary: #fdddcd, icon: '\f227'),
+        success: (primary: #237739, secondary: #ddf1e2, icon: '\f12a'),
+);
+
+.itsec-message-list {
+    display: flex;
+    padding: .75rem .5rem;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+
+    &::before {
+        @include dashicon('');
+        margin-right: .5rem;
+    }
+
+    &.itsec-message-list h3 {
+        font-size: 1.25rem;
+        margin: 0 0 .5rem 0;
+    }
+
+    & ul {
+        margin: 0;
+    }
+
+    & li {
+        margin: 0 0 .25rem 0;
+
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
+
+    .components-button {
+        margin-left: auto;
+        padding: 0;
+        min-width: 0;
+        min-height: 0;
+        height: min-content;
+    }
+
+    @each $type, $config in $types {
+        &.itsec-message-list--type-#{$type} {
+            background: map-get($config, 'secondary');
+
+            &.itsec-message-list--has-border {
+                border: 1px solid map-get($config, 'primary');
+            }
+
+            &::before {
+                content: map-get($config, 'icon');
+                color: map-get($config, 'primary');
+            }
+
+            h3,
+            li,
+            .components-button,
+            .dashicon {
+                color: map-get($config, 'primary');
+            }
+
+            .components-button .dashicon {
+                margin-left: 0;
+                margin-right: 0;
+            }
+
+            .components-button:hover,
+            .components-button:hover .dashicon {
+                color: $main-blue;
+            }
+        }
+    }
+
+    &.itsec-message-list--recommended::before {
+        @include recommended-icon();
+    }
+}
