@@ -2,7 +2,7 @@
 
 ### Technologies
 
-- MariaDB 10.9
+- MariaDB 10.8.2
 
 - WordPress 6.0.1
  
