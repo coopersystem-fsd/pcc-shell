@@ -1,0 +1,1664 @@
+.wpgmza-pagination
+{
+	text-align: center;
+	padding: 1em;
+}
+
+.wpgmza-pagination>.paginationjs
+{
+	display: inline-block;
+}
+
+.wpgmza-pagination .paginationjs .paginationjs-pages
+{
+	float: none;
+}
+
+.paginationjs .paginationjs-pages li{
+    margin: 0
+}
+
+.wpgmza_map {
+    border:0;
+    max-width:100% !important;
+}
+
+/* This fixes common CSS conflicts, :not added to cater for Google UI changes */
+.wpgmza_map img:not(button>img)
+{
+    border: none !important;
+    background-color:transparent !important;
+    /* padding:0 !important; */ /* Moved to google-ui-compatibility.js in basic */
+    box-shadow: none !important;
+}
+
+/* Don't allow white border around Google logo */
+.wpgmza_map img[src$="//maps.gstatic.com/mapfiles/api-3/images/google4.png"],
+	img[src='http://maps.gstatic.com/mapfiles/api-3/images/google_white5.png']
+{
+	box-shadow: none !important;
+}
+
+#wpgmza_map img { box-shadow: none !important; }
+.wpgmza_table img {
+    box-shadow: none !important;
+    
+}
+.gm-style div { margin-top:0 !important; }
+
+#wpgmaps_directions_edit {
+    padding-top:20px;
+}
+.wpgmza_markerbox {
+    /* height:auto; */
+    /* min-height:100px; */
+    margin:0; padding:0;
+    color:#000 !important;
+}
+.wpgmza_markerbox img { margin: 3px !important; }
+
+.wpgmza_markerbox h1,
+.wpgmza_markerbox h2,
+.wpgmza_markerbox h3,
+.wpgmza_markerbox h4,
+.wpgmza_markerbox h5,
+.wpgmza_markerbox h6,
+.wpgmza_markerbox h7,
+.wpgmza_markerbox h8,
+.wpgmza_markerbox strong,
+.wpgmza_markerbox p,
+.wpgmza_markerbox br {
+    margin:2px;
+    padding:1px;
+    color:#000 !important;
+}
+
+
+.wpgmza_markerbox a {
+    color:#1982D1 !important;
+}
+.wpgmaps_mlist_table {
+    width:42px;
+}
+
+.wpgmza_table .wpgmaps_mlist_marker {
+    width:32px;
+    height:32px;
+    vertical-align:top;
+    padding:0 !important;
+}
+
+.wpgmza_table .wpgmaps_mlist_info {
+    vertical-align:top;
+    text-align:left;
+    padding:0 !important;
+    
+}
+.wpgmza_table .wpgmaps_mlist_row {
+    cursor:pointer;
+    border: solid thin !important;
+    border-width: 1px 0 0 !important;
+    border-color: #d9d9d9 !important;
+}
+.wpgmza_table .wpgmaps_mlist_row:hover {
+    background-color: #EEEEEE;
+    
+}
+
+.wpgmza_map h2 { clear:both; }
+
+.wpgmaps_user_form { clear: both; }
+
+.wpgmza_table { clear:both; border-collapse: collapse !important; }
+
+
+.wpgmaps_mlist_row img {
+	margin-bottom:0 !important;
+}
+
+.wpgmza_table td {
+	vertical-align: top !important;
+        padding-bottom: 15px !important;
+        padding-right: 10px !important;
+        border: 0 !important;
+        
+}
+.wpgmza_table tr { border: 0 !important; }
+.wpgmza_table th {
+	text-align: left !important;
+        padding-bottom: 15px !important;
+        border: 0 !important;
+        min-width:100px;    
+}
+
+
+.dataTables_filter input[type="text"], .dataTables_filter select { display: inline !important; }
+.dataTables_filter label { font-weight:bold; }
+table.dataTable tr.child ul li { white-space: normal !important; }
+
+
+.adp-placemark img { width:24px !important; max-width:none !important; }
+
+.wpgmza_table .sorting { background-image: none !important; }
+/* .wpgmza_table .sorting_asc { background-image: none !important; }
+.wpgmza_table .sorting_desc { background-image: none !important; } */
+
+
+#wpgm_premium {
+    display:block;
+    overflow:auto;
+    margin:10px;
+    margin-left:0;
+    clear:both;
+    width:90%;
+}
+#wpgm_premium h2 {
+    margin-top:0;
+    padding-top:0;
+    font-weight:200;
+    font-size: 20px;
+    padding-bottom:0px;
+    margin-bottom:2px;
+}
+#wpgm_premium p {
+    font-size:16px;
+    line-height:28px;
+    
+}
+.wpgm_premium_row { 
+    margin-top:20px;
+    display:block;
+    clear:both;
+    width:100%;
+    overflow:auto;
+}
+.wpgm_details p {
+    padding-top:0px;
+    margin-top:2px;
+    color: #666 !important;
+
+}
+
+.wpgm_icon {
+    display:block;
+    float:left;
+    width:50px;
+    height:70px;
+    background-image:url(../images/premium.png);
+    background-repeat: no-repeat;
+}
+.wpgm_details {
+    display:block;
+    float:left;
+    width:80%;
+}
+
+.wpgm_notice_message {
+    border-radius: 3px 3px 3px 3px;
+    border-style: solid;
+    border-width: 1px;
+    margin: 5px 0 15px;
+    padding: 0 0.6em;
+    background-color: #FFFFE0;
+    border-color: #E6DB55;
+}
+
+.wpgmza-form-field:last-of-type {
+    margin-bottom: 18px;
+}
+
+.wpgmza-form-field--no-pad {
+    display: block;
+    padding-top: 0;
+}
+
+form#wpgmaps_options .wpgmza-form-field__label {
+    display: block;
+    color: #666;
+    font-weight: 400;
+}
+
+.wpgmza_map .wpgmza-form-field__label--float {
+    width: 100%;
+    position: absolute;
+    top: 37px;
+    background: #fff;
+    transition: all ease 0.3s;
+}
+
+.wpgmza-form-field__input:focus ~ label {
+    top: 8px;
+    color: #333;
+    font-weight: 700;
+}
+
+.wpgmza_dir_options {
+    margin-bottom: 0;
+    padding-top: 9px;
+}
+
+.wpgmza_dir_options label {
+    font-size: 15px;
+}
+
+.wpgmza_dir_options label:last-child {
+    margin-bottom: 0;
+}
+
+
+.wpgmza_marker_approval_msg { font-weight: bold; }
+
+.scrollFix {
+    line-height: 1.35;
+}
+.wpgmza_infowindow_description { white-space: normal; }
+.wpgmza_infowindow_title { white-space: normal; }
+.wpgmza_infowindow_address { white-space: normal; }
+.wpgmza_infowindow_title { font-weight: bold; }
+/* .gm-style-iw div {overflow:visible !important;} */
+#wpgmza_marker_list tr { vertical-align: middle !important; }
+#wpgmza_marker_list td { vertical-align: middle !important; }
+#wpgmza_marker_list td img { vertical-align: middle !important; }
+
+.wpgmza_marker_carousel { clear:both; }
+
+.wpgmza-shadow { 
+-webkit-box-shadow: 3px 3px 10px 0px rgba(107,107,107,1);
+-moz-box-shadow: 3px 3px 10px 0px rgba(107,107,107,1);
+box-shadow: 3px 3px 10px 0px rgba(107,107,107,1);
+}
+
+.wpgmza-shadow-sm {
+    -webkit-box-shadow: 0px 0px 10px 0px rgba(107,107,107,0.4);
+    -moz-box-shadow: 0px 0px 10px 0px rgba(107,107,107,0.4);
+    box-shadow: 0px 0px 10px 0px rgba(107,107,107,0.4);
+}
+
+
+.wpgmza_innermap_holder { 
+    padding:5px;
+    background-color:white;
+    border: 1px solid #ccc;
+    border-radius:5px;
+}
+.wpgmza_small_img { max-width: 14px; max-height: 14px; }
+.wpgmza-basic-list-item .wpgmza_small_img { max-width: initial !important; max-height: initial !important; }
+ul.wpgmza_marker_list_class {
+    list-style: none;
+    margin-left:5px;
+    padding-left:0;
+}
+
+.wpgmza-basic-list-item { float:left; cursor:pointer; }
+.wpgmza-basic-list-item.wpgmza_div_title {
+    display: block;
+    float: none;
+    font-weight: 600;
+    margin-bottom: 3px;
+}
+.wpgmaps_blist_row { clear:both; display:block; height:auto; overflow:hidden;   }
+.wpgmaps_blist_row:hover { background-color:#EEE;  }
+.wpgmza_div_marker { width:17px; height:17px; }
+
+.wpgmza_div_marker.wpgmza-basic-list-item {
+    width: auto;
+    height: auto;
+    max-width: initial !important;
+    max-height: initial !important;
+    position: relative;
+    top: 2px;
+    margin-right: 10px;
+}
+.wpgmza_div_address { padding-left:2px;}
+.wpgmza-basic-list-item.wpgmza_div_address {
+    font-size: 0.8em;
+}
+
+.wpgmza_basic_row { 
+    display:block;
+    border:1px solid #ccc;
+    padding:5px;
+    margin-top:5px;
+    margin-bottom:5px;
+    overflow:hidden;
+}
+
+.wpgmaps_blist_row > p {
+    margin-bottom: 0;
+    color: #7c7c7c;
+    font-size: .8em;
+}
+
+.wpgmza-basic-listing-image-holder {
+    
+    float:right;
+    width:20%;
+}
+.wpgmza-basic-listing-image-holder img { 
+    border: 1px solid #ccc;
+    padding: 5px !important;
+    float: right !important;
+    height: auto !important;
+    width: 100% !important;
+}
+.wpgmza-basic-listing-content-holder { float:left; display:block; width:100%; }
+.wpgmza-content-address-holder { width:78%; display:block; float:left; overflow:hidden;}
+.wpgmza-content-address-holder img { float:left !important; margin:10px !important; max-width:30px !important; }
+
+.wpgmza_row {
+    width:100%;
+    display:block;
+    overflow:auto;
+}
+.wpgmza_row_col {
+    width:90%;
+    float:left;
+    display:block;
+    overflow:auto;
+    margin:0.25%;
+    padding:0.2%;
+    min-height:360px;
+}
+.wpgmza_row_col h2 { 
+    font-weight:900;
+}
+.wpgmza_row_col ul li {
+    margin: 0.3em 2.5em;
+}
+
+.wpgmza_row_col ul {
+    list-style-type:disc;
+}
+
+@media only screen and (min-width:640px) {
+
+   .wpgmza_row_col {
+        width:31%;
+        float:left;
+        display:block;
+        overflow:auto;
+        margin:0.25%;
+        padding:0.2%;
+        min-height:360px;
+    } 
+    
+    
+}
+
+.wpgmaps_mlist_row.wpgmza_basic_row {
+    margin: 0;
+    border-width: 1px 1px 0;
+    padding: 16px;
+}
+
+.wpgmaps_mlist_row.wpgmza_basic_row:last-child {
+    border-bottom-width: 1px;
+}
+
+.wpgmza_basic_row .wpgmza-desc p {
+    font-size: .9em;
+}
+
+.wpgmza_basic_row .wpgmza-address {
+    margin-top: 0;
+    font-size: .9em;
+    color: #7c7c7c;
+}
+
+.wpgmza_basic_row .wpgmza-content-address-holder img {
+    transform: scale(0.7);
+    margin: 0 !important;
+    margin-right: 10px !important;
+    top: -6px;
+    position: relative;
+}
+
+.wpgmza-content-address-holder > p {
+    margin-bottom: 16px;
+    font-size: .9em;
+}
+
+.wpgmza-content-address-holder p.wpgmza-content-address-holder-inner {
+    font-size: 1em;
+}
+
+.wpgmza-content-address-holder > p:last-child {
+    margin-bottom: 0;
+}
+
+.wpgmza_basic_row .wpgmza-content-address-holder .wpgmza-desc p:empty {
+    margin: 0;
+}
+
+.wpgmza_marker_holder {
+    overflow-x: visible;
+    border: 1px solid #d9d9d9;
+}
+
+.owl-item p { word-break: break-word; }
+.owl-item .wpgmza_marker_directions_link a { color: #fff; box-shadow: none; text-decoration: underline; }
+.wpgmza_marker_address { word-break: break-word; }
+
+.wpgmza_marker_carousel .item { padding-right: 10px !important; padding-left: 10px !important; }
+
+.owl-item .wpgmza_carousel_info_holder > p:last-child { margin-bottom: 0; }
+
+
+
+.wpgmza_filter_container{
+    display: block; 
+    float: left; 
+    margin-bottom:15px;
+    min-width:30%;
+}
+
+.wpgmza-filter-widgets input[type="checkbox"] {
+    display: inline-block;
+}
+
+.wpgmza_cat_checkbox_holder { 
+    display: block;
+    overflow: auto;
+    height: 100px;
+    
+    overflow-y: auto;
+    padding:5px;
+
+ }
+ .wpgmza_cat_checkbox_item_holder label {
+    padding-left: 5px;
+}
+.wpgmza_cat_checkbox_item_holder_first { display:block; float:left; }
+.wpgmza_cat_ul {
+    margin-left:10px;
+    padding-left: 0;
+}
+
+/* .wpgmza_cat_checkbox_item_holder { display:block; float:left; margin-left:5px; } */
+
+.wpgmza_cat_checkbox_item_holder { 
+    display:block;
+}
+
+.wpgmaps_fullscreen {
+    position: fixed !important;
+    top:0;
+    left:0;
+    width:100% !important;
+    height: 100% !important;
+    z-index:9999;
+}
+
+.wpgmza-modern-shadow {
+	box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px;
+    -webkit-box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px;
+    -moz-box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px;
+    -o-box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px;
+}
+
+/*.wpgmza-modern-hover-opaque
+{
+	opacity: 0.6;
+	transition: opacity 0.3s;
+}
+
+.wpgmza-modern-hover-opaque:hover
+{
+	opacity: 0.999;
+}*/
+
+.wpgmza-modern-store-locator {
+    text-align: center;
+    padding-top: 10px;
+    max-width: 70%;
+}
+
+.wpgmza-modern-store-locator > .wpgmza-inner {
+    
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+
+
+    background: white;
+    padding: 0.5em !important;
+
+    border-radius: 2px;
+    font-family: Roboto, sans-serif;
+
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px;
+    -webkit-box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px;
+    -moz-box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px;
+    -o-box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px;
+
+}
+
+.wpgmza-modern-store-locator input,
+.wpgmza-modern-store-locator select {
+    height: 28px !important;
+    vertical-align: top;
+    padding: 0 6px !important;
+    margin: 0 2px;
+    color: #777;
+    border:1px solid #ccc;
+}
+
+.wpgmza-popout-panel {
+	position: absolute;
+	z-index: 9999999999;
+	background: #fff;
+	width: 40%;
+	height:100%;
+	top: 0px;
+	left: -43%;
+	transition: left 0.3s;
+	
+	overflow-y: auto;
+
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px;
+    -webkit-box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px;
+    -moz-box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px;
+    -o-box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px;
+}
+
+.wpgmza-popout-panel.wpgmza-open{
+    left: 0%;
+}
+
+.wpgmza-popout-panel ul {
+    list-style:none;
+    margin: 0;
+}
+
+.wpgmza-popout-panel .wpgmaps_mlist_row {
+    border: none;
+    border-bottom: 1px solid #eee;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font-family: Roboto, sans-serif;
+}
+
+.wpgmza-popout-panel .wpgmaps_mlist_row img{
+    border-radius: 3px;
+}
+
+.wpgmza-marker-listing-pic
+{
+	float: right;
+	width: 25%;
+	height: auto;
+}
+
+.wpgmza-modern-marker-listing li
+{
+	border: 1px solid #d9d9d9;
+	padding: 0.33em;
+}
+
+.wpgmza-modern-marker-listing li:not(:last-child)
+{
+	border-bottom: none;
+}
+
+.wpgmza-modern-marker-listing [data-name="title"] {
+	color: #505050;
+    font-size: 0.9em;
+    width: 75%;
+}
+
+.wpgmza-modern-marker-listing [data-name="address"]{
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+    color: #929292;
+    font-size: 0.8em;
+    width: 75%;
+}
+
+.wpgmza-modern-marker-listing [data-name="desc"] {
+	overflow: hidden;
+	max-height: 3em;
+    color: #929292;
+    font-size: 0.8em;
+    width: 75%;
+}
+
+.wpgmza-modern-marker-listing .wpgmza-close-container{
+	text-align: right;
+    padding:5px;
+    background: #585858;
+    color:#fff;
+    font-size: 16px;
+
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px;
+    -webkit-box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px;
+    -moz-box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px;
+    -o-box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px;
+}
+
+.wpgmza-modern-marker-listing > * {
+	cursor: pointer;
+}
+
+.wpgmza-modern-marker-listing-marker-view .wpgmza-close-container{
+	text-align: right;
+    padding:5px;
+    background: #585858;
+    color:#fff;
+    font-size: 16px;
+    z-index: 99;
+
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px;
+    -webkit-box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px;
+    -moz-box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px;
+    -o-box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px;
+}
+
+.wpgmza-modern-marker-listing-marker-view .wpgmza-close-container i {
+	cursor: pointer;
+}
+
+.wpgmza-modern-marker-listing-marker-view .wpgmza-close.fa-arrow-left {
+	float: left;
+}
+
+.wpgmza-modern-marker-listing-marker-view{
+	color: #929292;
+    font-family: Roboto, sans-serif;
+    display: flex;
+    flex-direction: column;
+}
+
+.wpgmza-modern-marker-listing-marker-view [data-name='title']{
+	color: #fff;
+    font-size: 1.2em;
+    padding-left: 10px;
+    padding-right: 10px;
+    order: 3;
+
+    background: #5f5f5f;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    margin-bottom: 10px;
+    margin-top: 15px;
+
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px;
+    -webkit-box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px;
+    -moz-box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px;
+    -o-box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px;
+}
+
+.wpgmza-modern-marker-listing-marker-view [data-name='address'],
+.wpgmza-modern-marker-listing-marker-view [data-name='desc'] {
+    padding-left: 10px;
+    padding-right: 10px;
+    font-size: 0.8em;
+    order: 4;
+
+}
+
+.wpgmza-modern-marker-listing-marker-view [data-name='pic']{
+    display: none;
+	max-width: 100%;
+    order: 1;
+    /* margin-top: -15%; */
+    margin-bottom: -11%;
+}
+
+.wpgmza-modern-marker-listing-marker-view [data-name='pic'][src] {
+    display:block;
+}
+
+.wpgmza-modern-marker-listing-marker-view [data-name='category']{
+    order: 8;
+    padding: 8px;
+}
+
+.wpgmza-modern-marker-listing-marker-view .wpgmza-modern-marker-listing-buttons {
+    order: 2;
+    display: inline-block;
+    /* position: static; */
+    margin-bottom: -10%;
+    height: 50px;
+    z-index: 99;
+    /* text-align: right; */
+    padding: 0px 0px 0px 7px;
+	position: absolute;
+    color: #fff;
+    width: auto;
+}
+
+.wpgmza-modern-marker-listing-marker-view *[data-custom-field-name]{
+    order: 9;
+    margin-top: 3px;
+    margin-bottom: 3px;
+    margin-left:10px;
+    background: #eee;
+    margin-right: auto;
+    padding: 0 7px;
+    border-radius: 5em;
+    font-size:  0.8em;
+}
+
+.wpgmza-modern-marker-listing-marker-view *[data-custom-field-name] > svg{
+    position:relative;
+    top: 1px;
+    padding:1px;
+}
+
+.wpgmza-modern-marker-listing-marker-view .wpgmza-modern-marker-listing-button{
+    text-align: center;
+    display: inline-block;
+}
+
+.wpgmza-modern-marker-listing-marker-view .wpgmza-modern-marker-listing-button svg {
+    background: #fff;
+    color: #5f5f5f;
+    width: 50px;
+    height: 50px;
+    padding: 17px;
+    border-radius: 50px;
+
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px;
+    -webkit-box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px;
+    -moz-box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px;
+    -o-box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px;
+}
+
+.wpgmza-modern-marker-listing-marker-view .wpgmza-modern-marker-listing-button > div{
+    display: none;
+}
+
+.wpgmza-modern-marker-listing-button > * {
+	display: block;
+	margin: 0 auto;
+}
+
+.wpgmza-modern-marker-open-button{
+    position: absolute;
+    top: 35px;
+    left: 10px;
+    z-index: 5000000000;
+    padding: 0.5em;
+    background: #fff;
+    cursor: pointer;
+    border-radius: 2px;
+    color: #666666;
+    font-size: 15px;
+}
+
+.wpgmza-modern-marker-open-button > svg {
+	padding: 2px;
+    margin-right:2px;
+}
+
+/*.wpgmza-custom-field-filter-widget-checkboxes.wpgmza-dropdown:hover .wpgmza-placeholder-label > ul.wpgmza-checkboxes {
+	display: block;
+	opacity: 0.99;
+}*/
+
+.wpgmza-placeholder-label > ul.wpgmza-checkboxes > li {
+	white-space: nowrap;
+}
+
+.wpgmza_basic_list {
+    overflow: hidden;
+    padding-top: 10px;
+}
+
+.wpgmaps_blist_row {
+    padding: 8px 0;
+    border-bottom: 1px solid #d9d9d9;
+}
+
+.wpgmza-modern-marker-listing [data-name="address"]{
+	font-size: 0.8em;
+	font-style: italic;
+}
+
+.wpgmza-custom-field {
+    margin-right: 5px;
+}
+
+.wpgmza_basic_list .wpgmza-custom-field {
+    margin-left: 10px;
+}
+
+.wpgmza_map .wpgmza-inner .wpgmza-form-field__input,
+.wpgmza_map .wpgmza-form-field input[type="text"],
+.wpgmza_map .wpgmza-form-field input[type="url"],
+.wpgmza_map .wpgmza-form-field input[type="password"],
+.wpgmza_map .wpgmza-form-field input[type="search"],
+.wpgmza_map .wpgmza-form-field input[type="number"],
+.wpgmza_map .wpgmza-form-field input[type="tel"],
+.wpgmza_map .wpgmza-form-field input[type="email"],
+.wpgmza_map .wpgmza-form-field textarea,
+.wpgmza_map .wpgmza-form-field select {
+    padding: 10px;
+    padding-left: 0;
+    border: none;
+    border-radius: 0;
+    transition: all .3s;
+    background: none;
+    box-shadow: none;
+    font-family: Roboto, sans-serif;
+}
+
+.wpgmza_map .wpgmza-inner .wpgmza-form-field__input:focus,
+.wpgmza_map .wpgmza-form-field input[type="text"]:focus,
+.wpgmza_map .wpgmza-form-field input[type="url"]:focus,
+.wpgmza_map .wpgmza-form-field input[type="password"]:focus,
+.wpgmza_map .wpgmza-form-field input[type="search"]:focus,
+.wpgmza_map .wpgmza-form-field input[type="number"]:focus,
+.wpgmza_map .wpgmza-form-field input[type="tel"]:focus,
+.wpgmza_map .wpgmza-form-field input[type="email"]:focus,
+.wpgmza_map .wpgmza-form-field textarea:focus,
+.wpgmza_map .wpgmza-form-field select:focus {
+    background: none;
+}
+
+.wpgmaps_via {
+    max-width: 100%;
+}
+
+.wpgmza-close, .wpgmza-modern-marker-listing-buttons > *{
+    cursor: pointer;
+}
+
+.wpgmza-filter-widgets {
+    padding: 5px;
+    display:  inline-block;
+    margin-bottom: 5px;
+}
+
+.wpgmza-filter-widgets input,
+.wpgmza-filter-widgets select,
+.wpgmza-filter-widgets .wpgmza-dropdown{
+    background-color: #fff;
+    border: none;
+    padding: 4px;
+    margin: 0;
+    margin-right: 4px;
+    display: inline;
+    font-size: 15px;
+    box-sizing: border-box;
+    font-family: Roboto, sans-serif;
+    color: #585858;
+    border-radius: 3px;
+
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px;
+    -webkit-box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px;
+    -moz-box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px;
+    -o-box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px;
+
+
+}
+
+.wpgmza-custom-field-filter-widget-checkboxes.wpgmza-dropdown .wpgmza-placeholder-label {
+    cursor: pointer;
+    position: relative;
+    display: inline;
+}
+
+.wpgmza-custom-field-filter-widget-checkboxes.wpgmza-dropdown .wpgmza-placeholder-label > ul.wpgmza-checkboxes {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    display: none;
+    z-index: 99;
+    list-style: none;
+    background: white;
+    padding: 5px;
+    border-radius: 3px;
+}
+
+/** Override the auto complete styles */
+.pac-container {
+    z-index: 9999999999;
+}
+
+.pac-container {
+    border-radius: 2px;
+    border-top: none;
+    font-family: Roboto, sans-serif;
+
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px;
+    -webkit-box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px;
+    -moz-box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px;
+    -o-box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px;
+}
+
+.pac-container .pac-item{
+    border-top: none;
+}
+
+.pac-container .pac-item .pac-item-query{
+    color: #333;
+
+}
+
+/** Media Query */
+
+@media only screen and (max-width: 1000px) {
+    .wpgmza-modern-store-locator{
+        max-width: 55%;
+        margin-left: 10%;
+    }
+}
+
+@media only screen and (max-width: 910px) {
+    .wpgmza-modern-store-locator .addressInput {
+        display: block;
+        float:none;
+        text-align: center;
+    }
+}
+
+@media only screen and (max-width: 860px) {
+    .wpgmza-modern-store-locator{
+        max-width: 50%;
+        margin-left: 10%;
+    }
+
+    .wpgmza-modern-marker-open-button{
+        top: 45px;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    .wpgmza-popout-panel {
+        width: 100%;
+        left:-103%
+    }
+
+    .wpgmza-modern-store-locator{
+        max-width: 40%;
+    }
+}
+
+@media only screen and (max-width: 450px) {
+    .wpgmza-modern-store-locator{
+        padding-top: 45px;
+    }
+
+    .wpgmza-modern-store-locator{
+        margin-left: 0%;
+    }
+   
+}
+
+@media only screen and (max-width: 345px) {
+    .wpgmza-modern-store-locator{
+        margin-left: -10%;
+    }
+}
+
+.wpgmza_marker_icon, .wpgmza_map_image
+{
+	margin: 5px auto;
+}
+
+.wpgmza-add-map-dialog
+{
+	text-align: left;
+}
+
+.wpgmza-add-map-dialog-inner-panels
+{
+	display: flex;
+}
+
+.wpgmza-add-map-dialog-inner-panels>div
+{
+	flex: 1;
+	padding: 0.5em;
+	display: flex;
+	justify-content: space-between;
+	flex-direction: column;
+}
+
+.wpgmza-center
+{
+	text-align: center;
+}
+
+.wpgmza-add-map-dialog-inner-panels select,
+	.wpgmza-add-map-dialog-inner-panels input
+{
+	width: 100%;
+}
+
+.wpgmza-add-map-dialog-inner-panels button
+{
+	margin-top: auto;
+}
+
+.wpgmza-not-found-msg {
+    display: none;
+    margin-top: 20px;
+    color: #777;
+}
+
+.wpgmza-not-found-msg.is-active {
+    display: block;
+}
+
+.wpgmza-not-found-msg p {
+    margin-bottom: 0;
+}
+
+/** OL Styles Overrides **/
+.wpgmza_map[data-maps-engine="open-layers"] .wpgmza-modern-store-locator
+{
+    position: absolute !important;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    max-width: 100% !important;
+    z-index: 99;
+}
+
+.wpgmza_map[data-maps-engine="open-layers"] .wpgmza-modern-marker-open-button {
+    top: 70px;
+}
+
+#
+.wpgmza-modern-marker-listing-buttons
+{
+	pointer-events: none;
+}
+
+.wpgmza-modern-marker-listing-buttons *
+{
+	pointer-events: all;
+} 
+
+.wpgmza-preloader
+{
+	width: 32px;
+	height: 32px;
+	z-index: 10000000000;
+	position: absolute;
+	left: 0.5em;
+	bottom: 0.5em;
+}
+
+.wpgmza-modern-store-locator button.wpgmza-use-my-location {
+	padding: 0;
+	width: 21px;
+	height: 21px;
+	
+	
+    border:1px solid #ccc;
+}
+
+.wpgmza_iw_title {
+	z-index: 2;
+}
+
+[data-wpgmza-marker-listing] .wpgmza-distance-from-location {
+    font-size: 0.8em;
+    opacity: 0.6;
+}
+
+.wpgmza-basic-list-item.wpgmza-distance-from-location
+{
+    padding-right: 10px;
+    display: block;
+    min-width: 100%;
+    text-align: right;
+    opacity: .4;
+}
+
+.wpgmza-modern-marker-listing [data-name="user-distance"]
+{
+    font-size: 0.8em;
+    font-style: italic;
+    color: #929292;
+}
+
+.wpgmza_polygon_title
+{
+    margin: 0;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-size: 14px;
+}
+
+/* Grid Marker Listing Styles */
+.wpgmza-marker-grid 
+{
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: flex-start;
+    width: 100% !important;
+    max-width: 100% !important;
+}
+
+.wpgmza-grid-row 
+{
+    height: auto;
+    flex-basis: 33.33%;
+    -ms-flex: auto;
+    height: 300px;
+    position: relative;
+    padding: 10px;
+    box-sizing: border-box !important;
+}
+
+.wpgmza-grid-item
+{
+    border: 1px solid #eee;
+    height: 100%;
+    box-sizing: border-box;
+    transition: all 0.3s cubic-bezier(.25, .8, .25, 1);
+    cursor: pointer;
+    border-radius: 2px;
+    position: relative;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+.wpgmza-grid-item:hover
+{
+    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.02), 0 2px 10px rgba(0, 0, 0, 0.04);
+}
+
+.wpgmza-grid-item .wpgmza_marker_title
+{
+    margin: 0;
+    font-weight: bold;
+    font-size: 0.9em !important;
+}
+
+.wpgmza-grid-item .wpgmza_marker_icon
+{
+    position: absolute;
+    top: 22px;
+    right: 17px;
+    width: 15px;
+    margin: 0 !important;
+    z-index: 10;
+}
+
+.wpgmza-grid-item .wpgmza-address
+{
+    font-size: .8em;
+    width: 100%;
+    opacity: .5;
+}
+
+.wpgmza-grid-item .wpgmza-desc,
+.wpgmza-grid-item .wpgmza-desc p
+{
+    font-size: .8em;
+    width: 100%;
+    opacity: .9;
+    margin-top: 5px;
+ 
+}
+
+.wpgmza-grid-item .wpgmza-distance-from-location
+{
+    bottom: 0;
+    text-align: right;
+    display: block;
+    font-size: .7em;
+    opacity: 1;
+    position: absolute;
+    padding: 0px 8px;
+    border-radius: 2px;
+    right: 10px;
+    bottom: 10px;
+    background: #f9f9f9;
+    width: max-content;
+    z-index: 9;
+}
+
+.wpgmza-grid-item-content
+{
+    overflow: auto;
+    max-height: 100%;
+    padding: 15px;
+    box-sizing: border-box;
+}
+
+.wpgmza-grid-item .wpgmza-distance-from-location + .wpgmza-grid-item-content
+{
+    padding-bottom: 50px; 
+}
+
+.wpgmza-grid-item .wpgmza_custom_fields > p
+{
+    border-top: 1px solid #eee;
+    padding: 2px 0;
+    margin: 0;
+    font-size: 0.8em;
+    opacity: .8;
+}
+
+
+.wpgmza-grid-footer
+{
+    font-size: 0.8em;
+    right: 0;
+    position: absolute;
+    bottom: 0;
+    padding: 10px;
+    width: 100%;
+    border-top: 1px solid #eee;
+    background: #fff;
+    text-align: right;
+    z-index: 10;
+    height: 50px;
+    line-height: 25px;
+}
+
+.wpgmza-grid-footer .wpgmza_gd,
+.wpgmza-grid-footer .wpgmza-link
+{
+    display: inline-block;
+    font-size: 0.8em;
+    margin-left: 7px;
+}
+
+.wpgmza-grid-footer ~ .wpgmza-grid-item-content
+{
+    max-height: calc( 100% - 50px) ;
+}
+
+.wpgmza-grid-item .wpgmza-basic-listing-image-holder
+{
+    width: 100%;
+    max-height: 170px;
+    overflow: hidden;
+    border: none !important;
+    position: relative;
+    right: 0;
+    border-bottom: 1px solid #eee !important;
+    top: 0;
+}
+.wpgmza-grid-item .wpgmza-basic-listing-image-holder .wpgmza_map_image
+{
+    width: 100%;
+    border: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+.wpgmza-grid-item .wpgmza-basic-listing-image-holder + .wpgmza_marker_title
+{
+    margin-top: 160px;
+}
+
+.wpgmza-grid-item-content
+{
+    padding: 0;
+}
+
+.wpgmza-grid-item .wpgmza_marker_title,
+.wpgmza-grid-item .wpgmza-desc,
+.wpgmza-grid-item .wpgmza-address,
+.wpgmza-grid-item .wpgmza_custom_fields
+{
+    padding: 5px 20px;
+}
+
+.wpgmza-grid-item .wpgmza_marker_title
+{
+    padding-top: 15px;
+}
+
+.wpgmza-grid-item .wpgmza-basic-listing-image-holder img
+{
+    border: none !important;
+    padding: 0 !important;
+}
+
+.wpgmza-grid-item .wpgmza-gallery-container .wpgmza-marker-gallery
+{
+    overflow: hidden;
+    max-width: 290px ;
+    margin: 0 auto;
+}
+
+.wpgmza-grid-item {
+  background: #fff;
+}
+
+.wpgmza-infowindow .wpgmza-marker-gallery
+{
+	float: right;
+}
+
+@media(max-width: 1333px) 
+{
+    .wpgmza-grid-row 
+    {
+        flex-basis: 33.33%;
+    }
+}
+@media(max-width: 1073px)
+{
+    .wpgmza-grid-row
+    {
+        flex-basis: 33.33%;
+    }
+}
+@media(max-width: 815px)
+{
+    .wpgmza-grid-row
+    {
+        flex-basis: 50%;
+    }
+}
+@media(max-width: 555px)
+{
+    .wpgmza-grid-row
+    {
+        flex-basis: 100%;
+    }
+}
+
+.ol-marker > img
+{
+	max-width: none !important;
+}
+
+.wpgmza-directions-step::before
+{
+	content: "";
+	display: inline-block;
+	vertical-align: middle;
+	margin-right: 0.3em;
+	position: relative;
+	top: -0.15em;
+	width: 1em;
+	height: 1em;
+	background-size: contain;
+	background-position: center;
+	background-repeat: no-repeat;
+}
+
+.wpgmza-directions-step.wpgmza-instruction-type-left::before,
+	.wpgmza-directions-step.wpgmza-instruction-type-sharp-left::before,
+	.wpgmza-directions-step.wpgmza-instruction-type-slight-left::before
+{
+	background-image: url('../images/road-signs/left.png');
+}
+
+.wpgmza-directions-step.wpgmza-instruction-type-right::before,
+	.wpgmza-directions-step.wpgmza-instruction-type-sharp-right::before,
+	.wpgmza-directions-step.wpgmza-instruction-type-slight-right::before
+{
+	background-image: url('../images/road-signs/right.png');
+}
+
+.wpgmza-directions-step.wpgmza-instruction-type-straight::before
+{
+	background-image: url('../images/road-signs/straight.png');
+}
+
+.wpgmza-directions-step.wpgmza-instruction-type-enter-roundabout::before
+{
+	background-image: url('../images/road-signs/enter-roundabout.png');
+}
+
+.wpgmza-directions-step.wpgmza-instruction-type-keep-left::before
+{
+	background-image: url('../images/road-signs/keep-left.png');
+}
+
+.wpgmza-directions-step.wpgmza-instruction-type-keep-right::before
+{
+	background-image: url('../images/road-signs/keep-right.png');
+}
+
+.wpgmza-directions-step.wpgmza-instruction-type-depart::before,
+	.wpgmza-directions-step.wpgmza-instruction-type-goal::before
+{
+	background-image: url('//maps.gstatic.com/mapfiles/api-3/images/spotlight-poi2.png');
+}
+
+.wpgmza-directions-step.wpgmza-instruction-type-u-turn::before
+{
+	background-image: url('../images/road-signs/u-turn.png');
+}
+
+.wpgmza-not-found input
+{
+	border: 1px solid red;
+}
+
+/* New fancy preloader */
+.wpgmza-preloader {
+  display: inline-block;
+  position: relative;
+  width: 64px;
+  height: 64px;
+  
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.wpgmza-preloader div {
+  position: absolute;
+  top: 27px;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  
+  background: #fff;
+  box-shadow: 0px 0px 2px black;
+  
+  animation-timing-function: cubic-bezier(0, 1, 1, 0);
+}
+.wpgmza-preloader div:nth-child(1) {
+  left: 6px;
+  animation: wpgmza-preloader1 0.6s infinite;
+}
+.wpgmza-preloader div:nth-child(2) {
+  left: 6px;
+  animation: wpgmza-preloader2 0.6s infinite;
+}
+.wpgmza-preloader div:nth-child(3) {
+  left: 26px;
+  animation: wpgmza-preloader2 0.6s infinite;
+}
+.wpgmza-preloader div:nth-child(4) {
+  left: 45px;
+  animation: wpgmza-preloader3 0.6s infinite;
+}
+@keyframes wpgmza-preloader1 {
+  0% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+@keyframes wpgmza-preloader3 {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(0);
+  }
+}
+@keyframes wpgmza-preloader2 {
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(19px, 0);
+  }
+}
+
+.wpgmza_marker_carousel.owl-carousel .owl-item img.wpgmza_marker_icon
+{
+	margin: 0.5em auto;
+	width: auto;
+}
+
+.wpgmza-directions__travel-mode,
+.wpgmza-directions-to__icon,
+.wpgmza-directions-from__icon
+{
+	display: none;
+}
+
+.wpgmza-modern-directions-box .wpgmza-directions__travel-mode,
+.wpgmza-modern-directions-box .wpgmza-directions-to__icon,
+.wpgmza-modern-directions-box .wpgmza-directions-from__icon
+{
+	display: block;
+	
+	-khtml-user-select: none;
+    -o-user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+.wpgmza-modern-directions-box .wpgmza-directions-box__title
+{
+	height: auto;
+}
+
+.wpgmza-modern-directions-box h2:before
+{
+	content: none;
+}
+
+.wpgmza-rating {
+  display: inline-block;
+  line-height: 20px;
+}
+.wpgmza-rating-stars-container > span {
+  display: flex;
+  flex-direction: row;
+  white-space: nowrap;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.wpgmza-directions-box:not(.style-modern) span.wpgmza-travel-mode-option,
+.wpgmza-directions-box:not(.style-modern) .wpgmza-directions-from__icon,
+.wpgmza-directions-box:not(.style-modern) .wpgmza-directions-to__icon{
+  display: none;
+}
+
+.wpgmza-infowindow [data-hide-in-infowindows="true"],
+	[data-wpgmza-marker-listing] [data-hide-in-marker-listings="true"]
+	.wpgmza_marker_holder [data-hide-in-marker-listings="true"]
+{
+	display: none;
+}
+
+
+.wpgmza-print-directions,
+.wpgmza-reset-directions {
+    cursor: pointer;
+}
+
+
+
+
+/* STORE LOCATOR MODERN STYLING */
+.wpgmza-modern-directions-box {
+    width:30%;
+    max-width:408px;
+}
+.style-modern input .wpgmza-directions-from {
+    color: #fff !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.87);
+}
+.style-modern .wpgmza-directions-locations .wpgmza-use-my-location {
+    border: 1px solid rgba(255, 255, 255, 0.87);
+    border-radius:2px;
+    margin-left:2px;
+    color: #fff !important;
+    opacity:0.5 !important;  
+}
+
+.style-modern .wpgmza-directions-locations .wpgmza-use-my-location:hover {
+    opacity: 1 !important;
+}
+
+
+.style-modern .wpgmza_remove_via {
+    border: 1px solid rgba(255, 255, 255, 0.87);
+    border-radius:2px;
+    margin-left:2px;
+    color: #fff !important;
+    opacity:0.5 !important;   
+}
+.style-modern .wpgmza_remove_via:hover {
+    opacity: 1 !important;
+}
+
+.style-modern .wpgmza-directions-buttons .wpgmza-get-directions {
+    border: 0px !important;
+}
+
+
+
+/* STORE LOCATOR LEGACY STYLING */
+.style-default .wpgmza-directions-options__section {
+    background-color:transparent !important;
+}
+.style-default .wpgmza-form-field__input {
+    width:50%;
+    min-width:200px;
+    border: 1px solid #ccc;
+    padding: 10px;
+}
+.style-default .wpgmaps_add_waypoint i {
+    color: #ccc;
+    margin-right:2px;
+}
+.wpgmaps_directions_outer_div.style-default {
+    padding-left:15px;
+}
+.style-default .wpgmza-travel-mode-option {
+    background-color:#333;
+}
+.style-default .wpgmza-directions__travel-mode {
+    display:block !important;
+}
+.style-default .wpgmza-travel-mode-option {
+    display:inline-block !important;
+}
+.style-default .wpgmza-directions-options__section {
+    min-height:inherit;
+}
+.style-default .wpgmza-use-my-location {
+    border: 1px solid #ccc;
+    margin-left: 12px;
+    border-radius: 5px;
+    color: #333;
+}
+
+
+.gm-ui-hover-effect:hover {
+    box-shadow: none !important;
+}
+
+.wpgmza-modern-directions-box .wpgmaps_directions_outer_div.style-default{
+    padding-left: inherit;
+}
+
+@media screen and (max-width: 1000px){
+    .wpgmza-modern-directions-box {
+        width: 100% !important;
+        max-width: 100%;
+        left: -100%;
+    }       
+}
+
+
+.wpgmza-ol-modern-infowindow-container:empty {
+    height: 0;
+}

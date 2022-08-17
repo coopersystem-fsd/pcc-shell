@@ -1,0 +1,829 @@
+.wpgmaps_directions_outer_div {
+    padding-top:5px;
+    padding-bottom:5px;
+}
+
+.wpgmaps_directions_outer_div table, wpgmza_marker_list_class {
+    margin-bottom:0px !important;
+}
+
+/* store locator styling */
+.wpgmza_sl_main_div {
+    width:100%;
+	overflow: hidden;
+}
+.wpgmza_sl_query_div {
+    display:block;
+}
+.wpgmza_sl_query_innerdiv1 { 
+    float:left;
+    display:block;
+    width:150px;
+    clear:left;
+}
+.wpgmza_sl_query_innerdiv2 {
+    display:block;
+    float:left;
+
+}
+
+.wpgmza_sl_radius_div {
+    display:block; 
+    clear:both;
+}
+    .wpgmza_sl_radius_innerdiv1 { 
+        float:left;
+        display:block;
+        width:150px;
+    }
+    .wpgmza_sl_radius_innerdiv2 {
+        display:block;
+        float:left;
+        width:250px;
+    }
+    
+.wpgmza_sl_radius_select {
+    
+}
+    .wpgmza_sl_select_option {
+
+    }
+
+.wpgmza_sl_category_div {
+    display:block; 
+    clear:both;
+    height:auto; 
+    overflow:auto; 
+
+}
+    .wpgmza_sl_category_innerdiv1 { 
+        float:left;
+        display:block;
+        width:150px;
+    }
+    .wpgmza_sl_category_innerdiv2 {
+        
+        float:left;
+        
+    }
+
+.wpgmza_sl_search_button {
+
+}
+
+.wpgmza_sl_search_button_div {
+    display:inline-block;
+}
+.wpgmza_sl_reset_button_div {
+    display:inline-block;
+}
+
+.sl_use_loc { float:left; margin-left:10px; padding: 11px 30px; }
+
+.wpgmza-modern-directions-box input:not([type='checkbox']),
+	.wpgmza-modern-directions-box select
+{
+	display: block;
+	width: 100% !important;
+}
+
+.wpgmza-modern-directions-box h2
+{
+	margin: 0;
+	padding: 0;
+	clear: none;
+}
+
+.wpgmza-directions-buttons i
+{
+	color: #bbb;
+	cursor: pointer;
+	transition: color 0.3s;
+}
+
+.wpgmza-directions-buttons i:hover
+{
+	color: #777;
+}
+
+.wpgmza-directions-buttons a
+{
+	display: block;
+	cursor: pointer;
+}
+
+.wpgmza-directions-options
+{
+	text-align: left;
+}
+
+.wpgmza-directions-options label
+{
+	display: inline;
+}
+
+.wpgmza_sl_search_button, 
+.wpgmza_sl_reset_button_div, 
+.wpgmza_store_locator_options_button {
+	cursor: pointer;
+	font-size: 20px;
+	padding: 0 0.3em;
+}
+
+.wpgmza-modern-store-locator .wpgmza_sl_search_button,
+.wpgmza-modern-store-locator .wpgmza_sl_reset_button_div,
+.wpgmza-modern-store-locator .wpgmza_store_locator_options_button {
+    cursor: pointer;
+    font-size: 15px;
+    padding: 0 0.3em;
+    height: 100%;
+    line-height: 28px;
+    color: #b7b7b7;
+}
+
+
+/* Modern checkbox list */
+.wpgmza-modern-store-locator .wpgmza_cat_checkbox_holder {
+	margin: 0;
+	padding: 0;
+	position: static;
+
+    border-bottom-left-radius: 2px;
+    border-bottom-right-radius: 2px;
+
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 2px -1px;
+    -webkit-box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 2px -1px;
+    -moz-box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 2px -1px;
+    -o-box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 2px -1px;
+}
+
+.wpgmza-modern-store-locator .wpgmza_cat_ul {
+	background: #fff;
+	text-align: left;
+	margin: 0;
+	padding: 0.5em;
+}
+
+.wpgmza-modern-store-locator .wpgmza_cat_ul > li {
+	display: inline-block;
+}
+
+.wpgmza-modern-store-locator .wpgmza_cat_ul > li > input[type='checkbox']{
+	display: none;
+}
+
+
+.wpgmza-modern-store-locator .wpgmza_cat_ul > li label {
+	display: inline-block;
+	padding: 0.4em 0.8em;
+	margin: 0.3em 1em;
+	border-radius: 5em;
+	position: relative;
+    cursor: pointer;
+}
+
+.wpgmza-modern-store-locator .wpgmza_cat_ul > li > input:checked + label {
+	display: block;
+	background: #3D8AF7;
+    border: 1px solid #3D8AF7;
+
+	color: white;
+}
+
+.wpgmza-modern-store-locator .wpgmza_cat_ul > li label, .wpgmza-chip-icon {
+    border: 1px solid #eee;
+    background: #eee;
+}
+
+.wpgmza-chip-icon {
+	background-position: center;
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-color: white;
+	
+	border-left: none;
+	width: 1em;
+	height: 100%;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	border-radius: 999px;
+}
+
+.wpgmza-modern-store-locator .wpgmza_cat_checkbox_holder {
+	overflow: hidden;
+	max-height: 0vh;
+	height: auto;
+	transition: max-height 0.5s;
+}
+
+.wpgmza-modern-store-locator .wpgmza_cat_checkbox_holder.wpgmza-open {
+	max-height: 100vh;
+}
+
+.wpgmaps_directions_outer_div > h2 {
+    margin-bottom: 0;
+}
+
+.wpgmza_sl_main_div input[type="button"],
+.wpgmaps_directions_outer_div input[type="button"],
+.wpgmza-inner input[type="button"] {
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.wpgmza-modern-directions-box .wpgmaps_directions_outer_div {
+    padding-top:0;
+    padding-bottom:0;
+    width: 100% !important; /*Ignore the user selection*/
+
+}
+
+.wpgmza-modern-directions-box h2{
+    background: #585858;
+    color:#fff;
+    font-size: 19px;
+    padding: 6px;
+    font-family: Roboto, sans-serif;
+    font-weight: 100;
+
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px;
+    -webkit-box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px;
+    -moz-box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px;
+    -o-box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px;
+}
+
+.wpgmza-modern-directions-box .wpgmza-directions-buttons {
+    float: right;
+    font-size: 16px;
+    margin-top: -32px;
+    margin-right: 5px;
+    color: #fff;
+}
+
+.wpgmza-modern-directions-box .wpgmaps_directions_outer_div{
+    font-family: Roboto, sans-serif;
+}
+
+.wpgmza-modern-directions-box .wpgmaps_directions_outer_div .wpgmza-form-field{
+    padding-top:5px;
+    padding-left:8px;
+    padding-right: 8px;
+    width: 100%;
+    margin-top: 15px !important;
+}
+
+.wpgmza-modern-directions-box .wpgmaps_directions_outer_div .wpgmza-form-field label{
+    font-size: 0.8em;
+    color: #adadad;
+}
+
+.wpgmza-modern-directions-box .wpgmaps_directions_outer_div .wpgmza-form-field input,
+.wpgmza-modern-directions-box .wpgmaps_directions_outer_div .wpgmza-form-field select{
+    color: #777;
+    border-bottom:1px solid #eee;
+}
+
+.wpgmza-modern-directions-box .wpgmaps_directions_outer_div a[id^=wpgmza_show_options], 
+.wpgmza-modern-directions-box .wpgmaps_directions_outer_div a[id^=wpgmza_hide_options],
+.wpgmza-modern-directions-box .wpgmaps_directions_outer_div a.wpgmaps_add_waypoint,
+.wpgmza-modern-directions-box .wpgmaps_directions_outer_div a.wpgmaps_remove_via {
+    background: #e4e4e4;
+    padding: 3px;
+    color:#777;
+    box-shadow: none !important;
+    text-decoration:  none !important;
+    border-radius: 4px;
+    float: right;
+    margin-top: 5px;
+    font-size: 11px;
+}
+
+.wpgmza-modern-directions-box .wpgmaps_directions_outer_div a[id^=wpgmza_show_options]:after {
+    content: "▼";
+    margin-left:4px;
+    font-size: 0.8em;
+}
+
+.wpgmza-modern-directions-box .wpgmaps_directions_outer_div a[id^=wpgmza_hide_options]:after {
+    content: "▲";
+    margin-left:4px;
+    font-size: 0.8em;
+}
+
+.wpgmza-modern-directions-box .wpgmaps_directions_outer_div .wpgmza_dir_options{
+    background:#eee;
+    margin-top: 2px;
+    border-radius: 4px;
+}
+
+.wpgmza-modern-directions-box .wpgmaps_directions_outer_div .wpgmza_dir_options label{
+    display: block;
+    color: #888 ;
+    cursor: pointer;
+}
+
+.wpgmza-modern-directions-box .wpgmaps_directions_outer_div .wpgmza-form-field .wpgmaps_get_directions {
+    background-color: #585858;
+    color: #fff;
+
+    border-radius: 3px;
+
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px;
+    -webkit-box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px;
+    -moz-box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px;
+    -o-box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px;
+}
+
+.wpgmza-modern-directions-box .wpgmza-directions-results table,
+.wpgmza-modern-directions-box .wpgmza-directions-results table td {
+    border: none;
+}
+
+.wpgmza-modern-directions-box .wpgmza-directions-results table tr {
+    display: block !important;
+    width: 90%;
+    margin-left: 5%;
+    margin-right: 5%;
+    margin-bottom: 10px;
+    border-radius: 3px;
+
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px;
+    -webkit-box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px;
+    -moz-box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px;
+    -o-box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px;
+}
+
+.wpgmza-modern-directions-box .adp-placemark {
+    background: none;
+}
+
+.wpgmza-modern-directions-box .adp-placemark tr {
+    background: #777;
+    color: #fff;
+}
+
+.wpgmza-modern-directions-box .adp-summary,
+.wpgmza-modern-directions-box .adp-legal {
+    font-size: 0.8em;
+    text-align: center;
+}
+
+.wpgmza-modern-directions-box .adp-list {
+    border: none;
+}
+
+.wpgmza-modern-directions-box .adp-list .adp-fullwidth tr:first-child{
+    color: #fff;
+    background: #585858;
+}
+
+.wpgmza-modern-directions-box .adp-directions {
+    font-size: 0.9em;
+}
+
+.wpgmza-modern-store-locator.wpgmza_sl_offset,
+.wpgmza-modern-store-locator.wpgmza_sl_mv_offset {
+    left: 45% !important;
+    max-width: 40%;
+}
+
+.wpgmza-modern-directions-box button[id^=wpgmza_use_my_loc] {
+   float: right;
+   margin-top: -35px;
+   border: none !important;
+   background: none !important;
+}
+
+.wpgmza-modern-store-locator .wpgmza_cat_ul .wpgmza_cat_ul_child{
+    display:none;
+    margin: 0;
+    padding: 0;
+
+}
+
+.wpgmza-modern-store-locator .wpgmza_cat_ul_child
+{
+    /* display: block; */
+    position: absolute;
+    border-radius: 2px;
+    margin-top: 2px;
+
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px;
+    -webkit-box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px;
+    -moz-box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px;
+    -o-box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px;
+	
+	z-index: 10;
+}
+
+.wpgmza-directions-results [data-icon]
+{
+	margin: 0 0.5em;
+}
+
+.wpgmza_map[data-maps-engine="open-layers"] .wpgmza-modern-store-locator.wpgmza_sl_offset,
+	.wpgmza_map[data-maps-engine="open-layers"] .wpgmza-modern-store-locator.wpgmza_sl_mv_offset
+{
+    width: 40% !important;
+}
+
+.wpgmza-show-directions-options,
+	.wpgmza-hide-directions-options
+{
+	font-size: 10px;
+}
+
+.wpgmza-hide-directions-options,
+	.wpgmza-directions-options
+{
+	display: none;
+}
+
+.wpgmza-directions-step
+{
+	cursor: pointer;
+}
+
+.wpgmza-form-field {
+    position: relative;
+    overflow: hidden;
+    margin-top: 0;
+    margin-bottom: 5px;
+    padding-top: 25px;
+}
+
+.wpgmza-travel-mode-option {
+  width: 30px;
+  height: 30px;
+  display: inline-block;
+  font-size: 16px;
+  text-align: center;
+  line-height: 30px;
+  border-radius: 50%;
+  cursor: pointer;
+  color: #fff;
+}
+
+.wpgmza-travel-mode-option i {
+  opacity: .3;
+}
+
+.wpgmza-travel-mode-option.wpgmza-travel-option__selected,
+.wpgmza-travel-mode-option:hover{
+  background: #3366d7;
+}
+
+.wpgmza-travel-mode-option.wpgmza-travel-option__selected i,
+.wpgmza-travel-mode-option:hover i{
+  opacity: 1;
+}
+.wpgmza-hidden {
+  display: none;
+}
+
+.wpgmza-modern-directions-box .wpgmaps_directions_outer_div .wpgmza-directions-box-inner .wpgmza-directions-actions {
+  background: #4185f3;
+  margin-top: 0 !important;
+  margin-bottom: 0;
+}
+
+.wpgmza-modern-directions-box .wpgmza-directions-box__title {
+  background: #4185f3 !important;
+  color: #fff;
+  font-size: 16px;
+  padding-left: 15px;
+  padding-top: 15px;
+  font-weight: normal;
+}
+.wpgmza-modern-directions-box .wpgmaps_directions_outer_div .wpgmza-directions-actions .wpgmza-form-field input,
+.wpgmza-modern-directions-box .wpgmaps_directions_outer_div .wpgmza-directions-actions .wpgmza-form-field input::placeholder{
+  color: #fff;
+  font-size: 13px;
+}
+
+.wpgmza-modern-directions-box .wpgmaps_directions_outer_div .wpgmza-directions-actions .wpgmza-form-field input::placeholder {
+  color: rgba(255,255,255, 0.5);
+}
+
+.wpgmza-directions-buttons .wpgmza-close i {
+  color: #fff;
+  margin-right: 10px;
+  margin-top: 5px;
+}
+
+.wpgmza-modern-directions-box .wpgmaps_directions_outer_div .wpgmza-directions-actions .wpgmza-form-field input:focus,
+.wpgmza-modern-directions-box .wpgmaps_directions_outer_div .wpgmza-directions-actions .wpgmza-form-field input:active {
+  outline: none;
+  box-shadow: none;
+}
+
+.wpgmza-directions-locations .wpgmza-form-field__label {
+  display: none;
+}
+
+.wpgmza-modern-directions-box .wpgmaps_directions_outer_div .wpgmza-directions-locations .wpgmza-form-field {
+  display: flex;
+  margin-top: 0 !important;
+}
+
+.wpgmza-directions-locations .wpgmza-use-my-location,
+.wpgmza-directions-locations .wpgmza_remove_via{
+  background: transparent;
+  padding: 10px;
+}
+
+.wpgmza-directions-locations .wpgmza-use-my-location:active,
+.wpgmza-directions-locations .wpgmza-use-my-location:focus,
+.wpgmza-directions-locations .wpgmza_remove_via:active,
+.wpgmza-directions-locations .wpgmza_remove_via:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.wpgmza-directions-from__icon,
+.wpgmza-directions-to__icon {
+  display: inline-block;
+  vertical-align: middle;
+  color: #fff;
+  font-size: 15px !important;
+  padding: 10px 0;
+  padding-right: 15px;
+  width: 30px;
+  transform: translateY(4px);
+  text-align: center;
+  line-height: 20px !important;
+}
+
+.wpgmza-modern-directions-box .wpgmza-directions-options__section {
+  background: #3366d7 !important;
+  display: block;
+  width: 100%;
+  min-height: 50px;
+  position: relative;
+}
+.wpgmza-modern-directions-box .wpgmaps_directions_outer_div .wpgmza-form-field.wpgmza-directions-options {
+  background: #3366d7  !important;
+  margin: 0 !important;
+  color: #fff;
+  padding: 20px;
+  box-sizing: border-box;
+  padding-top: 40px !important;
+}
+.wpgmza-modern-directions-box .wpgmaps_directions_outer_div .wpgmza-directions-options label {
+  color: #fff !important;
+  font-size: 13px !important;
+}
+.wpgmza-modern-directions-box .wpgmaps_directions_outer_div .wpgmza-directions-options label input {
+  margin-right: 6px;
+}
+.wpgmza-modern-directions-box .wpgmaps_directions_outer_div a[id^=wpgmza_show_options],
+.wpgmza-modern-directions-box .wpgmaps_directions_outer_div a[id^=wpgmza_hide_options]{
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%) !important;
+  margin: 0 !important;
+  z-index: 9;
+  background: transparent !important;
+  color: #fff  !important;
+  text-transform: uppercase  !important;
+  font-weight: bold;
+  font-size: 12px;
+}
+.wpgmza-modern-directions-box .wpgmaps_directions_outer_div a[id^=wpgmza_hide_options] {
+  top: 25px; 
+}
+.wpgmza-modern-directions-box .wpgmaps_directions_outer_div .wpgmaps_add_waypoint {
+  background: transparent !important;
+  color: rgba(255,255,255, 0.5) !important;
+  font-size: 12px !important;
+  width: 100%;
+}
+
+.wpgmza-modern-directions-box .wpgmaps_directions_outer_div .wpgmaps_add_waypoint:hover {
+  color: #fff !important;
+}
+
+.wpgmaps_add_waypoint i {
+  margin-right: 14px;
+  font-size: 14px;
+  color: #fff;
+}
+
+.wpgmza-add-waypoint {
+  padding-left: 6px !important;
+}
+
+.wpgmza-waypoint-via .wpgmza_remove_via {
+  opacity: 0;
+}
+
+.wpgmza-waypoint-via:hover .wpgmza_remove_via {
+  opacity: 1;
+}
+
+.wpgmza-directions-from__icon {
+  font-size: 7px !important;
+  text-align: center;
+}
+
+.wpgmza-directions-options input:focus,
+.wpgmza-directions-options:active {
+  box-shadow: none;
+  outline: none;
+}
+
+.wpgmza-modern-directions-box .wpgmaps_directions_outer_div .wpgmaps_get_directions {
+  background: #3366d7 !important;
+  padding: 10px;
+  font-size: 14px;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.wpgmza-modern-directions-box .wpgmaps_directions_outer_div .wpgmaps_get_directions:hover {
+  background: #4185f3 !important;
+}
+
+.wpgmza-modern-directions-box .wpgmaps_directions_outer_div .wpgmza-directions-buttons {
+  margin-right: 0;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.wpgmza-directions-box-inner {
+  min-width: 100%;
+}
+
+
+.wpgmza-directions-box__title {
+  height: 50px;
+}
+
+.wpgmza-modern-directions-box .adp-list .adp-fullwidth tr:first-child {
+  background: transparent !important;
+  color: #333 !important;
+}
+.wpgmza-modern-directions-box .adp-list {
+  padding: 0;
+}
+.wpgmza-modern-directions-box .adp-list table.adp-fullwidth,
+.wpgmza-modern-directions-box .adp-list table.adp-fullwidth td {
+  border: none;
+}
+
+.wpgmza-directions-box__title + .wpgmza-directions-buttons .wpgmza-close i {
+  margin: 0;
+  transform: translateY(-5px);
+}
+
+.wpgmza-directions-box__title + .wpgmza-directions-buttons .wpgmza-close i:hover {
+  color: #fff;
+}
+
+.wpgmza-modern-directions-box .adp-list table.adp-fullwidth {
+  margin-top: 0;
+  margin-bottom: 0;
+  padding-top: 10px;
+}
+
+.wpgmza-modern-directions-box .adp-list table.adp-fullwidth td {
+  border-bottom: 1px solid #ccc;
+  padding: 20px 15px;
+  font-size: 14px;
+}
+
+.wpgmza-modern-directions-box .adp-placemark {
+  margin-top: 0;
+}
+
+.wpgmza-modern-directions-box .adp-step, .adp-substep {
+  border: none;
+}
+
+.wpgmza-modern-directions-box .adp-listheader {
+    background: transparent !important;
+    color: #333 !important;
+  font-weight: bold;
+  padding: 15px 15px !important;
+  border-bottom: none !important;
+  padding-bottom: 10px !important;
+}
+
+.wpgmza-modern-directions-box .adp-legal {
+  font-size: 12px !important;
+  margin-bottom: 10px;
+}
+
+.wpgmza-modern-directions-box .adp-placemark tr {
+  background: transparent !important;
+  color: #333 !important;
+  font-weight: bold;
+  font-size: 16px;
+}
+.wpgmza-modern-directions-box .adp-placemark td {
+  border: none !important;
+}
+
+.wpgmza-modern-directions-box .adp-directions {
+  margin-top: 10px;
+  margin-bottom: 0;
+}
+
+.wpgmza-modern-directions-box .adp-directions td {
+  border-bottom: 1px solid #ccc;
+  padding: 15px;
+  font-size: 14px;
+}
+
+.wpgmza-modern-directions-box  .adp-distance {
+  color: green;
+  font-weight: normal;
+}
+
+.wpgmza-modern-directions-box .adp-listsel {
+  background: #4185f3;
+  border:none !important;;
+  color: #fff;
+}
+
+.wpgmza-modern-directions-box__results .wpgmza-directions-buttons {
+  transform: translateY(-7px);
+  margin-right: 15px;
+}
+
+.wpgmza-modern-directions-box__results .wpgmza-directions-buttons i {
+  color: #fff;
+}
+
+.wpgmza-modern-directions-box table.adp-placemark {
+  border-top: none !important;
+   border-left: none !important;
+  border-right: none !important;
+}
+
+.wpgmza-modern-directions-box .adp-summary {
+  font-size: 15px !important;
+  opacity: .4;
+}
+
+
+.wpgmza-modern-directions-box__results .wpgmza-directions-buttons span i{
+  transform: translateY(-1px) !important;
+  margin-right: 10px;
+}
+
+.wpgmza-directions-buttons span i:hover {
+  color: #fff;
+}
+
+.wpgmza-directions-buttons .fa-google {
+  margin-left: 5px;
+}
+
+.wpgmza-travel-mode-option {
+  transition: background .12s ease-in-out;
+}
+.wpgmza-modern-directions-box__results .adp-warnbox {
+  margin-top: 0;
+}
+.wpgmza-modern-directions-box__results .warnbox-content {
+  font-size: 13px;
+  padding: 14px;
+}
+
+.wpgmza-directions-result__buttons {
+  display: flex;
+}
+
+.wpgmza-directions-result__buttons a {
+  flex: 1;
+  margin: 5px;
+  background: #3366d7 !important;
+  padding: 10px;
+  font-size: 14px;
+  text-decoration: none;
+  font-weight: bold;
+  color: #fff;
+  text-decoration: none;
+  text-align: center;
+  border-radius: 3px;
+}
+
+.wpgmza-directions-result__buttons a:hover {
+  background: #4185f3 !important;
+}
+
+.wpgmza-travel-mode-option {
+  position: relative;
+}
+
+.wpgmza-travel-mode-option img {
+  max-width: 20px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}

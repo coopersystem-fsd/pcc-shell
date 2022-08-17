@@ -1,0 +1,1072 @@
+{
+    "wpgmza-address-input": {
+        "src": "js\/v8\/address-input.js",
+        "pro": false,
+        "dependencies": [
+            "wpgmza-event-dispatcher"
+        ]
+    },
+    "wpgmza-circle": {
+        "src": "js\/v8\/circle.js",
+        "pro": false,
+        "dependencies": [
+            "wpgmza-feature"
+        ]
+    },
+    "wpgmza-compatibility": {
+        "src": "js\/v8\/compatibility.js",
+        "pro": false,
+        "dependencies": [
+            "wpgmza"
+        ]
+    },
+    "wpgmza": {
+        "src": "js\/v8\/core.js",
+        "pro": false,
+        "dependencies": []
+    },
+    "wpgmza-css": {
+        "src": "js\/v8\/css-escape.js",
+        "pro": false,
+        "dependencies": [
+            "wpgmza"
+        ]
+    },
+    "wpgmza-distance": {
+        "src": "js\/v8\/distance.js",
+        "pro": false,
+        "dependencies": [
+            "wpgmza"
+        ]
+    },
+    "wpgmza-drawing-manager": {
+        "src": "js\/v8\/drawing-manager.js",
+        "pro": false,
+        "dependencies": [
+            "wpgmza-event-dispatcher"
+        ]
+    },
+    "wpgmza-elias-fano": {
+        "src": "js\/v8\/elias-fano.js",
+        "pro": false,
+        "dependencies": [
+            "wpgmza"
+        ]
+    },
+    "wpgmza-event-dispatcher": {
+        "src": "js\/v8\/event-dispatcher.js",
+        "pro": false,
+        "dependencies": [
+            "wpgmza"
+        ]
+    },
+    "wpgmza-event": {
+        "src": "js\/v8\/event.js",
+        "pro": false,
+        "dependencies": [
+            "wpgmza"
+        ]
+    },
+    "wpgmza-fancy-controls": {
+        "src": "js\/v8\/fancy-controls.js",
+        "pro": false,
+        "dependencies": [
+            "wpgmza"
+        ]
+    },
+    "wpgmza-feature": {
+        "src": "js\/v8\/feature.js",
+        "pro": false,
+        "dependencies": [
+            "wpgmza-event-dispatcher"
+        ]
+    },
+    "wpgmza-friendly-error": {
+        "src": "js\/v8\/friendly-error.js",
+        "pro": false,
+        "dependencies": [
+            "wpgmza"
+        ]
+    },
+    "wpgmza-geocoder": {
+        "src": "js\/v8\/geocoder.js",
+        "pro": false,
+        "dependencies": [
+            "wpgmza"
+        ]
+    },
+    "wpgmza-google-api-error-handler": {
+        "src": "js\/v8\/google-api-error-handler.js",
+        "pro": false,
+        "dependencies": [
+            "wpgmza"
+        ]
+    },
+    "wpgmza-info-window": {
+        "src": "js\/v8\/info-window.js",
+        "pro": false,
+        "dependencies": [
+            "wpgmza-event-dispatcher"
+        ]
+    },
+    "wpgmza-lat-lng": {
+        "src": "js\/v8\/latlng.js",
+        "pro": false,
+        "dependencies": [
+            "wpgmza"
+        ]
+    },
+    "wpgmza-lat-lng-bounds": {
+        "src": "js\/v8\/latlngbounds.js",
+        "pro": false,
+        "dependencies": [
+            "wpgmza"
+        ]
+    },
+    "wpgmza-legacy-global-symbols": {
+        "src": "js\/v8\/legacy-global-symbols.js",
+        "pro": false,
+        "dependencies": [
+            "wpgmza"
+        ]
+    },
+    "wpgmza-map-list-page": {
+        "src": "js\/v8\/map-list-page.js",
+        "pro": false,
+        "dependencies": [
+            "wpgmza"
+        ]
+    },
+    "wpgmza-map-settings": {
+        "src": "js\/v8\/map-settings.js",
+        "pro": false,
+        "dependencies": [
+            "wpgmza"
+        ]
+    },
+    "wpgmza-map": {
+        "src": "js\/v8\/map.js",
+        "pro": false,
+        "dependencies": [
+            "wpgmza-event-dispatcher"
+        ]
+    },
+    "wpgmza-maps-engine-dialog": {
+        "src": "js\/v8\/maps-engine-dialog.js",
+        "pro": false,
+        "dependencies": [
+            "wpgmza"
+        ]
+    },
+    "wpgmza-marker-filter": {
+        "src": "js\/v8\/marker-filter.js",
+        "pro": false,
+        "dependencies": [
+            "wpgmza-event-dispatcher"
+        ]
+    },
+    "wpgmza-marker-panel": {
+        "src": "js\/v8\/map-edit-page\/marker-panel.js",
+        "pro": false,
+        "dependencies": [
+            "wpgmza-feature-panel"
+        ]
+    },
+    "wpgmza-marker": {
+        "src": "js\/v8\/marker.js",
+        "pro": false,
+        "dependencies": [
+            "wpgmza"
+        ]
+    },
+    "wpgmza-modern-store-locator-circle": {
+        "src": "js\/v8\/modern-store-locator-circle.js",
+        "pro": false,
+        "dependencies": [
+            "wpgmza"
+        ]
+    },
+    "wpgmza-modern-store-locator": {
+        "src": "js\/v8\/modern-store-locator.js",
+        "pro": false,
+        "dependencies": [
+            "wpgmza",
+            "wpgmza-use-my-location-button"
+        ]
+    },
+    "wpgmza-native-maps-app-icon": {
+        "src": "js\/v8\/native-maps-icon.js",
+        "pro": false,
+        "dependencies": [
+            "wpgmza"
+        ]
+    },
+    "wpgmza-polyfills": {
+        "src": "js\/v8\/polyfills.js",
+        "pro": false,
+        "dependencies": [
+            "wpgmza"
+        ]
+    },
+    "wpgmza-polygon": {
+        "src": "js\/v8\/polygon.js",
+        "pro": false,
+        "dependencies": [
+            "wpgmza-feature"
+        ]
+    },
+    "wpgmza-polyline": {
+        "src": "js\/v8\/polyline.js",
+        "pro": false,
+        "dependencies": [
+            "wpgmza-feature"
+        ]
+    },
+    "wpgmza-popout-panel": {
+        "src": "js\/v8\/popout-panel.js",
+        "pro": false,
+        "dependencies": [
+            "wpgmza"
+        ]
+    },
+    "wpgmza-rectangle": {
+        "src": "js\/v8\/rectangle.js",
+        "pro": false,
+        "dependencies": [
+            "wpgmza-feature"
+        ]
+    },
+    "wpgmza-wpgmza-rest-api": {
+        "src": "js\/v8\/rest-api.js",
+        "pro": false,
+        "dependencies": [
+            "wpgmza"
+        ]
+    },
+    "wpgmza-settings-page": {
+        "src": "js\/v8\/settings-page.js",
+        "pro": false,
+        "dependencies": [
+            "wpgmza"
+        ]
+    },
+    "wpgmza-store-locator": {
+        "src": "js\/v8\/store-locator.js",
+        "pro": false,
+        "dependencies": [
+            "wpgmza-event-dispatcher"
+        ]
+    },
+    "wpgmza-text": {
+        "src": "js\/v8\/text.js",
+        "pro": false,
+        "dependencies": [
+            "wpgmza"
+        ]
+    },
+    "wpgmza-theme-editor": {
+        "src": "js\/v8\/theme-editor.js",
+        "pro": false,
+        "dependencies": [
+            "wpgmza-event-dispatcher"
+        ]
+    },
+    "wpgmza-theme-panel": {
+        "src": "js\/v8\/theme-panel.js",
+        "pro": false,
+        "dependencies": [
+            "wpgmza"
+        ]
+    },
+    "wpgmza-version": {
+        "src": "js\/v8\/version.js",
+        "pro": false,
+        "dependencies": [
+            "wpgmza"
+        ]
+    },
+    "wpgmza-xml-cache-converter": {
+        "src": "js\/v8\/xml-cache-converter.js",
+        "pro": false,
+        "dependencies": [
+            "wpgmza"
+        ]
+    },
+    "wpgmza-xml-parse-web-worker": {
+        "src": "js\/v8\/xml-parse-web-worker.js",
+        "pro": false,
+        "dependencies": [
+            "wpgmza"
+        ]
+    },
+    "wpgmza-integration": {
+        "src": "js\/v8\/3rd-party-integration\/integration.js",
+        "pro": false,
+        "dependencies": [
+            "wpgmza"
+        ]
+    },
+    "wpgmza-gutenberg": {
+        "src": "js\/v8\/3rd-party-integration\/gutenberg\/dist\/gutenberg.js",
+        "pro": false,
+        "dependencies": [
+            "wpgmza-integration",
+            "wp-i18n",
+            "wp-blocks",
+            "wp-editor",
+            "wp-components"
+        ]
+    },
+    "wpgmza-astra-theme-compatiblity": {
+        "src": "js\/v8\/compatibility\/astra-theme-compatibility.js",
+        "pro": false,
+        "dependencies": [
+            "wpgmza"
+        ]
+    },
+    "wpgmza-google-ui-compatibility": {
+        "src": "js\/v8\/compatibility\/google-ui-compatibility.js",
+        "pro": false,
+        "dependencies": [
+            "wpgmza"
+        ]
+    },
+    "wpgmza-google-circle": {
+        "src": "js\/v8\/google-maps\/google-circle.js",
+        "pro": false,
+        "dependencies": [
+            "wpgmza-circle"
+        ]
+    },
+    "wpgmza-google-drawing-manager": {
+        "src": "js\/v8\/google-maps\/google-drawing-manager.js",
+        "pro": false,
+        "dependencies": [
+            "wpgmza-drawing-manager"
+        ]
+    },
+    "wpgmza-google-geocoder": {
+        "src": "js\/v8\/google-maps\/google-geocoder.js",
+        "pro": false,
+        "dependencies": [
+            "wpgmza-geocoder"
+        ]
+    },
+    "wpgmza-google-html-overlay": {
+        "src": "js\/v8\/google-maps\/google-html-overlay.js",
+        "pro": false,
+        "dependencies": [
+            "wpgmza"
+        ]
+    },
+    "wpgmza-google-info-window": {
+        "src": "js\/v8\/google-maps\/google-info-window.js",
+        "pro": false,
+        "dependencies": [
+            "wpgmza-info-window",
+            "wpgmza-pro-info-window"
+        ]
+    },
+    "wpgmza-google-map": {
+        "src": "js\/v8\/google-maps\/google-map.js",
+        "pro": false,
+        "dependencies": [
+            "wpgmza-map",
+            "wpgmza-pro-map"
+        ]
+    },
+    "wpgmza-google-marker": {
+        "src": "js\/v8\/google-maps\/google-marker.js",
+        "pro": false,
+        "dependencies": [
+            "wpgmza-marker",
+            "wpgmza-pro-marker"
+        ]
+    },
+    "wpgmza-google-modern-store-locator-circle": {
+        "src": "js\/v8\/google-maps\/google-modern-store-locator-circle.js",
+        "pro": false,
+        "dependencies": [
+            "wpgmza-modern-store-locator-circle"
+        ]
+    },
+    "wpgmza-google-modern-store-locator": {
+        "src": "js\/v8\/google-maps\/google-modern-store-locator.js",
+        "pro": false,
+        "dependencies": [
+            "wpgmza-modern-store-locator"
+        ]
+    },
+    "wpgmza-google-polygon": {
+        "src": "js\/v8\/google-maps\/google-polygon.js",
+        "pro": false,
+        "dependencies": [
+            "wpgmza-polygon",
+            "wpgmza-pro-polygon"
+        ]
+    },
+    "wpgmza-google-polyline": {
+        "src": "js\/v8\/google-maps\/google-polyline.js",
+        "pro": false,
+        "dependencies": [
+            "wpgmza-polyline"
+        ]
+    },
+    "wpgmza-google-rectangle": {
+        "src": "js\/v8\/google-maps\/google-rectangle.js",
+        "pro": false,
+        "dependencies": [
+            "wpgmza-rectangle"
+        ]
+    },
+    "wpgmza-google-text-overlay": {
+        "src": "js\/v8\/google-maps\/google-text-overlay.js",
+        "pro": false,
+        "dependencies": [
+            "wpgmza-google-text"
+        ]
+    },
+    "wpgmza-google-text": {
+        "src": "js\/v8\/google-maps\/google-text.js",
+        "pro": false,
+        "dependencies": [
+            "wpgmza-text"
+        ]
+    },
+    "wpgmza-google-vertex-context-menu": {
+        "src": "js\/v8\/google-maps\/google-vertex-context-menu.js",
+        "pro": false,
+        "dependencies": [
+            "wpgmza_api_call"
+        ]
+    },
+    "wpgmza-circle-panel": {
+        "src": "js\/v8\/map-edit-page\/circle-panel.js",
+        "pro": false,
+        "dependencies": [
+            "wpgmza-feature-panel"
+        ]
+    },
+    "wpgmza-feature-panel": {
+        "src": "js\/v8\/map-edit-page\/feature-panel.js",
+        "pro": false,
+        "dependencies": [
+            "wpgmza-event-dispatcher"
+        ]
+    },
+    "wpgmza-map-edit-page": {
+        "src": "js\/v8\/map-edit-page\/map-edit-page.js",
+        "pro": false,
+        "dependencies": [
+            "wpgmza-event-dispatcher"
+        ]
+    },
+    "wpgmza-polygon-panel": {
+        "src": "js\/v8\/map-edit-page\/polygon-panel.js",
+        "pro": false,
+        "dependencies": [
+            "wpgmza-feature-panel"
+        ]
+    },
+    "wpgmza-polyline-panel": {
+        "src": "js\/v8\/map-edit-page\/polyline-panel.js",
+        "pro": false,
+        "dependencies": [
+            "wpgmza-feature-panel"
+        ]
+    },
+    "wpgmza-rectangle-panel": {
+        "src": "js\/v8\/map-edit-page\/rectangle-panel.js",
+        "pro": false,
+        "dependencies": [
+            "wpgmza-feature-panel"
+        ]
+    },
+    "wpgmza-ol-circle": {
+        "src": "js\/v8\/open-layers\/ol-circle.js",
+        "pro": false,
+        "dependencies": [
+            "wpgmza-circle"
+        ]
+    },
+    "wpgmza-ol-drawing-manager": {
+        "src": "js\/v8\/open-layers\/ol-drawing-manager.js",
+        "pro": false,
+        "dependencies": [
+            "wpgmza-drawing-manager"
+        ]
+    },
+    "wpgmza-ol-feature": {
+        "src": "js\/v8\/open-layers\/ol-feature.js",
+        "pro": false,
+        "dependencies": [
+            "wpgmza"
+        ]
+    },
+    "wpgmza-ol-geocoder": {
+        "src": "js\/v8\/open-layers\/ol-geocoder.js",
+        "pro": false,
+        "dependencies": [
+            "wpgmza-geocoder"
+        ]
+    },
+    "wpgmza-ol-info-window": {
+        "src": "js\/v8\/open-layers\/ol-info-window.js",
+        "pro": false,
+        "dependencies": [
+            "wpgmza-info-window",
+            "wpgmza-pro-info-window"
+        ]
+    },
+    "wpgmza-ol-map": {
+        "src": "js\/v8\/open-layers\/ol-map.js",
+        "pro": false,
+        "dependencies": [
+            "wpgmza-map",
+            "wpgmza-pro-map"
+        ]
+    },
+    "wpgmza-ol-marker": {
+        "src": "js\/v8\/open-layers\/ol-marker.js",
+        "pro": false,
+        "dependencies": [
+            "wpgmza-marker",
+            "wpgmza-pro-marker"
+        ]
+    },
+    "wpgmza-ol-modern-store-locator-circle": {
+        "src": "js\/v8\/open-layers\/ol-modern-store-locator-circle.js",
+        "pro": false,
+        "dependencies": [
+            "wpgmza-modern-store-locator-circle"
+        ]
+    },
+    "wpgmza-ol-modern-store-locator": {
+        "src": "js\/v8\/open-layers\/ol-modern-store-locator.js",
+        "pro": false,
+        "dependencies": [
+            "wpgmza-modern-store-locator"
+        ]
+    },
+    "wpgmza-ol-polygon": {
+        "src": "js\/v8\/open-layers\/ol-polygon.js",
+        "pro": false,
+        "dependencies": [
+            "wpgmza-polygon",
+            "wpgmza-pro-polygon"
+        ]
+    },
+    "wpgmza-ol-polyline": {
+        "src": "js\/v8\/open-layers\/ol-polyline.js",
+        "pro": false,
+        "dependencies": [
+            "wpgmza-polyline"
+        ]
+    },
+    "wpgmza-ol-rectangle": {
+        "src": "js\/v8\/open-layers\/ol-rectangle.js",
+        "pro": false,
+        "dependencies": [
+            "wpgmza-rectangle"
+        ]
+    },
+    "wpgmza-ol-text": {
+        "src": "js\/v8\/open-layers\/ol-text.js",
+        "pro": false,
+        "dependencies": [
+            "wpgmza-text"
+        ]
+    },
+    "wpgmza-admin-feature-data-table": {
+        "src": "js\/v8\/tables\/admin-feature-datatable.js",
+        "pro": false,
+        "dependencies": [
+            "wpgmza-data-table"
+        ]
+    },
+    "wpgmza-admin-data-table": {
+        "src": "js\/v8\/admin-map-datatable.js",
+        "pro": true,
+        "dependencies": [
+            "wpgmza-data-table"
+        ]
+    },
+    "wpgmza-admin-marker-data-table": {
+        "src": "js\/v8\/tables\/admin-marker-datatable.js",
+        "pro": false,
+        "dependencies": [
+            "wpgmza-data-table"
+        ]
+    },
+    "wpgmza-data-table": {
+        "src": "js\/v8\/tables\/datatable.js",
+        "pro": false,
+        "dependencies": [
+            "wpgmza"
+        ]
+    },
+    "wpgmza-advanced-page": {
+        "src": "js\/v8\/advanced-page.js",
+        "pro": true,
+        "dependencies": [
+            "wpgmza"
+        ]
+    },
+    "wpgmza-wpgmza-categories-page": {
+        "src": "js\/v8\/categories-page.js",
+        "pro": true,
+        "dependencies": [
+            "wpgmza"
+        ]
+    },
+    "wpgmza-wpgmza-category-picker": {
+        "src": "js\/v8\/category-picker.js",
+        "pro": true,
+        "dependencies": [
+            "wpgmza"
+        ]
+    },
+    "wpgmza-category-tree-node": {
+        "src": "js\/v8\/category-tree-node.js",
+        "pro": true,
+        "dependencies": [
+            "wpgmza-event-dispatcher"
+        ]
+    },
+    "wpgmza-category-tree": {
+        "src": "js\/v8\/category-tree.js",
+        "pro": true,
+        "dependencies": [
+            "wpgmza-category-tree-node"
+        ]
+    },
+    "wpgmza-custom-field-filter-controller": {
+        "src": "js\/v8\/custom-field-filter-controller.js",
+        "pro": true,
+        "dependencies": [
+            "wpgmza"
+        ]
+    },
+    "wpgmza-custom-field-filter-widget": {
+        "src": "js\/v8\/custom-field-filter-widget.js",
+        "pro": true,
+        "dependencies": [
+            "wpgmza"
+        ]
+    },
+    "wpgmza-directions-box": {
+        "src": "js\/v8\/directions-box.js",
+        "pro": true,
+        "dependencies": [
+            "wpgmza-event-dispatcher"
+        ]
+    },
+    "wpgmza-directions-renderer": {
+        "src": "js\/v8\/directions-renderer.js",
+        "pro": true,
+        "dependencies": [
+            "wpgmza-event-dispatcher"
+        ]
+    },
+    "wpgmza-directions-service": {
+        "src": "js\/v8\/directions-service.js",
+        "pro": true,
+        "dependencies": [
+            "wpgmza-event-dispatcher"
+        ]
+    },
+    "wpgmza-heatmap": {
+        "src": "js\/v8\/heatmap.js",
+        "pro": true,
+        "dependencies": [
+            "wpgmza-feature"
+        ]
+    },
+    "wpgmza-legacy-json-converter": {
+        "src": "js\/v8\/legacy-json-converter.js",
+        "pro": true,
+        "dependencies": [
+            "wpgmza"
+        ]
+    },
+    "wpgmza-marker-gallery-input": {
+        "src": "js\/v8\/marker-gallery-input.js",
+        "pro": true,
+        "dependencies": [
+            "wpgmza"
+        ]
+    },
+    "wpgmza-wpgmza-marker-gallery": {
+        "src": "js\/v8\/marker-gallery.js",
+        "pro": true,
+        "dependencies": [
+            "wpgmza"
+        ]
+    },
+    "wpgmza-marker-icon-picker": {
+        "src": "js\/v8\/marker-icon-picker.js",
+        "pro": true,
+        "dependencies": [
+            "wpgmza"
+        ]
+    },
+    "wpgmza-marker-icon": {
+        "src": "js\/v8\/marker-icon.js",
+        "pro": true,
+        "dependencies": [
+            "wpgmza-event-dispatcher"
+        ]
+    },
+    "wpgmza-marker-library-dialog": {
+        "src": "js\/v8\/marker-library-dialog.js",
+        "pro": true,
+        "dependencies": [
+            "wpgmza"
+        ]
+    },
+    "wpgmza-modern-directions-box": {
+        "src": "js\/v8\/modern-directions-box.js",
+        "pro": true,
+        "dependencies": [
+            "wpgmza-directions-box"
+        ]
+    },
+    "wpgmza-modern-directions-result-box": {
+        "src": "js\/v8\/modern-directions-result-box.js",
+        "pro": true,
+        "dependencies": [
+            "wpgmza-popout-panel"
+        ]
+    },
+    "wpgmza-modern-marker-listing-marker-view": {
+        "src": "js\/v8\/modern-marker-listing-marker-view.js",
+        "pro": true,
+        "dependencies": [
+            "wpgmza-popout-panel"
+        ]
+    },
+    "wpgmza-pro-address-input": {
+        "src": "js\/v8\/pro-address-input.js",
+        "pro": true,
+        "dependencies": [
+            "wpgmza-address-input"
+        ]
+    },
+    "wpgmza-pro-drawing-manager": {
+        "src": "js\/v8\/pro-drawing-manager.js",
+        "pro": true,
+        "dependencies": [
+            "wpgmza-google-drawing-manager",
+            "wpgmza-ol-drawing-manager"
+        ]
+    },
+    "wpgmza-pro-info-window": {
+        "src": "js\/v8\/pro-info-window.js",
+        "pro": true,
+        "dependencies": [
+            "wpgmza-info-window"
+        ]
+    },
+    "wpgmza-pro-lat-lng": {
+        "src": "js\/v8\/pro-latlng.js",
+        "pro": true,
+        "dependencies": [
+            "wpgmza-lat-lng"
+        ]
+    },
+    "wpgmza-pro-map-edit-page": {
+        "src": "js\/v8\/pro-map-edit-page.js",
+        "pro": true,
+        "dependencies": [
+            "wpgmza-map-edit-page"
+        ]
+    },
+    "wpgmza-pro-map-list-page": {
+        "src": "js\/v8\/pro-map-list-page.js",
+        "pro": true,
+        "dependencies": [
+            "wpgmza-map-list-page"
+        ]
+    },
+    "wpgmza-pro-map": {
+        "src": "js\/v8\/pro-map.js",
+        "pro": true,
+        "dependencies": [
+            "wpgmza-map"
+        ]
+    },
+    "wpgmza-pro-marker-filter": {
+        "src": "js\/v8\/pro-marker-filter.js",
+        "pro": true,
+        "dependencies": [
+            "wpgmza-marker-filter"
+        ]
+    },
+    "wpgmza-pro-marker": {
+        "src": "js\/v8\/pro-marker.js",
+        "pro": true,
+        "dependencies": [
+            "wpgmza-marker"
+        ]
+    },
+    "wpgmza-pro-polygon": {
+        "src": "js\/v8\/pro-polygon.js",
+        "pro": true,
+        "dependencies": [
+            "wpgmza-polygon"
+        ]
+    },
+    "wpgmza-pro-store-locator": {
+        "src": "js\/v8\/pro-store-locator.js",
+        "pro": true,
+        "dependencies": [
+            "wpgmza-store-locator"
+        ]
+    },
+    "wpgmza-queue": {
+        "src": "js\/v8\/queue.js",
+        "pro": true,
+        "dependencies": [
+            "wpgmza"
+        ]
+    },
+    "wpgmza-use-my-location-button": {
+        "src": "js\/v8\/use-my-location-button.js",
+        "pro": true,
+        "dependencies": [
+            "wpgmza-event-dispatcher"
+        ]
+    },
+    "wpgmza-pro-gutenberg": {
+        "src": "js\/v8\/3rd-party-integration\/gutenberg\/dist\/pro-gutenberg.js",
+        "pro": true,
+        "dependencies": [
+            "wpgmza-gutenberg"
+        ]
+    },
+    "wpgmza-cloud-api": {
+        "src": "js\/v8\/google-maps\/cloud-api.js",
+        "pro": true,
+        "dependencies": [
+            "wpgmza"
+        ]
+    },
+    "wpgmza-cloud-autocomplete": {
+        "src": "js\/v8\/google-maps\/cloud-autocomplete.js",
+        "pro": true,
+        "dependencies": [
+            "wpgmza-event-dispatcher"
+        ]
+    },
+    "wpgmza-cloud-directions-renderer": {
+        "src": "js\/v8\/google-maps\/cloud-directions-renderer.js",
+        "pro": true,
+        "dependencies": [
+            "wpgmza-directions-renderer"
+        ]
+    },
+    "wpgmza-cloud-directions-service": {
+        "src": "js\/v8\/google-maps\/cloud-directions-service.js",
+        "pro": true,
+        "dependencies": [
+            "wpgmza-directions-service"
+        ]
+    },
+    "wpgmza-cloud-geocoder": {
+        "src": "js\/v8\/google-maps\/cloud-geocoder.js",
+        "pro": true,
+        "dependencies": [
+            "wpgmza"
+        ]
+    },
+    "wpgmza-google-directions-renderer": {
+        "src": "js\/v8\/google-maps\/google-directions-renderer.js",
+        "pro": true,
+        "dependencies": [
+            "wpgmza-directions-renderer"
+        ]
+    },
+    "wpgmza-google-directions-service": {
+        "src": "js\/v8\/google-maps\/google-directions-service.js",
+        "pro": true,
+        "dependencies": [
+            "wpgmza-directions-service"
+        ]
+    },
+    "wpgmza-google-heatmap": {
+        "src": "js\/v8\/google-maps\/google-heatmap.js",
+        "pro": true,
+        "dependencies": [
+            "wpgmza-heatmap"
+        ]
+    },
+    "wpgmza-google-pro-drawing-manager": {
+        "src": "js\/v8\/google-maps\/google-pro-drawing-manager.js",
+        "pro": true,
+        "dependencies": [
+            "wpgmza-pro-drawing-manager"
+        ]
+    },
+    "wpgmza-google-pro-info-window": {
+        "src": "js\/v8\/google-maps\/google-pro-info-window.js",
+        "pro": true,
+        "dependencies": [
+            "wpgmza-google-info-window"
+        ]
+    },
+    "wpgmza-google-pro-map": {
+        "src": "js\/v8\/google-maps\/google-pro-map.js",
+        "pro": true,
+        "dependencies": [
+            "wpgmza-google-map"
+        ]
+    },
+    "wpgmza-google-pro-marker": {
+        "src": "js\/v8\/google-maps\/google-pro-marker.js",
+        "pro": true,
+        "dependencies": [
+            "wpgmza-google-marker"
+        ]
+    },
+    "wpgmza-google-pro-polygon": {
+        "src": "js\/v8\/google-maps\/google-pro-polygon.js",
+        "pro": true,
+        "dependencies": [
+            "wpgmza-google-polygon"
+        ]
+    },
+    "wpgmza-heatmap-panel": {
+        "src": "js\/v8\/map-edit-page\/heatmap-panel.js",
+        "pro": true,
+        "dependencies": [
+            "wpgmza-feature-panel"
+        ]
+    },
+    "wpgmza-pro-circle-panel": {
+        "src": "js\/v8\/map-edit-page\/pro-circle-panel.js",
+        "pro": true,
+        "dependencies": [
+            "wpgmza-circle-panel"
+        ]
+    },
+    "wpgmza-pro-marker-panel": {
+        "src": "js\/v8\/map-edit-page\/pro-marker-panel.js",
+        "pro": true,
+        "dependencies": [
+            "wpgmza-marker-panel"
+        ]
+    },
+    "wpgmza-pro-polygon-panel": {
+        "src": "js\/v8\/map-edit-page\/pro-polygon-panel.js",
+        "pro": true,
+        "dependencies": [
+            "wpgmza-polygon-panel"
+        ]
+    },
+    "wpgmza-pro-polyline-panel": {
+        "src": "js\/v8\/map-edit-page\/pro-polyline-panel.js",
+        "pro": true,
+        "dependencies": [
+            "wpgmza-polyline-panel"
+        ]
+    },
+    "wpgmza-pro-rectangle-panel": {
+        "src": "js\/v8\/map-edit-page\/pro-rectangle-panel.js",
+        "pro": true,
+        "dependencies": [
+            "wpgmza-rectangle-panel"
+        ]
+    },
+    "wpgmza-advanced-table-data-table": {
+        "src": "js\/v8\/marker-listings\/advanced-table-datatable.js",
+        "pro": true,
+        "dependencies": [
+            "wpgmza-data-table"
+        ]
+    },
+    "wpgmza-advanced-table-marker-listing": {
+        "src": "js\/v8\/marker-listings\/advanced-table-marker-listing.js",
+        "pro": true,
+        "dependencies": [
+            "wpgmza-marker-listing"
+        ]
+    },
+    "wpgmza-carousel-marker-listing": {
+        "src": "js\/v8\/marker-listings\/carousel-marker-listing.js",
+        "pro": true,
+        "dependencies": [
+            "wpgmza-marker-listing"
+        ]
+    },
+    "wpgmza-marker-listing": {
+        "src": "js\/v8\/marker-listings\/marker-listing.js",
+        "pro": true,
+        "dependencies": [
+            "wpgmza-event-dispatcher"
+        ]
+    },
+    "wpgmza-modern-marker-listing": {
+        "src": "js\/v8\/marker-listings\/modern-marker-listing.js",
+        "pro": true,
+        "dependencies": [
+            "wpgmza-marker-listing",
+            "wpgmza-popout-panel"
+        ]
+    },
+    "wpgmza-ol-directions-renderer": {
+        "src": "js\/v8\/open-layers\/ol-directions-renderer.js",
+        "pro": true,
+        "dependencies": [
+            "wpgmza-directions-renderer"
+        ]
+    },
+    "wpgmza-ol-directions-service": {
+        "src": "js\/v8\/open-layers\/ol-directions-service.js",
+        "pro": true,
+        "dependencies": [
+            "wpgmza-directions-service"
+        ]
+    },
+    "wpgmza-ol-heatmap": {
+        "src": "js\/v8\/open-layers\/ol-heatmap.js",
+        "pro": true,
+        "dependencies": [
+            "wpgmza-heatmap"
+        ]
+    },
+    "wpgmza-ol-pro-drawing-manager": {
+        "src": "js\/v8\/open-layers\/ol-pro-drawing-manager.js",
+        "pro": true,
+        "dependencies": [
+            "wpgmza-pro-drawing-manager"
+        ]
+    },
+    "wpgmza-ol-pro-info-window": {
+        "src": "js\/v8\/open-layers\/ol-pro-info-window.js",
+        "pro": true,
+        "dependencies": [
+            "wpgmza-ol-info-window"
+        ]
+    },
+    "wpgmza-ol-pro-map": {
+        "src": "js\/v8\/open-layers\/ol-pro-map.js",
+        "pro": true,
+        "dependencies": [
+            "wpgmza-ol-map"
+        ]
+    },
+    "wpgmza-ol-pro-marker": {
+        "src": "js\/v8\/open-layers\/ol-pro-marker.js",
+        "pro": true,
+        "dependencies": [
+            "wpgmza-ol-marker"
+        ]
+    },
+    "wpgmza-ol-pro-polygon": {
+        "src": "js\/v8\/open-layers\/ol-pro-polygon.js",
+        "pro": true,
+        "dependencies": [
+            "wpgmza-ol-polygon"
+        ]
+    }
+}

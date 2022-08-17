@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<script
+			src="https://code.jquery.com/jquery-1.12.4.min.js"
+			integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ="
+			crossorigin="anonymous"></script>
+			
+		<link rel="stylesheet" href="pagination.css"/>
+		<script src="pagination.min.js"></script>
+		
+		<script>
+		
+		$(document).ready(function(event) {
+		
+			var source = [];
+			var control;
+			
+			for(var i = 1; i < 2000; i++)
+				source.push(i);
+		
+			control = $("#pagination").pagination({
+				
+				dataSource: source,
+				
+				callback: function(data, pagination) {
+				
+					if(control)
+						control.pagination("disable");
+				
+					// Simulate AJAX call
+					$.ajax("http://localhost/", {
+						
+						data: {
+							page: pagination.pageNumber
+						},
+						
+						success: function() {
+							control.pagination("enable");
+						}
+					
+					});
+				
+				}
+			
+			});
+		
+		});
+		
+		</script>
+	</head>
+	<body>
+		<div id="pagination"></div>
+	</body>
+</html>
