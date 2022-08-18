@@ -1,5 +1,4 @@
 #!/bin/bash
-sudo -E -u www-data /bin/wp-cli.phar "$@"
 
 set -e
 
@@ -10,7 +9,6 @@ fi
 
 if ! [ -d "/var/www/html/wp-content/themes/pcc" ]; then
   echo "[ Download theme ]"
-
   cd /var/www/html/wp-content/themes/
   git clone https://github.com/coopersystem-fsd/pcc.git
 fi
@@ -22,33 +20,43 @@ if ! [ -d "/var/www/html/wp-content/plugins/pcc-framework" ]; then
 fi
 
 if [ "$ENV" == "prod" ]; then
-  cd /var/www/html/wp-content/plugins/pcc-framework
-  git checkout -f master
-  echo "[ PCC theme - Branch: master ]"
   cd /var/www/html/wp-content/themes/pcc
   git checkout -f master
   echo "[ PCC theme - Branch: master ]"
-else
   cd /var/www/html/wp-content/plugins/pcc-framework
+  git checkout -f master
+  echo "[ PCC plugins - Branch: master ]"
+else
+  cd /var/www/html/wp-content/themes/pcc
   git checkout -f dev
   echo "[ PCC theme - Branch: dev ]"
-  cd /var/www/html/wp-content/themes/pcc
-  git checkout -f master
-  echo "[ PCC theme - Branch: master ]"
+  cd /var/www/html/wp-content/plugins/pcc-framework
+  git checkout -f dev
+  echo "[ PCC plugins - Branch: dev ]"
 fi  
 
-echo "[ Install PCC theme ]"
 cd /var/www/html/wp-content/themes/pcc
-npm install
-composer install
-npm run build:production
+if ! [[ -d "/var/www/html/wp-content/plugins/pcc-framework/node_modules" || -d "/var/www/html/wp-content/plugins/pcc-framework/vendor" ]]; then
+  echo "[ Install PCC theme ]"
+  npm install
+  composer install
+  npm run build:production
+else
+  npm run build:production
+  composer update
+fi
 
-echo "[ Install PCC Plugin ]"
 cd /var/www/html/wp-content/plugins/pcc-framework
-npm install
-composer install
-npm run build:production
-
+if ! [[ -d "/var/www/html/wp-content/themes/pcc/node_modules" || -d "/var/www/html/wp-content/themes/pcc/vendor" ]]; then
+  echo "[ Install PCC Plugin ]"
+  npm install
+  composer install
+  npm run build:production
+else
+  echo "Run Composer and NPM"
+  npm run build:production
+  composer update
+fi
 cd /var/www/html
 
 echo "[ Set permissions to cache folder ]"
