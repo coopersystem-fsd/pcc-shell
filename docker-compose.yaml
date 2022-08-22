@@ -1,0 +1,47 @@
+version: '3'
+
+services:
+  # Database
+  database:
+    image: mariadb:10.8.2
+    container_name: database_${ENV}
+    volumes:
+      - db_data:/var/lib/mysql
+    restart: always
+    networks:
+      - proxy
+    env_file: .env
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+
+  # Wordpress
+  app:
+    depends_on:
+      - database
+    build: .
+    container_name: app_${ENV}
+    restart: always
+    networks:
+      - proxy
+    volumes:
+      - ./:/var/www/html
+      - ./wp-config.php.project:/var/www/html/wp-config.php
+    env_file: .env
+    environment:
+      WORDPRESS_DB_HOST: ${WORDPRESS_DB_HOST}
+      WORDPRESS_DB_USER: ${WORDPRESS_DB_USER}
+      WORDPRESS_DB_PASSWORD: ${WORDPRESS_DB_PASSWORD}
+      VIRTUAL_HOST: ${WORDPRESS_VIRTUAL_HOST}
+      LETSENCRYPT_HOST: ${WORDPRESS_LETSENCRYPT_HOST}
+
+volumes:
+  db_data:
+    name: db_data_${ENV}
+  
+networks:
+  proxy:
+    external:
+      name: proxy
