@@ -36,18 +36,19 @@ else
 fi  
 
 cd /var/www/html/wp-content/themes/pcc
-if ! [[ -d "/var/www/html/wp-content/plugins/pcc-framework/node_modules" || -d "/var/www/html/wp-content/plugins/pcc-framework/vendor" ]]; then
+if ! [[ -d "/var/www/html/wp-content/themes/pcc/node_modules" || -d "/var/www/html/wp-content/themes/pcc/vendor" ]]; then
   echo "[ Install PCC theme ]"
   npm install
   composer install
   npm run build:production
 else
+  echo "Run Composer and NPM"
   npm run build:production
   composer update
 fi
 
 cd /var/www/html/wp-content/plugins/pcc-framework
-if ! [[ -d "/var/www/html/wp-content/themes/pcc/node_modules" || -d "/var/www/html/wp-content/themes/pcc/vendor" ]]; then
+if ! [[ -d "/var/www/html/wp-content/plugins/pcc-framework/node_modules" || -d "/var/www/html/wp-content/plugins/pcc-framework/vendor" ]]; then
   echo "[ Install PCC Plugin ]"
   npm install
   composer install
@@ -57,6 +58,7 @@ else
   npm run build:production
   composer update
 fi
+
 cd /var/www/html
 
 echo "[ Set permissions to cache folder ]"
