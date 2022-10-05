@@ -1717,7 +1717,11 @@ const store = (0,external_this_wp_data_.registerStore)(MODULE_KEY, {
  */
 
 const isBlockPostEditorContextInitialized = () => {
-  // save url params espacially when a new translation is creating
+  if ((0,external_lodash_.isNil)((0,external_this_wp_data_.select)(MODULE_CORE_EDITOR_KEY))) {
+    return Promise.reject("Polylang languages panel can't be initialized because block editor isn't fully initialized.");
+  } // save url params espacially when a new translation is creating
+
+
   saveURLParams(); // call to getCurrentUser to force call to resolvers and initialize state
 
   const currentUser = (0,external_this_wp_data_.select)(MODULE_KEY).getCurrentUser();
@@ -3503,6 +3507,8 @@ if (isSiteBlockEditor()) {
       icon: library_translation,
       render: PolylangSidebar
     });
+  }, function (reason) {
+    console.info(reason);
   });
 }
 })();

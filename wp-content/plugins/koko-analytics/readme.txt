@@ -4,7 +4,7 @@ Donate link: https://opencollective.com/koko-analytics
 Tags: analytics, statistics, stats, koko
 Requires at least: 5.0
 Tested up to: 6.0
-Stable tag: 1.0.33
+Stable tag: 1.0.34
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 Requires PHP: 5.3
@@ -88,6 +88,14 @@ A pageview is defined as a view of a page on your site. If a user clicks reload 
 ### What is the definition of a "visitor"?
 A visitor represents the number of sessions during which your website or a specific page was viewed one or more times.
 
+### I only see an empty page when viewing the analytics dashboard.
+Koko Analytics was recently added to EasyPrivacy, a popular filter list which is used in many ad-blockers. It blocks both the tracking script and the dashboard script, but we are working with EasyPrivacy team to get this resolved.
+
+Until then, please ensure to whitelist your own domain in your ad-blocker settings.
+
+### How can I help fund Koko Analytics?
+Please visit the [Koko Analytics project page on OpenCollective](https://opencollective.com/koko-analytics).
+
 
 == Screenshots ==
 
@@ -99,13 +107,20 @@ A visitor represents the number of sessions during which your website or a speci
 
 == Changelog ==
 
+#### 1.0.34 - Sep 19, 2022
+
+- Track visits to front page (if not a static page) as well.
+- Use gmdate() for determining whether to send cache headers.
+- Update JavaScript dependencies.
+
+
 #### 1.0.33 - Aug 17, 2022
 
 - Always show at least 1 visitor if pageviews were recorded that day.
 - Decrease Cache-Control header of REST API responses to 60s.
 - Add button to reset all statistics.
 - Add filter `koko_analytics_url_aggregations` to modify or add URL aggregations for referrer URL's.
-- Created an initiative on OpenCollective for others to help fund development and support costs of Koko Analytics. Please visit [https://opencollective.com/koko-analytics](https://opencollective.com/koko-analytics) for more details.
+- Created an initiative on OpenCollective for others to help fund development and support costs of Koko Analytics. Please visit https://opencollective.com/koko-analytics for more details.
 
 
 #### 1.0.32 - Jun 2, 2022

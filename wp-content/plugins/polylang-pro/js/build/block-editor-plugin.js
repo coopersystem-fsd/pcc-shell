@@ -666,6 +666,10 @@ const store = (0,external_this_wp_data_.registerStore)(
  * Wait for the whole post block editor context has been initialized: current post loaded and languages list initialized.
  */
 const isBlockPostEditorContextInitialized = () => {
+	if ( isNil( select( MODULE_CORE_EDITOR_KEY ) ) ) {
+		return Promise.reject( "Polylang languages panel can't be initialized because block editor isn't fully initialized." );
+	}
+
 	// save url params espacially when a new translation is creating
 	saveURLParams();
 	// call to getCurrentUser to force call to resolvers and initialize state
@@ -959,9 +963,11 @@ if ( typeof jQuery != 'undefined' ) {
 			$.ajaxPrefilter( function ( options, originalOptions, jqXHR ) {
 				if ( -1 != options.url.indexOf( ajaxurl ) || -1 != ajaxurl.indexOf( options.url ) ) {
 
-					function addPolylangParametersAsString() {
-						let str = 'lang=' + getCurrentLanguage()
-						let arr = JSON.stringify( 'lang=' + getCurrentLanguage() )
+				const currentLanguage = getCurrentLanguage();
+				const arr = { 'lang' : currentLanguage };
+
+				function addPolylangParametersAsString() {
+						const str = 'lang=' + currentLanguage;
 						if ( 'undefined' === typeof options.data || '' === options.data.trim() ) {
 							// Only Polylang data need to be send. So it could be as a simple query string.
 							options.data = str;
