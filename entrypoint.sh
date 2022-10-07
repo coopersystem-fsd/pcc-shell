@@ -19,7 +19,7 @@ if ! [ -d "/var/www/html/wp-content/plugins/pcc-framework" ]; then
   git clone https://github.com/coopersystem-fsd/pcc-framework.git
 fi
 
-if [ "$ENV" == "prod" ]; then
+if [[ "$ENV" == "hom" || "$ENV" == "prod" ]]; then
   cd /var/www/html/wp-content/themes/pcc
   git checkout -f master
   echo "[ PCC theme - Branch: master ]"
@@ -36,28 +36,18 @@ else
 fi  
 
 cd /var/www/html/wp-content/themes/pcc
-if ! [[ -d "/var/www/html/wp-content/themes/pcc/node_modules" || -d "/var/www/html/wp-content/themes/pcc/vendor" ]]; then
-  echo "[ Install PCC theme ]"
-  npm install
-  composer install
-  npm run build:production
-else
-  echo "Run Composer and NPM"
-  npm run build:production
-  composer update
-fi
+echo "[ Install PCC theme dependencies ]"
+npm install
+composer install
+npm run build:production
+
 
 cd /var/www/html/wp-content/plugins/pcc-framework
-if ! [[ -d "/var/www/html/wp-content/plugins/pcc-framework/node_modules" || -d "/var/www/html/wp-content/plugins/pcc-framework/vendor" ]]; then
-  echo "[ Install PCC Plugin ]"
-  npm install
-  composer install
-  npm run build:production
-else
-  echo "Run Composer and NPM"
-  npm run build:production
-  composer update
-fi
+echo "[ Install PCC Plugin dependencies ]"
+npm install
+composer install
+npm run build:production
+
 
 cd /var/www/html
 
