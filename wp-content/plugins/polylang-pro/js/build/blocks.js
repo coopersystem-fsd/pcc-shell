@@ -1048,7 +1048,11 @@ const store = (0,external_this_wp_data_.registerStore)(settings_MODULE_KEY, {
  */
 
 const isBlockPostEditorContextInitialized = () => {
-  // save url params espacially when a new translation is creating
+  if (isNil(select(MODULE_CORE_EDITOR_KEY))) {
+    return Promise.reject("Polylang languages panel can't be initialized because block editor isn't fully initialized.");
+  } // save url params espacially when a new translation is creating
+
+
   saveURLParams(); // call to getCurrentUser to force call to resolvers and initialize state
 
   const currentUser = select(MODULE_KEY).getCurrentUser();

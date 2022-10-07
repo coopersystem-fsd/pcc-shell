@@ -3,7 +3,7 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 /*
 Plugin Name: Easy WP SMTP
-Version: 1.4.7
+Version: 1.5.0
 Plugin URI: https://wp-ecommerce.net/easy-wordpress-smtp-send-emails-from-your-wordpress-site-using-a-smtp-server-2197
 Author: wpecommerce, alexanderfoxc
 Author URI: https://wp-ecommerce.net/
@@ -68,14 +68,20 @@ class EasyWPSMTP {
 		}
 
 		if ( ! empty( $this->opts['smtp_settings']['enable_debug'] ) ) {
-			$line = sprintf(
-				'Headers: %s, To: %s, Subject: %s',
-				! empty( $args['headers'] && is_array( $args['headers'] ) ) ? implode( ' | ', $args['headers'] ) : '',
-				! empty( $args['to'] ) ? $args['to'] : '',
-				! empty( $args['subject'] ) ? $args['subject'] : ''
-			);
-			$this->log( $line . "\r\n" );
-		}
+			//Check if the "to" field has multiple emails in an array.
+			$to_address = "";
+			if ( !empty( $args['to'] ) ) {
+				$to_address = is_array( $args['to'] ) ? implode( ' ; ', $args['to'] ) : $args['to'];
+			}
+			//Prepare the debug logging line
+	$line = sprintf(
+	'Headers: %s, To: %s, Subject: %s',
+	! empty( $args['headers'] && is_array( $args['headers'] ) ) ? implode( ' | ', $args['headers'] ) : '',
+	! empty( $args['to'] ) ? $to_address : '',
+	! empty( $args['subject'] ) ? $args['subject'] : ''
+);
+$this->log( $line . "\r\n" );
+}
 
 		return $args;
 	}
@@ -183,6 +189,7 @@ class EasyWPSMTP {
 		$phpmailer->Port = $this->opts['smtp_settings']['port'];
 
 		/* If we're using smtp auth, set the username & password */
+		$phpmailer->SMTPAuth = false;
 		if ( 'yes' === $this->opts['smtp_settings']['autentication'] ) {
 			$phpmailer->SMTPAuth = true;
 			$phpmailer->Username = $this->opts['smtp_settings']['username'];
@@ -380,10 +387,17 @@ class EasyWPSMTP {
 					wp_die();
 				}
 				$in_raw = file_get_contents( $_FILES['swpsmtp_import_settings_file']['tmp_name'] ); //phpcs:ignore
+
+				
 				try {
+					
 					$in = json_decode( $in_raw, true );
+					
+					//if json_decode has errors
 					if ( json_last_error() !== 0 ) {
-						$in = unserialize( $in_raw ); //phpcs:ignore
+
+						echo __("Error importing the settings file. Please re-export the file",'easy-wp-smtp');
+						wp_die();
 					}
 					if ( empty( $in['data'] ) ) {
 						echo esc_html( $err_msg );
@@ -398,9 +412,13 @@ class EasyWPSMTP {
 						wp_die();
 					}
 					$data = json_decode( $in['data'], true );
+
+					//if json_decode has errors
 					if ( json_last_error() !== 0 ) {
-						$data = unserialize( $in['data'] ); //phpcs:ignore
+						echo __("Error importing the settings file. Please re-export the file",'easy-wp-smtp');
+						wp_die();
 					}
+
 					update_option( 'swpsmtp_options', $data['swpsmtp_options'] );
 					update_option( 'swpsmtp_pass_encrypted', $data['swpsmtp_pass_encrypted'] );
 					if ( $data['swpsmtp_pass_encrypted'] ) {

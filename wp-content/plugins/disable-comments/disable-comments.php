@@ -4,7 +4,7 @@
  * Plugin Name: Disable Comments
  * Plugin URI: https://wordpress.org/plugins/disable-comments/
  * Description: Allows administrators to globally disable comments on their site. Comments can be disabled according to post type. You could bulk delete comments using Tools.
- * Version: 2.4.1
+ * Version: 2.4.2
  * Author: WPDeveloper
  * Author URI: https://wpdeveloper.com
  * License: GPL-3.0+
@@ -37,7 +37,7 @@ class Disable_Comments
 
 	function __construct()
 	{
-		define('DC_VERSION', '2.4.1');
+		define('DC_VERSION', '2.4.2');
 		define('DC_PLUGIN_SLUG', 'disable_comments_settings');
 		define('DC_PLUGIN_ROOT_PATH', dirname(__FILE__));
 		define('DC_PLUGIN_VIEWS_PATH', DC_PLUGIN_ROOT_PATH . '/views/');
@@ -1131,9 +1131,9 @@ class Disable_Comments
 				if (!empty($delete_post_types)) {
 					// Loop through post_types and remove comments/meta and set posts comment_count to 0.
 					foreach ($delete_post_types as $delete_post_type) {
-						$wpdb->query("DELETE cmeta FROM $wpdb->commentmeta cmeta INNER JOIN $wpdb->comments comments ON cmeta.comment_id=comments.comment_ID INNER JOIN $wpdb->posts posts ON comments.comment_post_ID=posts.ID WHERE posts.post_type = '$delete_post_type'");
-						$wpdb->query("DELETE comments FROM $wpdb->comments comments INNER JOIN $wpdb->posts posts ON comments.comment_post_ID=posts.ID WHERE posts.post_type = '$delete_post_type'");
-						$wpdb->query("UPDATE $wpdb->posts SET comment_count = 0 WHERE post_author != 0 AND post_type = '$delete_post_type'");
+						$wpdb->query($wpdb->prepare("DELETE cmeta FROM $wpdb->commentmeta cmeta INNER JOIN $wpdb->comments comments ON cmeta.comment_id=comments.comment_ID INNER JOIN $wpdb->posts posts ON comments.comment_post_ID=posts.ID WHERE posts.post_type = '%s'", $delete_post_type));
+						$wpdb->query($wpdb->prepare("DELETE comments FROM $wpdb->comments comments INNER JOIN $wpdb->posts posts ON comments.comment_post_ID=posts.ID WHERE posts.post_type = '%s'", $delete_post_type));
+						$wpdb->query($wpdb->prepare("UPDATE $wpdb->posts SET comment_count = 0 WHERE post_author != 0 AND post_type = '%s'", $delete_post_type));
 
 						$post_type_object = get_post_type_object($delete_post_type);
 						$post_type_label  = $post_type_object ? $post_type_object->labels->name : $delete_post_type;
@@ -1151,15 +1151,15 @@ class Disable_Comments
 				if (!empty($delete_comment_types)) {
 					// Loop through comment_types and remove comments/meta and set posts comment_count to 0.
 					foreach ($delete_comment_types as $delete_comment_type) {
-						$wpdb->query("DELETE cmeta FROM $wpdb->commentmeta cmeta INNER JOIN $wpdb->comments comments ON cmeta.comment_id=comments.comment_ID WHERE comments.comment_type = '$delete_comment_type'");
-						$wpdb->query("DELETE comments FROM $wpdb->comments comments  WHERE comments.comment_type = '$delete_comment_type'");
+						$wpdb->query($wpdb->prepare("DELETE cmeta FROM $wpdb->commentmeta cmeta INNER JOIN $wpdb->comments comments ON cmeta.comment_id=comments.comment_ID WHERE comments.comment_type = '%s'", $delete_comment_type));
+						$wpdb->query($wpdb->prepare("DELETE comments FROM $wpdb->comments comments  WHERE comments.comment_type = '%s'", $delete_comment_type));
 						$deletedPostTypeNames[] = $commenttypes[$delete_comment_type];
 					}
 
 					// Update comment_count on post_types
 					foreach ($types as $key => $value) {
-						$comment_count = $wpdb->get_var("SELECT COUNT(comments.comment_ID) FROM $wpdb->comments comments INNER JOIN $wpdb->posts posts ON comments.comment_post_ID=posts.ID WHERE posts.post_type = '$key'");
-						$wpdb->query("UPDATE $wpdb->posts SET comment_count = $comment_count WHERE post_author != 0 AND post_type = '$key'");
+						$comment_count = $wpdb->get_var($wpdb->prepare("SELECT COUNT(comments.comment_ID) FROM $wpdb->comments comments INNER JOIN $wpdb->posts posts ON comments.comment_post_ID=posts.ID WHERE posts.post_type = '%s'", $key));
+						$wpdb->query($wpdb->prepare("UPDATE $wpdb->posts SET comment_count = %d WHERE post_author != 0 AND post_type = '%s'", $comment_count, $key));
 					}
 
 					$wpdb->query("OPTIMIZE TABLE $wpdb->commentmeta");

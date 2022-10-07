@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInite12ae07126042ba6976032440d2f7eed
+class ComposerStaticInit1a65e5d0f324324ae26213646b0972a2
 {
     public static $classMap = array (
         'PLL_ACF' => __DIR__ . '/../..' . '/integrations/acf/acf.php',
@@ -225,7 +225,7 @@ class ComposerStaticInite12ae07126042ba6976032440d2f7eed
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->classMap = ComposerStaticInite12ae07126042ba6976032440d2f7eed::$classMap;
+            $loader->classMap = ComposerStaticInit1a65e5d0f324324ae26213646b0972a2::$classMap;
 
         }, null, ClassLoader::class);
     }

@@ -1,0 +1,80 @@
+# Copyright (C) 2022 Jake Goldman, 10up
+# This file is distributed under the GPLv2 or later.
+msgid ""
+msgstr ""
+"Project-Id-Version: Simple Page Ordering 2.4.2\n"
+"Report-Msgid-Bugs-To: "
+"https://wordpress.org/support/plugin/simple-page-ordering\n"
+"POT-Creation-Date: 2022-09-28 16:13:24+00:00\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2022-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"X-Generator: node-wp-i18n 1.2.6\n"
+
+#: simple-page-ordering.php:143
+msgid ""
+"It looks like you are using a development copy of <strong>Simple Page "
+"Ordering</strong>. Please run <code>npm i; npm run build</code> to create "
+"assets."
+msgstr ""
+
+#: simple-page-ordering.php:161
+msgid ""
+"To reposition an item, simply drag and drop the row by \"clicking and "
+"holding\" it anywhere (outside of the links and form controls) and moving "
+"it to its new position."
+msgstr ""
+
+#: simple-page-ordering.php:226 simple-page-ordering.php:501
+msgid "Missing mandatory parameters."
+msgstr ""
+
+#: simple-page-ordering.php:424
+msgid "Sort by Order"
+msgstr ""
+
+#: simple-page-ordering.php:456
+msgid "Post ID."
+msgstr ""
+
+#: simple-page-ordering.php:461
+msgid "Previous post ID"
+msgstr ""
+
+#: simple-page-ordering.php:466
+msgid "Next post ID"
+msgstr ""
+
+#: simple-page-ordering.php:472
+msgid "Start index"
+msgstr ""
+
+#: simple-page-ordering.php:478
+msgid "Array of excluded post IDs"
+msgstr ""
+
+#. Plugin Name of the plugin/theme
+msgid "Simple Page Ordering"
+msgstr ""
+
+#. Plugin URI of the plugin/theme
+msgid "http://10up.com/plugins/simple-page-ordering-wordpress/"
+msgstr ""
+
+#. Description of the plugin/theme
+msgid ""
+"Order your pages and hierarchical post types using drag and drop on the "
+"built in page list. For further instructions, open the \"Help\" tab on the "
+"Pages screen."
+msgstr ""
+
+#. Author of the plugin/theme
+msgid "Jake Goldman, 10up"
+msgstr ""
+
+#. Author URI of the plugin/theme
+msgid "https://10up.com"
+msgstr ""
