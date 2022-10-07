@@ -1,4 +1,4 @@
-FROM wordpress:6.0.1-php7.4-apache
+FROM wordpress:6.0.2-php7.4-apache
 
 # Install necessaries libs
 RUN apt update \
