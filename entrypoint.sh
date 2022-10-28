@@ -19,21 +19,13 @@ if ! [ -d "/var/www/html/wp-content/plugins/pcc-framework" ]; then
   git clone https://github.com/coopersystem-fsd/pcc-framework.git
 fi
 
-if [[ "$ENV" == "hom" || "$ENV" == "prod" ]]; then
-  cd /var/www/html/wp-content/themes/pcc
-  git checkout -f master
-  echo "[ PCC theme - Branch: master ]"
-  cd /var/www/html/wp-content/plugins/pcc-framework
-  git checkout -f master
-  echo "[ PCC plugins - Branch: master ]"
-else
-  cd /var/www/html/wp-content/themes/pcc
-  git checkout -f dev
-  echo "[ PCC theme - Branch: dev ]"
-  cd /var/www/html/wp-content/plugins/pcc-framework
-  git checkout -f dev
-  echo "[ PCC plugins - Branch: dev ]"
-fi  
+cd /var/www/html/wp-content/themes/pcc
+git checkout -f dev
+echo "[ PCC theme - Branch: dev ]"
+cd /var/www/html/wp-content/plugins/pcc-framework
+git checkout -f dev
+echo "[ PCC plugins - Branch: dev ]"
+
 
 cd /var/www/html/wp-content/themes/pcc
 echo "[ Install PCC theme dependencies ]"
