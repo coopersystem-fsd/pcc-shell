@@ -1,9 +1,9 @@
-FROM wordpress:6.0.2-php7.4-apache
+FROM wordpress:6.1.1-php7.4-apache
 
 # Install necessaries libs
 RUN apt update \
   && apt install -y git libmemcached-dev wget unzip libjpeg62-turbo-dev libpng-dev libxpm-dev \
-    libfreetype6-dev libzip-dev libmagickwand-dev --no-install-recommends memcached curl gnupg vim iputils-ping
+  libfreetype6-dev libzip-dev libmagickwand-dev --no-install-recommends memcached curl gnupg vim iputils-ping
 
 WORKDIR /tmp
 
