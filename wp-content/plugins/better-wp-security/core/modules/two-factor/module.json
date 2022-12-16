@@ -122,5 +122,10 @@
     "application_passwords_roles",
     "exclude_type",
     "exclude_roles"
-  ]
-}
+  ],
+   "encryption": {
+     "user-meta": [
+       "_two_factor_totp_key"
+     ]
+   }
+ }

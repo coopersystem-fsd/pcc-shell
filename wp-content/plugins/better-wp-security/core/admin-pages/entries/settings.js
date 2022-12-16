@@ -14,8 +14,9 @@ setLocaleData( { '': {} }, 'better-wp-security' );
 import { createHistory } from './settings/history';
 import App from './settings/app.js';
 
+const history = createHistory( document.location, { page: 'itsec' } );
+
 domReady( () => {
-	const history = createHistory( document.location, { page: 'itsec' } );
 	const containerEl = document.getElementById( 'itsec-settings-root' );
 	const serverType = containerEl.dataset.serverType;
 	const installType = containerEl.dataset.installType;
@@ -34,6 +35,7 @@ domReady( () => {
 
 export * from './settings/components';
 export { ToolFill } from './settings/pages/tools';
+export { SecureSiteEndFill } from './settings/pages/secure-site';
 export {
 	Page,
 	ChildPages,
@@ -47,3 +49,4 @@ export {
 } from './settings/utils';
 export { STORE_NAME as ONBOARD_STORE_NAME } from './settings/stores/onboard';
 export { STORE_NAME as TOOLS_STORE_NAME } from './settings/stores/tools';
+export { history };

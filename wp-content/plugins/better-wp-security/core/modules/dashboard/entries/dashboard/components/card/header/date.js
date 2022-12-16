@@ -3,22 +3,24 @@
  */
 import { isString } from 'lodash';
 import memize from 'memize';
+import moment from 'moment';
 
 /**
  * WordPress dependencies
  */
-import { Fragment, useState } from '@wordpress/element';
+import { useState } from '@wordpress/element';
 import {
 	Button,
 	Dashicon,
+	DatePicker,
+	Dropdown,
 	Modal,
 	SelectControl,
-	TextControl,
 } from '@wordpress/components';
 import { compose } from '@wordpress/compose';
 import { withDispatch, withSelect } from '@wordpress/data';
 import { __, sprintf } from '@wordpress/i18n';
-import { dateI18n, format } from '@wordpress/date';
+import { dateI18n, format, getDate, isInTheFuture } from '@wordpress/date';
 
 function getPeriod( queryArgs, config ) {
 	if ( queryArgs.period ) {
@@ -72,10 +74,6 @@ const getDateOptions = memize( () => {
 	];
 } );
 
-const now = new window.Date();
-const MIN = format( 'Y-m-d', now.setDate( now.getDate() - 60 ) );
-const MAX = format( 'Y-m-d' );
-
 function Date( {
 	queryArgs,
 	config,
@@ -93,13 +91,18 @@ function Date( {
 		e.preventDefault();
 
 		let newPeriod;
-
 		if ( 'custom' === periodOption ) {
-			newPeriod = { start, end };
+			const momentStart = moment( start )
+				.set( { hour: 0, minute: 0, second: 0 } );
+			const momentEnd = moment( end )
+				.set( { hour: 23, minute: 59, second: 59 } );
+			newPeriod = {
+				start: format( 'Y-m-d\\TH:i:s', momentStart ),
+				end: format( 'Y-m-d\\TH:i:s', momentEnd ),
+			};
 		} else {
 			newPeriod = periodOption;
 		}
-
 		update( { ...queryArgs, period: newPeriod } );
 		setIsOpen( false );
 	};
@@ -112,7 +115,7 @@ function Date( {
 				aria-expanded={ isOpen }
 				aria-label={ sprintf(
 					/* translators: 1. The current search period or interval Eg, 24 hours. */
-					__( '%s (click to change)', 'better-wp-security' ),
+					__( '%s (click to edit)', 'better-wp-security' ),
 					periodLabel
 				) }
 			>
@@ -136,35 +139,78 @@ function Date( {
 							setPeriodOption( newPeriod )
 						}
 					/>
-					{ periodOption === 'custom' && (
-						<Fragment>
-							<TextControl
-								type="date"
-								min={ MIN }
-								max={ MAX }
-								value={ start }
-								onChange={ ( newStart ) =>
-									setStart( newStart )
-								}
-								label={ __( 'Start Date', 'better-wp-security' ) }
-								placeholder="YYYY-MM-DD"
-							/>
-							<TextControl
-								type="date"
-								min={ MIN }
-								max={ MAX }
-								value={ end }
-								onChange={ ( newEnd ) =>
-									setEnd( newEnd )
-								}
-								label={ __( 'End Date', 'better-wp-security' ) }
-								placeholder="YYYY-MM-DD"
-							/>
-						</Fragment>
-					) }
-					<Button isPrimary onClick={ onApply }>
-						{ __( 'Apply', 'better-wp-security' ) }
-					</Button>
+					<div className="itsec-card-header-date__actions">
+						{ periodOption === 'custom' && (
+							<>
+								<Dropdown
+									renderToggle={ ( { isOpen: isCalendarOpen, onToggle } ) => (
+										<Button
+											variant="secondary"
+											onClick={ onToggle }
+											aria-expanded={ isCalendarOpen }
+											aria-label={ sprintf(
+												/* translators: 1. The selected start date */
+												__( 'From: %s (click to edit)', 'better-wp-security' ),
+												dateI18n( 'M j', start )
+											) }
+											text={ sprintf(
+												/* translators: 1. The selected start date */
+												__( 'From: %s', 'better-wp-security' ),
+												dateI18n( 'M j', start )
+											) }
+										/>
+									) }
+									renderContent={ () => <DatePicker
+										currentDate={ start }
+										onChange={ setStart }
+										isInvalidDate={ ( dateToCheck ) => {
+											if ( isInTheFuture( dateToCheck ) ) {
+												return true;
+											}
+											const earliestDate = new window.Date();
+											earliestDate.setDate( earliestDate.getDate() - 60 );
+
+											return dateToCheck < earliestDate;
+										} }
+									/> }
+								/>
+
+								<Dropdown
+									renderToggle={ ( { isOpen: isCalendarOpen, onToggle } ) => (
+										<Button
+											variant="secondary"
+											onClick={ onToggle }
+											aria-expanded={ isCalendarOpen }
+											aria-label={ sprintf(
+												/* translators: 1. The selected end date */
+												__( 'To: %s (click to edit)', 'better-wp-security' ),
+												dateI18n( 'M j', end )
+											) }
+											text={ sprintf(
+												/* translators: 1. The selected end date */
+												__( 'To: %s', 'better-wp-security' ),
+												dateI18n( 'M j', end )
+											) }
+										/>
+									) }
+									renderContent={ () => <DatePicker
+										currentDate={ end }
+										onChange={ setEnd }
+										isInvalidDate={ ( dateToCheck ) => {
+											if ( isInTheFuture( dateToCheck ) ) {
+												return true;
+											}
+											const startDate = getDate( start );
+											return startDate > dateToCheck;
+										} }
+									/> }
+								/>
+							</>
+						) }
+						<Button variant="primary" className="itsec-card-header-date__action--apply" onClick={ onApply }>
+							{ __( 'Apply', 'better-wp-security' ) }
+						</Button>
+					</div>
 				</Modal>
 			) }
 		</div>

@@ -89,6 +89,17 @@ export function getQueryHeader( state, queryId, header ) {
 }
 
 /**
+ * Gets the query parameters for a query.
+ *
+ * @param {Object} state   State object.
+ * @param {string} queryId Query id.
+ * @return {Object|undefined} The parameters, if any.
+ */
+export function getQueryParams( state, queryId ) {
+	return get( state, [ 'queryParams', queryId ] );
+}
+
+/**
  * Gets a ban by its self link.
  *
  * @param {Object} state Store data.

@@ -4,7 +4,7 @@ namespace iThemesSecurity\Ban_Users;
 
 use iThemesSecurity\Actor\Multi_Actor_Factory;
 use iThemesSecurity\Ban_Hosts\Filters;
-use Pimple\Container;
+use iThemesSecurity\Strauss\Pimple\Container;
 
 return static function ( Container $c ) {
 	$c['module.ban-users.files'] = [

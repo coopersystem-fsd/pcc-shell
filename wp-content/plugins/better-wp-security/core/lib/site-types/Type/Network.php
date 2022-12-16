@@ -7,6 +7,7 @@ use iThemesSecurity\Lib\Site_Types\Question\Client_Question_Pack;
 use iThemesSecurity\Lib\Site_Types\Question\End_Users_Question_Pack;
 use iThemesSecurity\Lib\Site_Types\Has_End_Users;
 use iThemesSecurity\Lib\Site_Types\Question;
+use iThemesSecurity\Lib\Site_Types\Question\Global_Question_Pack;
 use iThemesSecurity\Lib\Site_Types\Question\Login_Security_Question_Pack;
 use iThemesSecurity\Lib\Site_Types\Templating_Site_Type;
 
@@ -35,6 +36,7 @@ final class Network implements Templating_Site_Type, Has_End_Users {
 
 	public function get_questions(): array {
 		return array_merge(
+			( new Global_Question_Pack() )->get_questions(),
 			( new Client_Question_Pack() )->get_questions(),
 			( new End_Users_Question_Pack( $this ) )->get_questions(),
 			( new Login_Security_Question_Pack( $this ) )->get_questions()

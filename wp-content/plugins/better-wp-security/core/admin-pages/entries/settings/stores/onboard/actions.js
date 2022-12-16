@@ -89,14 +89,21 @@ export function* repeatQuestion() {
 
 export function* applyAnswerResponse() {
 	const answers = yield controls.select( STORE_NAME, 'getAnswers' );
+	const modules = yield controls.resolveSelect( MODULES_STORE_NAME, 'getModules' );
 
 	for ( const answer of answers ) {
 		for ( const module of answer.modules ) {
-			yield controls.dispatch( MODULES_STORE_NAME, 'editModule', module, {
-				status: {
-					selected: 'active',
-				},
-			} );
+			const config = modules.find( ( { id } ) => id === module );
+
+			if ( config?.side_effects ) {
+				yield controls.dispatch( MODULES_STORE_NAME, 'activateModule', module );
+			} else {
+				yield controls.dispatch( MODULES_STORE_NAME, 'editModule', module, {
+					status: {
+						selected: 'active',
+					},
+				} );
+			}
 		}
 
 		for ( const module in answer.settings ) {

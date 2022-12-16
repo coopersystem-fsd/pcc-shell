@@ -122,7 +122,9 @@ final class Deferred implements \WPSentry\ScopedVendor\Http\Promise\Promise
         if (\WPSentry\ScopedVendor\Http\Promise\Promise::FULFILLED === $this->state) {
             return $this->value;
         }
-        /** @var ClientExceptionInterface */
+        if (null === $this->failure) {
+            throw new \RuntimeException('Internal Error: Promise is not fulfilled but has no exception stored');
+        }
         throw $this->failure;
     }
 }

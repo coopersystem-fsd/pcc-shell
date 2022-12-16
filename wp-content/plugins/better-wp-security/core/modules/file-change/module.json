@@ -128,5 +128,8 @@
       "expected_hashes",
       "last_scan"
     ]
-  }
+  },
+  "removed-settings": [
+    "notify_admin"
+  ]
 }

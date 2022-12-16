@@ -150,7 +150,7 @@
         "type": "string",
         "default": "automatic",
         "title": "Proxy Detection",
-        "description": "Determine how iThemes Security determines your visitor‘s IP addresses. Choose the Security Check Scan to increase iThemes Security’s ability to identify your server IP and IPs attacking your website accurately."
+        "description": "Determine how iThemes Security determines your visitor’s IP addresses. Choose the Security Check Scan to let iThemes Security identify malicious IPs attacking your website accurately."
       },
       "proxy_header": {
         "type": "string",
@@ -279,6 +279,11 @@
         },
         "additionalProperties": false,
         "default": {},
+        "readonly": true
+      },
+      "log_info": {
+        "type": "string",
+        "default": "",
         "readonly": true
       }
     },
@@ -425,7 +430,6 @@
   },
   "removed-settings": [
     "did_upgrade",
-    "log_info",
     "show_security_check",
     "digest_email",
     "email_notifications",

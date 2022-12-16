@@ -15,6 +15,12 @@ final class EventHint
      */
     public $exception;
     /**
+     * An object describing the mechanism of the original exception.
+     *
+     * @var ExceptionMechanism|null
+     */
+    public $mechanism;
+    /**
      * The stacktrace to set on the event.
      *
      * @var Stacktrace|null
@@ -31,6 +37,7 @@ final class EventHint
      *
      * @psalm-param array{
      *     exception?: \Throwable|null,
+     *     mechanism?: ExceptionMechanism|null,
      *     stacktrace?: Stacktrace|null,
      *     extra?: array<string, mixed>
      * } $hintData
@@ -39,10 +46,14 @@ final class EventHint
     {
         $hint = new self();
         $exception = $hintData['exception'] ?? null;
+        $mechanism = $hintData['mechanism'] ?? null;
         $stacktrace = $hintData['stacktrace'] ?? null;
         $extra = $hintData['extra'] ?? [];
         if (null !== $exception && !$exception instanceof \Throwable) {
             throw new \InvalidArgumentException(\sprintf('The value of the "exception" field must be an instance of a class implementing the "%s" interface. Got: "%s".', \Throwable::class, \get_debug_type($exception)));
+        }
+        if (null !== $mechanism && !$mechanism instanceof \Sentry\ExceptionMechanism) {
+            throw new \InvalidArgumentException(\sprintf('The value of the "mechanism" field must be an instance of the "%s" class. Got: "%s".', \Sentry\ExceptionMechanism::class, \get_debug_type($mechanism)));
         }
         if (null !== $stacktrace && !$stacktrace instanceof \Sentry\Stacktrace) {
             throw new \InvalidArgumentException(\sprintf('The value of the "stacktrace" field must be an instance of the "%s" class. Got: "%s".', \Sentry\Stacktrace::class, \get_debug_type($stacktrace)));
@@ -51,6 +62,7 @@ final class EventHint
             throw new \InvalidArgumentException(\sprintf('The value of the "extra" field must be an array. Got: "%s".', \get_debug_type($extra)));
         }
         $hint->exception = $exception;
+        $hint->mechanism = $mechanism;
         $hint->stacktrace = $stacktrace;
         $hint->extra = $extra;
         return $hint;

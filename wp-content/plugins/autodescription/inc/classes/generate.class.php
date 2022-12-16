@@ -212,7 +212,7 @@ class Generate extends User_Data {
 	 * @return string The separator.
 	 */
 	public function get_separator( $type = 'title' ) {
-		return $this->get_separator_list()[ $this->get_option( $type . '_separator' ) ] ?? '&#x2d;';
+		return $this->get_separator_list()[ $this->get_option( "{$type}_separator" ) ] ?? '&#x2d;';
 	}
 
 	/**
@@ -378,7 +378,7 @@ class Generate extends User_Data {
 		if ( null !== $memo = memo() ) return $memo;
 
 		$id                = $this->get_the_real_ID();
-		$post_modified_gmt = \get_post( $id )->post_modified_gmt;
+		$post_modified_gmt = \get_post( $id )->post_modified_gmt ?? '0000-00-00 00:00:00';
 
 		return memo(
 			'0000-00-00 00:00:00' === $post_modified_gmt

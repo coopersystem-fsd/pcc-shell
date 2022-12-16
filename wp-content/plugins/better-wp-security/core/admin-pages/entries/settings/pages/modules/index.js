@@ -53,6 +53,7 @@ import {
 	useModuleRequirementsValidator,
 	getModuleTypes,
 	useNavigateTo,
+	useConfigContext,
 } from '../../utils';
 import './style.scss';
 
@@ -60,6 +61,7 @@ export default function Modules() {
 	const { url, path } = useRouteMatch();
 	const { root } = useParams();
 	const validateModuleRequirements = useModuleRequirementsValidator();
+	const { installType } = useConfigContext();
 	const { modules, dirty } = useSelect(
 		( select ) => ( {
 			modules: select( MODULES_STORE_NAME ).getEditedModules(),
@@ -79,11 +81,7 @@ export default function Modules() {
 						( root === 'settings' ||
 							module.onboard ||
 							( root === 'import' && dirty.includes( slug ) ) ) &&
-						( module.status.selected === 'active' ||
-							! validateModuleRequirements(
-								module,
-								'activate'
-							).hasErrors() )
+						shouldShowModuleRequirementsCheck( validateModuleRequirements, module )
 				),
 				'order'
 			),
@@ -93,6 +91,19 @@ export default function Modules() {
 				tab.modules.length > 0 &&
 				( root === 'settings' || tab.name !== 'advanced' )
 		);
+	const allModules = sortBy(
+		tabs.reduce( ( acc, tab ) => acc.concat( tab.modules ), [] ),
+		( { title } ) => title.toLowerCase()
+	);
+	if ( allModules.length > 0 ) {
+		const allTab = { name: 'all', title: __( 'All', 'better-wp-security' ), modules: allModules };
+		if ( installType === 'free' ) {
+			tabs.unshift( allTab );
+		} else {
+			tabs.push( allTab );
+		}
+	}
+
 	const help = __(
 		'Features is the home base of iThemes Security. Enabling a security feature will unlock the related User Group, Configure, and Notification settings. Disabling a security feature will hide the related options throughout the plugin.',
 		'better-wp-security'
@@ -128,6 +139,29 @@ export default function Modules() {
 			) }
 		</>
 	);
+}
+
+/**
+ * Checks if a module should be shown because it passes any requirements check.
+ *
+ * Active modules are always shown.
+ *
+ * @param {Function} validator The module requirement validator.
+ * @param {Object}   module    The module definition.
+ * @return {boolean} True if the module should be hidden.
+ */
+function shouldShowModuleRequirementsCheck( validator, module ) {
+	if ( module.status.selected === 'active' ) {
+		return true;
+	}
+
+	const result = validator( module, 'activate' );
+
+	if ( ! result.hasErrors() ) {
+		return true;
+	}
+
+	return result.getErrorCodes().some( ( code ) => result.getErrorData( code )[ 0 ].showMessageIfUnmet );
 }
 
 function ModuleTabPanel( { base, tabs } ) {
@@ -254,7 +288,9 @@ function Module( { module, statusToggle: StatusToggle } ) {
 					tagName="p"
 					id={ `itsec-module-description--${ module.id }` }
 				/>
-				<StatusToggle module={ module } />
+				{ ( module.status.selected === 'active' || ! validRequirements.hasErrors() ) && (
+					<StatusToggle module={ module } />
+				) }
 				<ErrorList
 					apiError={ apiError }
 					errors={ validRequirements.getAllErrorMessages() }

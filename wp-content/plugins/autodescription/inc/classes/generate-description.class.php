@@ -483,15 +483,15 @@ class Generate_Description extends Generate {
 
 		if ( ! $this->is_auto_description_enabled( $args ) ) return '';
 
+		if ( ! \in_array( $type, [ 'opengraph', 'twitter', 'search' ], true ) )
+			$type = 'search';
+
 		if ( null === $args ) {
 			$excerpt = $this->get_description_excerpt_from_query();
 		} else {
 			$this->fix_generation_args( $args );
 			$excerpt = $this->get_description_excerpt_from_args( $args );
 		}
-
-		if ( ! \in_array( $type, [ 'opengraph', 'twitter', 'search' ], true ) )
-			$type = 'search';
 
 		/**
 		 * @since 2.9.0
@@ -582,12 +582,8 @@ class Generate_Description extends Generate {
 	 */
 	protected function get_description_excerpt_from_query() {
 
-		static $excerpt;
-
-		if ( isset( $excerpt ) )
-			return $excerpt;
-
-		$excerpt = '';
+		// phpcs:ignore, WordPress.CodeAnalysis.AssignmentInCondition -- I know.
+		if ( null !== $memo = memo() ) return $memo;
 
 		if ( $this->is_real_front_page() ) {
 			$excerpt = $this->get_front_page_description_excerpt();
@@ -599,7 +595,7 @@ class Generate_Description extends Generate {
 			$excerpt = $this->get_archival_description_excerpt();
 		}
 
-		return $excerpt;
+		return memo( $excerpt ?? '' );
 	}
 
 	/**
@@ -746,6 +742,9 @@ class Generate_Description extends Generate {
 	 * Returns a description excerpt for singular post types.
 	 *
 	 * @since 3.1.0
+	 * NOTE: Don't add memo; large memory heaps can occur.
+	 *       It only runs twice on the post edit screen (post.php).
+	 *       Front-end caller get_description_excerpt_from_query() uses memo.
 	 *
 	 * @param int $id The singular ID.
 	 * @return string
@@ -797,6 +796,7 @@ class Generate_Description extends Generate {
 	 * @since 3.1.0 1. No longer returns anything for terms.
 	 *              2. Now strips plausible embeds URLs.
 	 * @since 4.0.1 The second parameter `$id` now defaults to int 0, instead of an empty string.
+	 * TODO deprecate and simplify (remove $excerpt and $deprecated).
 	 *
 	 * @param string $excerpt    The Excerpt.
 	 * @param int    $id         The Post ID.
@@ -840,10 +840,10 @@ class Generate_Description extends Generate {
 		 */
 		if ( ! empty( $post->post_excerpt ) ) {
 			$excerpt = $post->post_excerpt;
-		} elseif ( isset( $post->post_content ) ) {
+		} elseif ( isset( $post->post_content, $post->ID ) && ! $this->uses_non_html_page_builder( $post->ID ) ) {
 			// We should actually get the parsed content here... but that can be heavy on the server.
 			// We could cache that parsed content, but that'd be asinine for a plugin. WordPress should've done that.
-			$excerpt = $this->uses_non_html_page_builder( $post->ID ) ? '' : $post->post_content;
+			$excerpt = $post->post_content;
 
 			if ( $excerpt ) {
 				$excerpt = $this->strip_newline_urls( $excerpt );
@@ -888,6 +888,7 @@ class Generate_Description extends Generate {
 	 *              4. Resolved some backtracking issues.
 	 *              5. Resolved an issue where a character followed by punctuation would cause the match to fail.
 	 * @since 4.2.0 Now enforces at least a character length of 1. This prevents needless processing.
+	 * @since 4.2.7 Now considers floating numerics as one word.
 	 * @see https://secure.php.net/manual/en/regexp.reference.unicode.php
 	 *
 	 * We use `[^\P{Po}\'\"]` because WordPress texturizes ' and " to fall under `\P{Po}`.
@@ -926,7 +927,7 @@ class Generate_Description extends Generate {
 		$excerpt = \wptexturize( $excerpt );
 		$excerpt = html_entity_decode( $excerpt, ENT_QUOTES, 'UTF-8' );
 		/**
-		 * Play with it here: https://regex101.com/r/u0DIgx/5/ (old) https://regex101.com/r/G92lUt/3 (new)
+		 * Play with it here: https://regex101.com/r/u0DIgx/5/ (old) https://regex101.com/r/G92lUt/5 (new)
 		 *
 		 * TODO Group 4's match is repeated. However, referring to it as (4) will cause it to congeal into 3.
 		 *
@@ -949,7 +950,7 @@ class Generate_Description extends Generate {
 		 * }
 		 */
 		preg_match(
-			'/(?:\A[\p{P}\p{Z}]*?)?([\P{Po}\p{M}\xBF\xA1:\p{Z}]+[\p{Z}\w])(?:([^\P{Po}\p{M}\xBF\xA1:]\Z(*ACCEPT))|((?(?=.+(?:\w+[\p{Pc}\p{Pd}\p{Pf}\p{Z}]*){1,3}|[\p{Po}]\Z)(?:.+[\p{Pe}\p{Pf}](*THEN)\Z(*ACCEPT)|.*[^\P{Po}\p{M}\xBF\xA1:])|.*\Z(*ACCEPT)))(?>(.+?\p{Z}*(?:\w+[\p{Pc}\p{Pd}\p{Pf}\p{Z}]*){1,3})|[^\p{Pc}\p{Pd}\p{M}\xBF\xA1:])?)(.+)?/su',
+			'/(?:\A[\p{P}\p{Z}]*?)?([\P{Po}\p{M}\xBF\xA1:\p{Z}]+[\p{Z}\w])(?:([^\P{Po}\p{M}\xBF\xA1:]\Z(*ACCEPT))|((?(?=.+(?:\w+[\p{Pc}\p{Pd}\p{Pf}\p{Z}]*){1,3}|[\p{Po}]\Z)(?:.+[\p{Pe}\p{Pf}](*THEN)\Z(*ACCEPT)|.*[^\P{Po}\p{M}\xBF\xA1:][^\P{Nd}\p{Z}]*)|.*\Z(*ACCEPT)))(?>(.+?\p{Z}*(?:\w+[\p{Pc}\p{Pd}\p{Pf}\p{Z}]*){1,3})|[^\p{Pc}\p{Pd}\p{M}\xBF\xA1:])?)(.+)?/su',
 			$excerpt,
 			$matches
 		);
@@ -964,6 +965,7 @@ class Generate_Description extends Generate {
 		} elseif ( isset( $matches[1] ) ) {
 			$excerpt = $matches[1];
 		}
+		// else { TODO Should we empty excerpt here? Can we even reach this? }
 
 		if ( \strlen( $excerpt ) < $min_char_length ) return '';
 

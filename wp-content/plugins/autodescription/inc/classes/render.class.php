@@ -202,13 +202,11 @@ class Render extends Admin_Init {
 				]
 			);
 		} else {
-			$el = vsprintf(
+			$el = sprintf(
 				'<%s%s />',
-				[
-					/** @link <https://www.w3.org/TR/2011/WD-html5-20110525/syntax.html#syntax-tag-name> */
-					preg_replace( '/[^0-9a-zA-Z]+/', '', $tag ),
-					$attr,
-				]
+				/** @link <https://www.w3.org/TR/2011/WD-html5-20110525/syntax.html#syntax-tag-name> */
+				preg_replace( '/[^0-9a-zA-Z]+/', '', $tag ),
+				$attr
 			);
 		}
 
@@ -824,10 +822,8 @@ class Render extends Admin_Init {
 
 		if ( ! $this->output_published_time() ) return '';
 
-		$id   = $this->get_the_real_ID();
-		$post = \get_post( $id );
-
-		$post_date_gmt = $post->post_date_gmt;
+		$id            = $this->get_the_real_ID();
+		$post_date_gmt = \get_post( $id )->post_date_gmt ?? '0000-00-00 00:00:00';
 
 		if ( '0000-00-00 00:00:00' === $post_date_gmt )
 			return '';
@@ -1251,8 +1247,8 @@ class Render extends Admin_Init {
 	 *
 	 * @param string $where                 Determines the position of the indicator.
 	 *                                      Accepts 'before' for before, anything else for after.
-	 * @param int    $meta_timer            Total meta time.
-	 * @param int    $bootstrap_timer       Total bootstrap time.
+	 * @param float  $meta_timer            Total meta time in seconds.
+	 * @param float  $bootstrap_timer       Total bootstrap time in seconds.
 	 * @return string The SEO Framework's HTML plugin indicator.
 	 */
 	protected function get_plugin_indicator( $where = 'before', $meta_timer = 0, $bootstrap_timer = 0 ) {
@@ -1268,9 +1264,9 @@ class Render extends Admin_Init {
 			 * @param bool $show_timer Whether to show the generation time in the indicator.
 			 */
 			'show_timer' => (bool) \apply_filters( 'the_seo_framework_indicator_timing', true ),
-			'annotation' => trim( vsprintf(
+			'annotation' => \esc_html( trim( vsprintf(
 				/* translators: 1 = The SEO Framework, 2 = 'by Sybre Waaijer */
-				\esc_html__( '%1$s %2$s', 'autodescription' ),
+				\__( '%1$s %2$s', 'autodescription' ),
 				[
 					'The SEO Framework',
 					/**
@@ -1278,10 +1274,10 @@ class Render extends Admin_Init {
 					 * @param bool $sybre Whether to show the author name in the indicator.
 					 */
 					\apply_filters( 'sybre_waaijer_<3', true ) // phpcs:ignore, WordPress.NamingConventions.ValidHookName -- Easter egg.
-						? \esc_html__( 'by Sybre Waaijer', 'autodescription' )
+						? \__( 'by Sybre Waaijer', 'autodescription' )
 						: '',
 				]
-			) ),
+			) ) ),
 		] );
 
 		if ( ! $cache['run'] ) return '';

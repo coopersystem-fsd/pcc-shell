@@ -5,6 +5,8 @@ namespace Sentry;
 
 /**
  * This class stores the information about the authenticated user for a request.
+ *
+ * @see https://develop.sentry.dev/sdk/event-payloads/types/#user
  */
 final class UserDataBag
 {
@@ -25,6 +27,10 @@ final class UserDataBag
      */
     private $username;
     /**
+     * @var string|null the user segment, for apps that divide users in user segments
+     */
+    private $segment;
+    /**
      * @var array<string, mixed> Additional data
      */
     private $metadata = [];
@@ -33,12 +39,13 @@ final class UserDataBag
      *
      * @param string|int|null $id
      */
-    public function __construct($id = null, ?string $email = null, ?string $ipAddress = null, ?string $username = null)
+    public function __construct($id = null, ?string $email = null, ?string $ipAddress = null, ?string $username = null, ?string $segment = null)
     {
         $this->setId($id);
         $this->setEmail($email);
         $this->setIpAddress($ipAddress);
         $this->setUsername($username);
+        $this->setSegment($segment);
     }
     /**
      * Creates an instance of this object from a user ID.
@@ -79,6 +86,9 @@ final class UserDataBag
                     break;
                 case 'username':
                     $instance->setUsername($value);
+                    break;
+                case 'segment':
+                    $instance->setSegment($value);
                     break;
                 default:
                     $instance->setMetadata($field, $value);
@@ -141,6 +151,22 @@ final class UserDataBag
         $this->email = $email;
     }
     /**
+     * Gets the segement of the user.
+     */
+    public function getSegment() : ?string
+    {
+        return $this->segment;
+    }
+    /**
+     * Sets the segment of the user.
+     *
+     * @param string|null $segment The segment
+     */
+    public function setSegment(?string $segment) : void
+    {
+        $this->segment = $segment;
+    }
+    /**
      * Gets the ip address of the user.
      */
     public function getIpAddress() : ?string
@@ -200,6 +226,7 @@ final class UserDataBag
         $this->email = $other->email;
         $this->ipAddress = $other->ipAddress;
         $this->username = $other->username;
+        $this->segment = $other->segment;
         $this->metadata = \array_merge($this->metadata, $other->metadata);
         return $this;
     }

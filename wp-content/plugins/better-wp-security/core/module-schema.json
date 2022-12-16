@@ -458,6 +458,21 @@
         }
       }
     },
+    "encryption": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "user-meta": {
+          "description": "List of user meta keys that store encrypted values.",
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
     "requirements": {
       "type": "object",
       "properties": {
@@ -477,6 +492,54 @@
                   "type": "array",
                   "items": {
                     "type": "string"
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "multisite": {
+          "type": "object",
+          "allOf": [
+            {
+              "$ref": "#/definitions/requirement"
+            },
+            {
+              "type": "object",
+              "required": [
+                "status"
+              ],
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "enum": [
+                    "enabled",
+                    "disabled"
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "server": {
+          "type": "object",
+          "allOf": [
+            {
+              "$ref": "#/definitions/requirement"
+            },
+            {
+              "type": "object",
+              "properties": {
+                "php": {
+                  "type": "string"
+                },
+                "extensions": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "enum": [
+                      "OpenSSL"
+                    ]
                   }
                 }
               }
@@ -551,6 +614,9 @@
             "activate",
             "run"
           ]
+        },
+        "showMessageIfUnmet": {
+          "type": "boolean"
         }
       }
     }

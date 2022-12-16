@@ -1,7 +1,12 @@
 /**
+ * External dependencies
+ */
+import { useParams } from 'react-router-dom';
+
+/**
  * WordPress dependencies
  */
-import { useMemo } from '@wordpress/element';
+import { useMemo, useState } from '@wordpress/element';
 import { __, sprintf } from '@wordpress/i18n';
 import { Button, Card, CardBody } from '@wordpress/components';
 import { useSelect } from '@wordpress/data';
@@ -9,14 +14,15 @@ import { useSelect } from '@wordpress/data';
 /**
  * Internal dependencies
  */
-import { AsideFill, useConfigContext } from '@ithemes/security.pages.settings';
+import { AsideFill, useConfigContext, SecureSiteEndFill } from '@ithemes/security.pages.settings';
 import {
 	MarkPro,
 	VulnerabilityReport as VulnerabilityReportGraphic,
 } from '@ithemes/security-style-guide';
-import { TabPanel } from '@ithemes/security-components';
+import { ControlledTabPanel } from '@ithemes/security-components';
 import { useAsync } from '@ithemes/security-hocs';
 import { CORE_STORE_NAME } from '@ithemes/security.packages.data';
+import Onboarding from './components/onboarding';
 import './style.scss';
 
 export default function App() {
@@ -27,30 +33,39 @@ export default function App() {
 	}
 
 	return (
-		<AsideFill>
-			<ProUpgrade />
-			<VulnerabilityReport />
-		</AsideFill>
+		<>
+			<AsideFill>
+				<ProUpgrade />
+				<VulnerabilityReport />
+			</AsideFill>
+			<SecureSiteEndFill>
+				<OnboardingEndFill />
+			</SecureSiteEndFill>
+		</>
 	);
 }
 
 function ProUpgrade() {
+	const [ currentTab, selectTab ] = useState( 'one' );
 	const tabs = useMemo(
 		() => [
 			{
 				name: 'one',
 				title: __( '1 Site', 'better-wp-security' ),
-				price: '80',
+				price: '99',
+				link: 'https://ithem.es/security-1-site-plan',
+			},
+			{
+				name: 'five',
+				title: __( '5 Sites', 'better-wp-security' ),
+				price: '199',
+				link: 'https://ithem.es/security-5-site-plan',
 			},
 			{
 				name: 'ten',
 				title: __( '10 Sites', 'better-wp-security' ),
-				price: '127',
-			},
-			{
-				name: 'unlimited',
-				title: __( 'Unlimited', 'better-wp-security' ),
-				price: '199',
+				price: '299',
+				link: 'https://ithem.es/security-10-site-plan',
 			},
 		],
 		[]
@@ -69,7 +84,7 @@ function ProUpgrade() {
 						'better-wp-security'
 					) }
 				</p>
-				<TabPanel isStyled tabs={ tabs }>
+				<ControlledTabPanel isStyled tabs={ tabs } selected={ currentTab } onSelect={ selectTab }>
 					{ ( { price } ) => (
 						<>
 							<span className="itsec-promo-pro-upgrade__price">
@@ -83,11 +98,11 @@ function ProUpgrade() {
 							</span>
 						</>
 					) }
-				</TabPanel>
+				</ControlledTabPanel>
 				<Button
 					isPrimary
 					className="itsec-promo-pro-upgrade__button"
-					href="https://ithem.es/go-security-pro-now"
+					href={ tabs.find( ( tab ) => tab.name === currentTab )?.link || 'https://ithem.es/go-security-pro-now' }
 				>
 					{ __( 'Go Pro Now', 'better-wp-security' ) }
 				</Button>
@@ -176,4 +191,14 @@ function signupToList( email ) {
 
 			return response;
 		} );
+}
+
+function OnboardingEndFill() {
+	const { root } = useParams();
+
+	if ( root !== 'onboard' ) {
+		return null;
+	}
+
+	return <Onboarding />;
 }

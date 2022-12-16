@@ -19,7 +19,7 @@ import {
 } from '@wordpress/element';
 import { useDispatch, useSelect, useRegistry } from '@wordpress/data';
 import { applyFilters } from '@wordpress/hooks';
-import { __, sprintf } from '@wordpress/i18n';
+import { __, _n, sprintf } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
@@ -385,12 +385,18 @@ export function getModuleTypes() {
 }
 
 export function useModuleRequirementsValidator() {
-	const { featureFlags } = useSelect(
+	const { featureFlags, siteInfo, requirementsInfo } = useSelect(
 		( select ) => ( {
 			featureFlags: select( CORE_STORE_NAME ).getFeatureFlags(),
+			siteInfo: select( CORE_STORE_NAME ).getSiteInfo(),
+			requirementsInfo: select( CORE_STORE_NAME ).getRequirementsInfo(),
 		} ),
 		[]
 	);
+
+	const isVersionAtLeast = ( version, atLeast ) => {
+		return version.localeCompare( atLeast, undefined, { numeric: true, sensitivity: 'base' } ) >= 0;
+	};
 
 	return useCallback(
 		( module, mode ) => {
@@ -408,7 +414,7 @@ export function useModuleRequirementsValidator() {
 				isForMode( module.requirements.ssl ) &&
 				document.location.protocol !== 'https:'
 			) {
-				error.add( 'ssl', __( 'Your site must support SSL.', 'better-wp-security' ) );
+				error.add( 'ssl', __( 'Your site must support SSL.', 'better-wp-security' ), module.requirements.ssl );
 			}
 
 			if (
@@ -427,15 +433,56 @@ export function useModuleRequirementsValidator() {
 									'better-wp-security'
 								),
 								flag
-							)
+							),
+							module.requirements[ 'feature-flags' ]
 						);
 					}
 				}
 			}
 
+			if ( module.requirements.multisite && isForMode( module.requirements.multisite ) ) {
+				if ( module.requirements.multisite.status === 'enabled' && siteInfo?.multisite === false ) {
+					error.add( 'multisite', __( 'Multisite must be enabled.', 'better-wp-security' ), module.requirements.multisite );
+				} else if ( module.requirements.multisite.status === 'disabled' && siteInfo?.multisite === true ) {
+					error.add( 'multisite', __( 'Multisite is not supported.', 'better-wp-security' ), module.requirements.multisite );
+				}
+			}
+
+			if ( module.requirements.server && isForMode( module.requirements.server ) && requirementsInfo ) {
+				if ( module.requirements.server.php && ! isVersionAtLeast( requirementsInfo.server.php, module.requirements.server.php ) ) {
+					error.add( 'server', sprintf(
+						/* translators: The PHP version. */
+						__( 'You must be running PHP version %s or later.', 'better-wp-security' ),
+						module.requirements.server.php
+					), module.requirements.server );
+				}
+
+				const missingExtensions = ( module.requirements.server.extensions || [] )
+					.filter( ( extension ) => ! requirementsInfo.server.extensions[ extension ] );
+
+				if ( missingExtensions.length === 1 ) {
+					error.add( 'server', sprintf(
+						/* translators: PHP Extension name. */
+						__( 'The %s PHP extension is required.', 'better-wp-security' ),
+						missingExtensions[ 0 ]
+					), module.requirements.server );
+				} else if ( missingExtensions.length > 0 ) {
+					error.add( 'server', sprintf(
+						/* translators: List of PHP extensions */
+						_n(
+							'The following PHP extension is required: %l.',
+							'The following PHP extensions are required: %l.',
+							missingExtensions.length,
+							'better-wp-security'
+						).replace( '%l', '%s' ),
+						missingExtensions.join( ', ' )
+					), module.requirements.server );
+				}
+			}
+
 			return error;
 		},
-		[ featureFlags ]
+		[ featureFlags, siteInfo, requirementsInfo ]
 	);
 }
 

@@ -27,7 +27,7 @@ final class AddHostPlugin implements \WPSentry\ScopedVendor\Http\Client\Common\P
      * @param array{'replace'?: bool} $config
      *
      * Configuration options:
-     *   - replace: True will replace all hosts, false will only add host when none is specified.
+     *   - replace: True will replace all hosts, false will only add host when none is specified
      */
     public function __construct(\WPSentry\ScopedVendor\Psr\Http\Message\UriInterface $host, array $config = [])
     {

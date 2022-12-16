@@ -4,7 +4,6 @@ declare (strict_types=1);
 namespace Sentry;
 
 use WPSentry\ScopedVendor\GuzzleHttp\Promise\PromiseInterface;
-use WPSentry\ScopedVendor\Jean85\PrettyVersions;
 use WPSentry\ScopedVendor\Psr\Log\LoggerInterface;
 use WPSentry\ScopedVendor\Psr\Log\NullLogger;
 use Sentry\Integration\IntegrationInterface;
@@ -29,6 +28,10 @@ final class Client implements \Sentry\ClientInterface
      * The identifier of the SDK.
      */
     public const SDK_IDENTIFIER = 'sentry.php';
+    /**
+     * The version of the SDK.
+     */
+    public const SDK_VERSION = '3.12.0';
     /**
      * @var Options The client options
      */
@@ -83,7 +86,7 @@ final class Client implements \Sentry\ClientInterface
         $this->representationSerializer = $representationSerializer ?? new \Sentry\Serializer\RepresentationSerializer($this->options);
         $this->stacktraceBuilder = new \Sentry\StacktraceBuilder($options, $this->representationSerializer);
         $this->sdkIdentifier = $sdkIdentifier ?? self::SDK_IDENTIFIER;
-        $this->sdkVersion = $sdkVersion ?? \WPSentry\ScopedVendor\Jean85\PrettyVersions::getVersion('sentry/sentry')->getPrettyVersion();
+        $this->sdkVersion = $sdkVersion ?? self::SDK_VERSION;
     }
     /**
      * {@inheritdoc}
@@ -91,6 +94,22 @@ final class Client implements \Sentry\ClientInterface
     public function getOptions() : \Sentry\Options
     {
         return $this->options;
+    }
+    /**
+     * {@inheritdoc}
+     */
+    public function getCspReportUrl() : ?string
+    {
+        $dsn = $this->options->getDsn();
+        if (null === $dsn) {
+            return null;
+        }
+        $endpoint = $dsn->getCspReportEndpointUrl();
+        $query = \array_filter(['sentry_release' => $this->options->getRelease(), 'sentry_environment' => $this->options->getEnvironment()]);
+        if (!empty($query)) {
+            $endpoint .= '&' . \http_build_query($query, '', '&');
+        }
+        return $endpoint;
     }
     /**
      * {@inheritdoc}
@@ -182,7 +201,7 @@ final class Client implements \Sentry\ClientInterface
     {
         if (null !== $hint) {
             if (null !== $hint->exception && empty($event->getExceptions())) {
-                $this->addThrowableToEvent($event, $hint->exception);
+                $this->addThrowableToEvent($event, $hint->exception, $hint);
             }
             if (null !== $hint->stacktrace && null === $event->getStacktrace()) {
                 $event->setStacktrace($hint->stacktrace);
@@ -211,21 +230,37 @@ final class Client implements \Sentry\ClientInterface
             return null;
         }
         if (null !== $scope) {
-            $previousEvent = $event;
+            $beforeEventProcessors = $event;
             $event = $scope->applyToEvent($event, $hint);
             if (null === $event) {
-                $this->logger->info('The event will be discarded because one of the event processors returned "null".', ['event' => $previousEvent]);
+                $this->logger->info('The event will be discarded because one of the event processors returned "null".', ['event' => $beforeEventProcessors]);
                 return null;
             }
         }
-        if (!$isTransaction) {
-            $previousEvent = $event;
-            $event = $this->options->getBeforeSendCallback()($event, $hint);
-            if (null === $event) {
-                $this->logger->info('The event will be discarded because the "before_send" callback returned "null".', ['event' => $previousEvent]);
-            }
+        $beforeSendCallback = $event;
+        $event = $this->applyBeforeSendCallback($event, $hint);
+        if (null === $event) {
+            $this->logger->info(\sprintf('The event will be discarded because the "%s" callback returned "null".', $this->getBeforeSendCallbackName($beforeSendCallback)), ['event' => $beforeSendCallback]);
         }
         return $event;
+    }
+    private function applyBeforeSendCallback(\Sentry\Event $event, ?\Sentry\EventHint $hint) : ?\Sentry\Event
+    {
+        if ($event->getType() === \Sentry\EventType::event()) {
+            return $this->options->getBeforeSendCallback()($event, $hint);
+        }
+        if ($event->getType() === \Sentry\EventType::transaction()) {
+            return $this->options->getBeforeSendTransactionCallback()($event, $hint);
+        }
+        return $event;
+    }
+    private function getBeforeSendCallbackName(\Sentry\Event $event) : string
+    {
+        $beforeSendCallbackName = 'before_send';
+        if ($event->getType() === \Sentry\EventType::transaction()) {
+            $beforeSendCallbackName = 'before_send_transaction';
+        }
+        return $beforeSendCallbackName;
     }
     /**
      * Optionally adds a missing stacktrace to the Event if the client is configured to do so.
@@ -248,15 +283,16 @@ final class Client implements \Sentry\ClientInterface
      *
      * @param Event      $event     The event that will be enriched with the exception
      * @param \Throwable $exception The exception that will be processed and added to the event
+     * @param EventHint  $hint      Contains additional information about the event
      */
-    private function addThrowableToEvent(\Sentry\Event $event, \Throwable $exception) : void
+    private function addThrowableToEvent(\Sentry\Event $event, \Throwable $exception, \Sentry\EventHint $hint) : void
     {
         if ($exception instanceof \ErrorException && null === $event->getLevel()) {
             $event->setLevel(\Sentry\Severity::fromError($exception->getSeverity()));
         }
         $exceptions = [];
         do {
-            $exceptions[] = new \Sentry\ExceptionDataBag($exception, $this->stacktraceBuilder->buildFromException($exception), new \Sentry\ExceptionMechanism(\Sentry\ExceptionMechanism::TYPE_GENERIC, \true));
+            $exceptions[] = new \Sentry\ExceptionDataBag($exception, $this->stacktraceBuilder->buildFromException($exception), $hint->mechanism ?? new \Sentry\ExceptionMechanism(\Sentry\ExceptionMechanism::TYPE_GENERIC, \true));
         } while ($exception = $exception->getPrevious());
         $event->setExceptions($exceptions);
     }

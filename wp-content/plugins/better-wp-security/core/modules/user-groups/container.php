@@ -2,7 +2,7 @@
 
 use iThemesSecurity\User_Groups;
 use iThemesSecurity\User_Groups\REST;
-use Pimple\Container;
+use iThemesSecurity\Strauss\Pimple\Container;
 
 return static function ( Container $c ) {
 	$c['module.user-groups.files'] = [

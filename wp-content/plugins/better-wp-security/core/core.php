@@ -27,7 +27,7 @@ if ( ! class_exists( 'ITSEC_Core' ) ) {
 		 *
 		 * @access private
 		 */
-		private $plugin_build = 4124;
+		private $plugin_build = 4126;
 
 		/**
 		 * Used to distinguish between a user modifying settings and the API modifying settings (such as from Sync
@@ -284,7 +284,7 @@ if ( ! class_exists( 'ITSEC_Core' ) ) {
 		private function setup_tables() {
 			global $wpdb;
 
-			$wpdb->global_tables = array_merge( $wpdb->global_tables, ITSEC_Schema::TABLES );
+			$wpdb->global_tables = array_merge( $wpdb->global_tables, ITSEC_Schema::get_table_names() );
 		}
 
 		private function setup_scheduler() {
@@ -699,6 +699,10 @@ if ( ! class_exists( 'ITSEC_Core' ) ) {
 		 * @return string
 		 */
 		public static function get_install_type() {
+			if ( defined( 'ITSEC_FORCE_INSTALL_TYPE' ) && ITSEC_FORCE_INSTALL_TYPE === 'free' ) {
+				return 'free';
+			}
+
 			if ( self::is_pro() ) {
 				return 'pro';
 			}
@@ -875,6 +879,14 @@ if ( ! class_exists( 'ITSEC_Core' ) ) {
 			$url = self::get_url_for_settings_route( $path );
 
 			return sprintf( '<a href="%s" data-itsec-path="%s">', esc_attr( $url ), esc_attr( $path ) );
+		}
+
+		public static function get_tools_route( string $tool ): string {
+			return '/settings/tools#' . $tool;
+		}
+
+		public static function get_url_for_tools_route( string $tool ): string {
+			return self::get_url_for_settings_route( '/settings/tools' ) . '#' . $tool;
 		}
 
 		/**
@@ -1186,6 +1198,15 @@ if ( ! class_exists( 'ITSEC_Core' ) ) {
 			}
 
 			return $self->version;
+		}
+
+		/**
+		 * Gets the PHP version that is going to be required soon.
+		 *
+		 * @return string
+		 */
+		public static function get_next_php_requirement(): string {
+			return '7.3.0';
 		}
 
 		/**

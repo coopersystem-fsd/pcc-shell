@@ -37,7 +37,7 @@ final class ErrorPlugin implements \WPSentry\ScopedVendor\Http\Client\Common\Plu
      * @param array{'only_server_exception'?: bool} $config
      *
      * Configuration options:
-     *   - only_server_exception: Whether this plugin should only throw 5XX Exceptions (default to false).
+     *   - only_server_exception: Whether this plugin should only throw 5XX Exceptions (default to false)
      */
     public function __construct(array $config = [])
     {
@@ -63,10 +63,10 @@ final class ErrorPlugin implements \WPSentry\ScopedVendor\Http\Client\Common\Plu
      * @param RequestInterface  $request  Request of the call
      * @param ResponseInterface $response Response of the call
      *
+     * @return ResponseInterface If status code is not in 4xx or 5xx return response
+     *
      * @throws ClientErrorException If response status code is a 4xx
      * @throws ServerErrorException If response status code is a 5xx
-     *
-     * @return ResponseInterface If status code is not in 4xx or 5xx return response
      */
     private function transformResponseToException(\WPSentry\ScopedVendor\Psr\Http\Message\RequestInterface $request, \WPSentry\ScopedVendor\Psr\Http\Message\ResponseInterface $response) : \WPSentry\ScopedVendor\Psr\Http\Message\ResponseInterface
     {

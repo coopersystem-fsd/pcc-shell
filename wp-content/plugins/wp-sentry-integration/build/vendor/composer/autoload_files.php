@@ -12,6 +12,5 @@ return array(
     'wp-sentry-9c67151ae59aff4788964ce8eb2a0f43' => $vendorDir . '/clue/stream-filter/src/functions_include.php',
     'wp-sentry-8cff32064859f4559445b89279f3199c' => $vendorDir . '/php-http/message/src/filters.php',
     'wp-sentry-c964ee0ededf28c96ebd9db5099ef910' => $vendorDir . '/guzzlehttp/promises/src/functions_include.php',
-    'wp-sentry-09f6b20656683369174dd6fa83b7e5fb' => $vendorDir . '/symfony/polyfill-uuid/bootstrap.php',
     'fb4ca2d97fe7ba6af750497425204e70' => $vendorDir . '/sentry/sentry/src/functions.php',
 );

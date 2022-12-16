@@ -1,10 +1,10 @@
 === iThemes Security ===
-Contributors: ithemes, chrisjean, mattdanner, timothyblynjacobs
+Contributors: ithemes, timothyblynjacobs, layotte, jthillithemes, lisacee.
 Tags: security plugin, malware scanner, security, malware prevention, two-factor authentication, brute force protection, scanner, password protection, ban, bad bots, audit log
-Requires at least: 5.8
-Tested up to: 6.0
-Stable tag: 8.1.2
-Requires PHP: 7.0
+Requires at least: 5.9
+Tested up to: 6.1
+Stable tag: 8.1.4
+Requires PHP: 7.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -150,6 +150,27 @@ Manage more than one WordPress site? Release lockouts and keep your themes, plug
 7. Advanced Security Tools
 
 == Changelog ==
+
+= 8.1.4 =
+* Tweak: Add "All" tab to the Features page.
+* Tweak: Don't show "Ban" buttons in Security Dashboard if the user won't be able to create a ban.
+* Bug Fix: Prevent Headers Already Sent warning when a lockout occurs during a WP Cron request on some server setups.
+* Bug Fix: Manually load Sodium Polyfill for servers that have an older version of libsodium installed.
+* Bug Fix: Error when saving the File Change settings when the "notify_admin" setting was set.
+* Bug Fix: Prevent a redirect loop when logging in on sites that take more than 5 seconds to load the Dashboard.
+
+= 8.1.3 =
+* Important: iThemes Security now requires PHP 7.3 and WordPress 5.9 or later.
+* Security: Add support for encrypting Two-Factor Mobile App secrets. Enable via Tools -> Set Encryption Key.
+* Security: Deprecate Automatic Proxy Detection. Instead, manually configure Proxy Detection or use Security Check. Fix IP spoofing attacks.
+* Enhancement: Add "Ban Lockout" button to the Active Lockouts card.
+* Bug Fix: File Logs not rotating.
+* Bug Fix: PHP warning when loading Icon Fonts in certain configurations.
+* Bug Fix: Don't attempt to Hide Backend when a Cron request is being processed.
+* Bug Fix: Prevent entering invalid date values when selecting a custom date range in the Security Dashboard.
+* Bug Fix: Preliminary PHP 8.1 compatibility.
+* Bug Fix: File Change "notify_admin" settings validation error.
+* Thanks to Calvin Alkan for reporting the security issues fixed in this release.
 
 = 8.1.2 =
 * Tweak: Require a Title when creating a new Dashboard.
@@ -661,5 +682,5 @@ Manage more than one WordPress site? Release lockouts and keep your themes, plug
 
 == Upgrade Notice ==
 
-= 8.1.2 =
-Version 8.1.0 includes new features and important bug fixes.
+= 8.1.4 =
+Version 8.1.4 includes important bug fixes.

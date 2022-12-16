@@ -49,3 +49,12 @@
 .react-grid-item.static .itsec-card-header {
     cursor: default;
 }
+
+.itsec-card-header-date__actions {
+    display: flex;
+    gap: 0.5em;
+}
+
+.itsec-card-header-date__action--apply {
+    margin-left: auto;
+}

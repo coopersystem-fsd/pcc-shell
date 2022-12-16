@@ -1,8 +1,16 @@
 <?php
 # This file contains strings extracted from each module's module.json file. These strings are used in the Settings pages.
 # BEGIN MODULE: admin-user
-__( 'Change Content Directory', 'better-wp-security' );
-__( 'Advanced feature to rename the wp-content directory to a different name.', 'better-wp-security' );
+__( 'Admin User', 'better-wp-security' );
+__( 'An advanced tool that removes users with a username of “admin” or a user ID of “1”.', 'better-wp-security' );
+__( 'Change Admin User', 'better-wp-security' );
+__( 'Changes the username of the “admin” user.', 'better-wp-security' );
+__( 'Run this tool to change the username of a user with the “admin” username. This may prevent unsophisticated attacks that assume the “admin” user exists.', 'better-wp-security' );
+__( 'New Username', 'better-wp-security' );
+__( 'Enter the new username for the “admin” user.', 'better-wp-security' );
+__( 'Change User ID 1', 'better-wp-security' );
+__( 'Changes the user ID for the first WordPress user.', 'better-wp-security' );
+__( 'Run this tool to change the user ID of a user with a user ID of “1”. This may prevent unsophisticated attacks that assume the user with an ID of “1” is an administrator.', 'better-wp-security' );
 # END MODULE: admin-user
 
 # BEGIN MODULE: backup
@@ -65,8 +73,25 @@ __( 'The number of minutes in which bad logins should be remembered.', 'better-w
 __( 'Login Attempts', 'better-wp-security' );
 # END MODULE: brute-force
 
+# BEGIN MODULE: content-directory
+__( 'Change Content Directory', 'better-wp-security' );
+__( 'Advanced feature to rename the wp-content directory to a different name.', 'better-wp-security' );
+# END MODULE: content-directory
+
 # BEGIN MODULE: core
 __( 'Core', 'better-wp-security' );
+__( 'Set Encryption Key', 'better-wp-security' );
+__( 'Sets a secure key that iThemes Security uses to encrypt sensitive values like Two-Factor codes.', 'better-wp-security' );
+__( 'iThemes Security will add a constant to your website’s <code>wp-config.php</code> file named <code>ITSEC_ENCRYPTION_KEY</code>.', 'better-wp-security' );
+__( 'encryption', 'better-wp-security' );
+__( 'Confirm Reset Key', 'better-wp-security' );
+__( 'Confirm you want to reset the encryption key to a new value.', 'better-wp-security' );
+__( 'Rotate Encryption Key', 'better-wp-security' );
+__( 'Updates all encrypted values to use the new encryption key.', 'better-wp-security' );
+__( 'If you’ve manually updated the <code>ITSEC_ENCRYPTION_KEY</code> constant in your website’s <code>wp-config.php</code> file, use this tool to update any existing encrypted values.', 'better-wp-security' );
+__( 'encryption', 'better-wp-security' );
+__( 'Previous Key', 'better-wp-security' );
+__( 'Provide the previous value of <code>ITSEC_ENCRYPTION_KEY</code>.', 'better-wp-security' );
 # END MODULE: core
 
 # BEGIN MODULE: dashboard
@@ -162,7 +187,7 @@ __( 'The number of days file logs should be kept. File logs will additionally be
 __( 'Path to Log Files', 'better-wp-security' );
 __( 'This path must be writable by your website. For added security, it is recommended you do not include it in your website root folder.', 'better-wp-security' );
 __( 'Proxy Detection', 'better-wp-security' );
-__( 'Determine how iThemes Security determines your visitor‘s IP addresses. Choose the Security Check Scan to increase iThemes Security’s ability to identify your server IP and IPs attacking your website accurately.', 'better-wp-security' );
+__( 'Determine how iThemes Security determines your visitor’s IP addresses. Choose the Security Check Scan to let iThemes Security identify malicious IPs attacking your website accurately.', 'better-wp-security' );
 __( 'Proxy Header', 'better-wp-security' );
 __( 'Select the header your Proxy Server uses to forward the client IP address. If you don’t know the header, you can contact your hosting provider or select the header that has your IP Address.', 'better-wp-security' );
 __( 'Allow Data Tracking', 'better-wp-security' );

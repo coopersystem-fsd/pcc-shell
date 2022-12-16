@@ -8,7 +8,10 @@ use Sentry\Event;
 use Sentry\EventType;
 use Sentry\ExceptionDataBag;
 use Sentry\Frame;
+use Sentry\Options;
+use Sentry\Tracing\DynamicSamplingContext;
 use Sentry\Tracing\Span;
+use Sentry\Tracing\TransactionMetadata;
 use Sentry\Util\JSON;
 /**
  * This is a simple implementation of a serializer that takes in input an event
@@ -18,6 +21,14 @@ use Sentry\Util\JSON;
  */
 final class PayloadSerializer implements \Sentry\Serializer\PayloadSerializerInterface
 {
+    /**
+     * @var Options The SDK client options
+     */
+    private $options;
+    public function __construct(\Sentry\Options $options)
+    {
+        $this->options = $options;
+    }
     /**
      * {@inheritdoc}
      */
@@ -74,7 +85,7 @@ final class PayloadSerializer implements \Sentry\Serializer\PayloadSerializerInt
         }
         $user = $event->getUser();
         if (null !== $user) {
-            $result['user'] = \array_merge($user->getMetadata(), ['id' => $user->getId(), 'username' => $user->getUsername(), 'email' => $user->getEmail(), 'ip_address' => $user->getIpAddress()]);
+            $result['user'] = \array_merge($user->getMetadata(), ['id' => $user->getId(), 'username' => $user->getUsername(), 'email' => $user->getEmail(), 'ip_address' => $user->getIpAddress(), 'segment' => $user->getSegment()]);
         }
         $osContext = $event->getOsContext();
         $runtimeContext = $event->getRuntimeContext();
@@ -106,6 +117,10 @@ final class PayloadSerializer implements \Sentry\Serializer\PayloadSerializerInt
         }
         if (\Sentry\EventType::transaction() === $event->getType()) {
             $result['spans'] = \array_values(\array_map([$this, 'serializeSpan'], $event->getSpans()));
+            $transactionMetadata = $event->getSdkMetadata('transaction_metadata');
+            if ($transactionMetadata instanceof \Sentry\Tracing\TransactionMetadata) {
+                $result['transaction_info']['source'] = (string) $transactionMetadata->getSource();
+            }
         }
         $stacktrace = $event->getStacktrace();
         if (null !== $stacktrace) {
@@ -115,9 +130,17 @@ final class PayloadSerializer implements \Sentry\Serializer\PayloadSerializerInt
     }
     private function serializeAsEnvelope(\Sentry\Event $event) : string
     {
-        $envelopeHeader = \Sentry\Util\JSON::encode(['event_id' => (string) $event->getId(), 'sent_at' => \gmdate('Y-m-d\\TH:i:s\\Z')]);
-        $itemHeader = \Sentry\Util\JSON::encode(['type' => (string) $event->getType(), 'content_type' => 'application/json']);
-        return \sprintf("%s\n%s\n%s", $envelopeHeader, $itemHeader, $this->serializeAsEvent($event));
+        // @see https://develop.sentry.dev/sdk/envelopes/#envelope-headers
+        $envelopeHeader = ['event_id' => (string) $event->getId(), 'sent_at' => \gmdate('Y-m-d\\TH:i:s\\Z'), 'dsn' => (string) $this->options->getDsn(), 'sdk' => ['name' => $event->getSdkIdentifier(), 'version' => $event->getSdkVersion()]];
+        $dynamicSamplingContext = $event->getSdkMetadata('dynamic_sampling_context');
+        if ($dynamicSamplingContext instanceof \Sentry\Tracing\DynamicSamplingContext) {
+            $entries = $dynamicSamplingContext->getEntries();
+            if (!empty($entries)) {
+                $envelopeHeader['trace'] = $entries;
+            }
+        }
+        $itemHeader = ['type' => (string) $event->getType(), 'content_type' => 'application/json'];
+        return \sprintf("%s\n%s\n%s", \Sentry\Util\JSON::encode($envelopeHeader), \Sentry\Util\JSON::encode($itemHeader), $this->serializeAsEvent($event));
     }
     /**
      * @return array<string, mixed>

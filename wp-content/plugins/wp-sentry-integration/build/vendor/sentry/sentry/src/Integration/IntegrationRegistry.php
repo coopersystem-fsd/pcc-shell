@@ -101,6 +101,10 @@ final class IntegrationRegistry
         if (!$options->hasDefaultIntegrations()) {
             return [];
         }
-        return [new \Sentry\Integration\ExceptionListenerIntegration(), new \Sentry\Integration\ErrorListenerIntegration(), new \Sentry\Integration\FatalErrorListenerIntegration(), new \Sentry\Integration\RequestIntegration(), new \Sentry\Integration\TransactionIntegration(), new \Sentry\Integration\FrameContextifierIntegration(), new \Sentry\Integration\EnvironmentIntegration()];
+        $integrations = [new \Sentry\Integration\RequestIntegration(), new \Sentry\Integration\TransactionIntegration(), new \Sentry\Integration\FrameContextifierIntegration(), new \Sentry\Integration\EnvironmentIntegration(), new \Sentry\Integration\ModulesIntegration()];
+        if (null !== $options->getDsn()) {
+            \array_unshift($integrations, new \Sentry\Integration\ExceptionListenerIntegration(), new \Sentry\Integration\ErrorListenerIntegration(), new \Sentry\Integration\FatalErrorListenerIntegration());
+        }
+        return $integrations;
     }
 }

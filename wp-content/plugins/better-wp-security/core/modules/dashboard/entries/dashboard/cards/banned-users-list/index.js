@@ -105,7 +105,7 @@ function BannedUsers( { card, config, eqProps } ) {
 				{ ! isCreating && (
 					<>
 						{ schema?.links
-							.filter( ( link ) => link.rel === 'create-form' )
+							.filter( ( link ) => link.rel === 'create-form' && ( ! link.targetHints?.allow || link.targetHints.allow.includes( 'POST' ) ) )
 							.map( ( createForm ) => (
 								<span
 									key={ createForm.href }

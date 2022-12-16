@@ -570,6 +570,11 @@ class Crud extends Factory implements \IteratorAggregate, \JsonSerializable
 				if(is_string($value)){
 					$value = wp_kses_post($value);
 				}
+
+				if($key === 'link'){
+					$value = html_entity_decode($value);
+				}
+
 				$this->fields[$key] = $value;
 			}
 			
@@ -598,6 +603,7 @@ class Crud extends Factory implements \IteratorAggregate, \JsonSerializable
 	 * @throws \Exception The object has been trashed
 	 * @return \ArrayIterator
 	 */
+	#[\ReturnTypeWillChange]
 	public function getIterator()
 	{
 		$this->assert_not_trashed();
@@ -610,6 +616,7 @@ class Crud extends Factory implements \IteratorAggregate, \JsonSerializable
 	 * @throws \Exception
 	 * @return array
 	 */
+	#[\ReturnTypeWillChange]
 	public function jsonSerialize()
 	{
 		$this->assert_not_trashed();

@@ -21,12 +21,17 @@ class Settings implements \ArrayAccess, \JsonSerializable, \IteratorAggregate
 		
 		$option_value = get_option($this->option_name);
 		
-		if(empty($option_value))
+		if(empty($option_value)){
 			$this->data = (object)array();
-		else if(!($this->data = json_decode($option_value)))
-		{
+		}else if(!($this->data = json_decode($option_value))){
+			/* Gracefully handle the settings object, by defaulting to an empty object */
+			$this->data = (object)array();
+
+			/* Legacy - We use to throw an exception, we wont do that anymore */
+			/*
 			global $wpdb;
 			throw new \Exception("Option value is not valid JSON in {$wpdb->prefix}options - " . json_last_error_msg());
+			*/
 		}
 		
 		$this->overrides = (object)array();
@@ -63,11 +68,13 @@ class Settings implements \ArrayAccess, \JsonSerializable, \IteratorAggregate
 		$this->update();
 	}
 	
+	#[\ReturnTypeWillChange]
 	public function offsetExists($offset)
 	{
 		return isset($this->data->{$offset}) || isset($this->overrides->{$offset});
 	}
 	
+	#[\ReturnTypeWillChange]
 	public function offsetGet($offset)
 	{
 		if(isset($this->overrides->{$offset}))
@@ -76,12 +83,14 @@ class Settings implements \ArrayAccess, \JsonSerializable, \IteratorAggregate
 		return $this->data->{$offset};
 	}
 	
+	#[\ReturnTypeWillChange]
 	public function offsetSet($offset, $value)
 	{
 		$this->data->{$offset} = $value;
 		$this->update();
 	}
 	
+	#[\ReturnTypeWillChange]
 	public function offsetUnset($offset)
 	{
 		unset($this->data->{$offset});
@@ -89,11 +98,13 @@ class Settings implements \ArrayAccess, \JsonSerializable, \IteratorAggregate
 		$this->update();
 	}
 	
+	#[\ReturnTypeWillChange]
 	public function jsonSerialize()
 	{
 		return (object)array_merge((array)$this->data, (array)$this->overrides);
 	}
 	
+	#[\ReturnTypeWillChange]
 	public function getIterator()
 	{
 		return new \ArrayIterator(array_merge((array)$this->data, (array)$this->overrides));

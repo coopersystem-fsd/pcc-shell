@@ -1,7 +1,7 @@
 /**
  * Internal dependencies
  */
-import { apiFetch } from './controls';
+import { apiFetch, select } from './controls';
 
 /**
  * Fetch the index.
@@ -27,6 +27,33 @@ export function receiveIndex( index ) {
 		type: RECEIVE_INDEX,
 		index,
 	};
+}
+
+export function *saveCurrentUser( data, optimistic = false ) {
+	yield * saveUser( 'me', data, optimistic );
+}
+
+export function *saveUser( id, data, optimistic = false ) {
+	const currentUserId = yield select( 'ithemes-security/core', 'getCurrentUserId' );
+
+	if ( id === 'me' ) {
+		id = currentUserId;
+	}
+
+	const path = `/wp/v2/users/${ id === currentUserId ? 'me' : id }`;
+
+	yield { type: 'START_SAVING_USER', id, data, optimistic };
+	try {
+		const response = yield apiFetch( {
+			method: 'PUT',
+			path,
+			data,
+		} );
+		yield receiveUser( response );
+		yield { type: 'FINISH_SAVING_USER', id, user: response };
+	} catch ( error ) {
+		yield { type: 'FAILED_SAVING_USER', id, error };
+	}
 }
 
 export function receiveUser( user ) {

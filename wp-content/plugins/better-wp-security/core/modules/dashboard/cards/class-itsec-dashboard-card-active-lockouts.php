@@ -1,5 +1,9 @@
 <?php
 
+use iThemesSecurity\Actor;
+use iThemesSecurity\Lib\Result;
+use iThemesSecurity\Ban_Hosts\Repository_Ban;
+
 class ITSEC_Dashboard_Card_Active_Lockouts extends ITSEC_Dashboard_Card {
 	/**
 	 * @inheritDoc
@@ -74,7 +78,11 @@ class ITSEC_Dashboard_Card_Active_Lockouts extends ITSEC_Dashboard_Card {
 	}
 
 	public function get_links() {
-		return array(
+
+		/** @var ITSEC_Lockout $itsec_lockout */
+		global $itsec_lockout;
+
+		$links = array(
 			array(
 				'rel'      => 'item',
 				'route'    => 'lockout/(?P<lockout_id>[\d]+)',
@@ -91,6 +99,18 @@ class ITSEC_Dashboard_Card_Active_Lockouts extends ITSEC_Dashboard_Card {
 				'callback' => array( $this, 'release_lockout' ),
 			),
 		);
+		if ( $itsec_lockout->is_lockout_banning_available() ) {
+			$links[] = array(
+				'rel'                => ITSEC_Lib_REST::LINK_REL . 'ban-lockout',
+				'route'              => 'lockout/(?P<lockout_id>[\d]+)/ban',
+				'title'              => __( 'Ban Lockout', 'better-wp-security' ),
+				'methods'            => WP_REST_Server::CREATABLE,
+				'cap'                => ITSEC_Core::get_required_cap(),
+				'callback'           => array( $this, 'ban_lockout' ),
+			);
+		}
+
+		return $links;
 	}
 
 	/**
@@ -126,7 +146,7 @@ class ITSEC_Dashboard_Card_Active_Lockouts extends ITSEC_Dashboard_Card {
 
 		$lockout_id = (int) $request['lockout_id'];
 
-		if ( ! $lockout_id || ! $lockout = $itsec_lockout->get_lockout( $lockout_id ) ) {
+		if ( ! $lockout_id || ! $itsec_lockout->get_lockout( $lockout_id ) ) {
 			return new WP_Error( 'not_found', __( 'Lockout Not Found', 'better-wp-security' ) );
 		}
 
@@ -135,6 +155,23 @@ class ITSEC_Dashboard_Card_Active_Lockouts extends ITSEC_Dashboard_Card {
 		}
 
 		return null;
+	}
+
+	/**
+	 * Converts lockout into ban.
+	 *
+	 * @param WP_REST_Request $request
+	 *
+	 * @return Result<Repository_Ban>
+	 */
+	public function ban_lockout( WP_REST_Request $request ): Result {
+		/** @var ITSEC_Lockout $itsec_lockout */
+		global $itsec_lockout;
+
+		$lockout_id = (int) $request['lockout_id'];
+		$user       = new Actor\User( wp_get_current_user() );
+
+		return $itsec_lockout->persist_ban_from_lockout( $lockout_id, $user );
 	}
 
 	private function prepare_lockout( $lockout, $detail = false ) {
@@ -168,6 +205,8 @@ class ITSEC_Dashboard_Card_Active_Lockouts extends ITSEC_Dashboard_Card {
 		} else {
 			$data['label'] = __( 'Unknown', 'better-wp-security' );
 		}
+
+		$data['bannable'] = $itsec_lockout->can_create_ban_from_lockout( $data['id'] )->is_success();
 
 		$data['description'] = isset( $modules[ $data['type'] ] ) ? $modules[ $data['type'] ]['reason'] : __( 'unknown reason.', 'better-wp-security' );
 

@@ -1,7 +1,7 @@
 <?php
 
 use iThemesSecurity\User_Groups\Matcher;
-use Pimple\Container;
+use iThemesSecurity\Strauss\Pimple\Container;
 
 return static function ( Container $c ) {
 	$c[ ITSEC_Dashboard::class ] = static function ( Container $c ) {

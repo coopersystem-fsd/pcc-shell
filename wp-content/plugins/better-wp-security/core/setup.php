@@ -141,6 +141,15 @@ final class ITSEC_Setup {
 
 		if ( empty( $build ) ) {
 			ITSEC_Lib::schedule_cron_test();
+
+			if ( ITSEC_Files::can_write_to_files() ) {
+				try {
+					$secret = ITSEC_Lib_Encryption::generate_secret();
+					ITSEC_Lib_Encryption::save_secret_key( $secret );
+				} catch ( RuntimeException $e ) {
+
+				}
+			}
 		} else {
 			// Existing install. Perform data upgrades.
 

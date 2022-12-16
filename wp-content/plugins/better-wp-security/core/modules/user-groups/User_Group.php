@@ -434,7 +434,7 @@ final class User_Group implements Matchable, \JsonSerializable {
 		return $this->get_label();
 	}
 
-	public function jsonSerialize() {
+	public function jsonSerialize(): array {
 		return [
 			'id'          => $this->get_id(),
 			'label'       => $this->get_label(),

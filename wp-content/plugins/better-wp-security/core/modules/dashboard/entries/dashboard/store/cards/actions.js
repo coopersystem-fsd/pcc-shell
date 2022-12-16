@@ -1,12 +1,12 @@
 /**
  * External dependencies
  */
-import { set } from 'lodash';
+import { set, castArray } from 'lodash';
 
 /**
  * WordPress dependencies
  */
-import { select } from '@wordpress/data';
+import { select, dispatch } from '@wordpress/data';
 import { addQueryArgs } from '@wordpress/url';
 import { __, sprintf } from '@wordpress/i18n';
 
@@ -340,6 +340,17 @@ export function* refreshDashboardCards( dashboardId ) {
 	yield finishRefreshDashboardCards( dashboardId );
 
 	return updates;
+}
+
+export function* refreshDashboardCardsOfType( dashboardId, types ) {
+	types = castArray( types );
+	const cards = select( 'ithemes-security/dashboard' ).getDashboardCards( dashboardId );
+
+	for ( const card of cards ) {
+		if ( types.includes( card.card ) ) {
+			dispatch( 'ithemes-security/dashboard' ).refreshDashboardCard( card.id );
+		}
+	}
 }
 
 export function* refreshDashboardCard( cardId ) {

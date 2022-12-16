@@ -4,7 +4,7 @@ Donate link:       http://10up.com/plugins/simple-page-ordering-wordpress/
 Tags:              order, re-order, ordering, pages, page, manage, menu_order, hierarchical, ajax, drag-and-drop, admin
 Requires at least: 3.8
 Tested up to:      6.0
-Stable tag:        2.4.2
+Stable tag:        2.4.3
 License:           GPLv2 or later
 License URI:       http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -46,6 +46,8 @@ Yep. When you register the post type, include the `page-attributes` feature in t
 
 `'supports' => array( 'title', 'editor', 'page-attributes' ),`
 
+Alternatively, when you register the post type, set `hierarchical` to `true` - hierarchical post types natively order by menu order.
+
 You can also take advantage of the `simple_page_ordering_is_sortable` filter, which passes the result of the default check and the post type name, to override default behavior.
 
 = I want my non-hierarchical post type to be sortable. Help! =
@@ -70,11 +72,11 @@ Where 5 is the number of items to batch on each request (the default is 50). Not
 
 This feature is already built into WordPress natively, but a bit tucked away. If you pull down the "Screen Options" tab up top (on the list of post objects) there's a field where you can specify the number of items to show per page. I decided it was not a very good practice to duplicate this.
 
-= How can I exclude certain custom post types? =
+= How can I modify sortable post types? =
 
-Custom post types can be excluded by using the `simple_page_ordering_is_sortable` filter.
+Post types can be included or excluded by using the `simple_page_ordering_is_sortable` filter.
 
-For example, with `excluded_post_type` as the custom post type ID, add the following snippet in the theme function file or custom plugin:
+For example, to exclude the `excluded_post_type` custom post type, add the following snippet in the theme function file or custom plugin:
 
 `
 add_filter( 'simple_page_ordering_is_sortable', function( $sortable, $post_type ) {
@@ -84,6 +86,17 @@ add_filter( 'simple_page_ordering_is_sortable', function( $sortable, $post_type 
 	return $sortable;
 }, 10, 2 );
 `
+
+To include the `include_post_type` custom post type, add the following snippet in the theme function file or custom plugin:
+
+```
+add_filter( 'simple_page_ordering_is_sortable', function( $sortable, $post_type ) {
+	if ( 'include_post_type' === $post_type ) {
+		return true;
+	}
+	return $sortable;
+}, 10, 2 );
+```
 
 = Can I use REST to order posts? =
 
@@ -95,6 +108,13 @@ Yes. The plugin registers the REST endpoint `simple-page-ordering/v1/page_orderi
 1. Processing indicator
 
 == Changelog ==
+
+= 2.4.3 - 2022-11-08 =
+* **Changed:** Allow hierarchical post types that don't have `page-attributes` set to be sorted properly (props [@dkotter](https://github.com/dkotter), [@peterwilsoncc](https://github.com/peterwilsoncc) via [#108](https://github.com/10up/simple-page-ordering/pull/108).
+* **Security:** Bump `got` from 10.7.0 to 11.8.5 (props [@dependabot](https://github.com/apps/dependabot) via [#106](https://github.com/10up/simple-page-ordering/pull/106).
+* **Security:** Bump `@wordpress/env` from 4.9.0 to 5.3.0 (props [@dependabot](https://github.com/apps/dependabot) via [#106](https://github.com/10up/simple-page-ordering/pull/106).
+* **Security:** Bump `scss-tokenizer` from 0.3.0 to 0.4.3 (props [@dependabot](https://github.com/apps/dependabot) via [#107](https://github.com/10up/simple-page-ordering/pull/107).
+* **Security:** Bump `node-sass` from 7.0.1 to 7.0.3 (props [@dependabot](https://github.com/apps/dependabot) via [#107](https://github.com/10up/simple-page-ordering/pull/107).
 
 = 2.4.2 - 2022-09-28 =
 * **Changed:** Replaced our Grunt build process with `10up-toolkit` (props [@cadic](https://github.com/cadic), [@peterwilsoncc](https://github.com/peterwilsoncc), [@dinhtungdu](https://github.com/dinhtungdu) via [#97](https://github.com/10up/simple-page-ordering/pull/97).

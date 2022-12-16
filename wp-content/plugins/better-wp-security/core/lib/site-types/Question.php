@@ -11,6 +11,7 @@ interface Question {
 	const SELECT_END_USERS = 'select-end-users';
 	const END_USERS_TWO_FACTOR = 'end-users-two-factor';
 	const END_USERS_PASSWORD_POLICY = 'end-users-password-policy';
+	const SECURITY_CHECK_PRO = 'security-check-pro';
 
 	/**
 	 * Gets a unique id identifying this question.

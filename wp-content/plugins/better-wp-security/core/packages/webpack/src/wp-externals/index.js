@@ -14,7 +14,7 @@ const formatRequest = ( request ) => {
 	};
 };
 
-const wpPackages = ( context, request, callback ) => {
+const wpPackages = ( { request }, callback ) => {
 	if ( /^@wordpress\//.test( request ) && request !== '@wordpress/icons' ) {
 		callback( null, formatRequest( request ), 'this' );
 	} else {

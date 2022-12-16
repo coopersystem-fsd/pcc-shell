@@ -1173,6 +1173,20 @@ final class ITSEC_Lib {
 	}
 
 	/**
+	 * Removes any number of items from a list.
+	 *
+	 * Values are loosely compared.
+	 *
+	 * @param array $array
+	 * @param       ...$values
+	 *
+	 * @return array
+	 */
+	public static function array_pull( array $array, ...$values ): array {
+		return array_values( array_diff( $array, $values ) );
+	}
+
+	/**
 	 * Merges two arrays recursively such that only arrays are deeply merged.
 	 *
 	 * @param array $array1
@@ -2332,6 +2346,23 @@ final class ITSEC_Lib {
 	}
 
 	/**
+	 * Get info used to help evaluate requirements according to
+	 * {@see ITSEC_Lib::evaluate_requirements()}.
+	 *
+	 * @return array[]
+	 */
+	public static function get_requirements_info(): array {
+		return [
+			'server' => [
+				'php'        => explode( '-', PHP_VERSION )[0],
+				'extensions' => [
+					'OpenSSL' => self::is_func_allowed( 'openssl_verify' ),
+				],
+			]
+		];
+	}
+
+	/**
 	 * Evaluate whether this site passes the given requirements.
 	 *
 	 * @param array $requirements
@@ -2364,6 +2395,25 @@ final class ITSEC_Lib {
 					'type'  => 'array',
 					'items' => [
 						'type' => 'string',
+					],
+				],
+				'multisite'     => [
+					'type' => 'string',
+					'enum' => [ 'enabled', 'disabled' ],
+				],
+				'server'        => [
+					'type'       => 'object',
+					'properties' => [
+						'php'        => [
+							'type' => 'string',
+						],
+						'extensions' => [
+							'type'  => 'array',
+							'items' => [
+								'type' => 'string',
+								'enum' => [ 'OpenSSL' ],
+							],
+						],
 					],
 				],
 			],
@@ -2412,6 +2462,48 @@ final class ITSEC_Lib {
 								)
 							);
 						}
+					}
+					break;
+				case 'multisite':
+					if ( $requirement === 'enabled' && ! is_multisite() ) {
+						$error->add(
+							'multisite',
+							__( 'Multisite must be enabled.', 'better-wp-security' )
+						);
+					} elseif ( $requirement === 'disabled' && is_multisite() ) {
+						$error->add(
+							'multisite',
+							__( 'Multisite is not supported.', 'better-wp-security' )
+						);
+					}
+					break;
+				case 'server':
+					$info = self::get_requirements_info();
+
+					if ( isset( $requirement['php'] ) && version_compare( $info['server']['php'], $requirement['php'], '<' ) ) {
+						$error->add( 'server', sprintf( __( 'You must be running PHP version %s or later.', 'better-wp-security' ), $requirement['php'] ) );
+					}
+
+					$missing = array_filter( $requirement['extensions'] ?? [], function ( $extension ) use ( $info ) {
+						return empty( $info['server']['extensions'][ $extension ] );
+					} );
+
+					if ( $missing ) {
+						if ( count( $missing ) === 1 ) {
+							$message = sprintf( __( 'The %s PHP extension is required.', 'better-wp-security' ), ITSEC_Lib::first( $missing ) );
+						} else {
+							$message = wp_sprintf(
+								_n(
+									'The following PHP extension is required: %l.',
+									'The following PHP extensions are required: %l.',
+									count( $missing ),
+									'better-wp-security'
+								),
+								$missing
+							);
+						}
+
+						$error->add( 'server', $message );
 					}
 					break;
 			}
@@ -2572,18 +2664,18 @@ final class ITSEC_Lib {
 	/**
 	 * Extends a service definition, ignoring if the service has been frozen.
 	 *
-	 * @param \Pimple\Container $c
+	 * @param \iThemesSecurity\Strauss\Pimple\Container $c
 	 * @param string            $id
 	 * @param callable          $extend
 	 *
 	 * @return bool
 	 */
-	public static function extend_if_able( \Pimple\Container $c, string $id, callable $extend ): bool {
+	public static function extend_if_able( \iThemesSecurity\Strauss\Pimple\Container $c, string $id, callable $extend ): bool {
 		try {
 			$c->extend( $id, $extend );
 
 			return true;
-		} catch ( \Pimple\Exception\FrozenServiceException $e ) {
+		} catch ( \iThemesSecurity\Strauss\Pimple\Exception\FrozenServiceException $e ) {
 			return false;
 		}
 	}
@@ -2647,5 +2739,19 @@ final class ITSEC_Lib {
 			wp_rand( 0, 0xffff ),
 			wp_rand( 0, 0xffff )
 		);
+	}
+
+	public static function recursively_json_serialize( $value ) {
+		if ( $value instanceof JsonSerializable ) {
+			return $value->jsonSerialize();
+		}
+
+		if ( is_array( $value ) ) {
+			foreach ( $value as $k => $v ) {
+				$value[ $k ] = self::recursively_json_serialize( $v );
+			}
+		}
+
+		return $value;
 	}
 }

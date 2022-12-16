@@ -54,6 +54,6 @@ final class DefaultTransportFactory implements \Sentry\Transport\TransportFactor
         if (null === $options->getDsn()) {
             return new \Sentry\Transport\NullTransport();
         }
-        return new \Sentry\Transport\HttpTransport($options, $this->httpClientFactory->create($options), $this->streamFactory, $this->requestFactory, new \Sentry\Serializer\PayloadSerializer(), $this->logger);
+        return new \Sentry\Transport\HttpTransport($options, $this->httpClientFactory->create($options), $this->streamFactory, $this->requestFactory, new \Sentry\Serializer\PayloadSerializer($options), $this->logger);
     }
 }

@@ -143,7 +143,7 @@ final class ITSEC_Logs_List_Table extends ITSEC_WP_List_Table {
 			$vars = array_merge( array( 'page' => $_GET['page'] ), $vars );
 		}
 
-		return network_admin_url( 'admin.php?' . http_build_query( $vars, null, '&' ) );
+		return network_admin_url( 'admin.php?' . http_build_query( $vars, '', '&' ) );
 	}
 
 	/**

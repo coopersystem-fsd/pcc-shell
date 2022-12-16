@@ -5,7 +5,7 @@ namespace iThemesSecurity\Site_Scanner;
 use iThemesSecurity\Site_Scanner\Repository\LatestScanRepository;
 use iThemesSecurity\Site_Scanner\Repository\LogRepository;
 use iThemesSecurity\Site_Scanner\Repository\Repository;
-use Pimple\Container;
+use iThemesSecurity\Strauss\Pimple\Container;
 
 return static function ( Container $c ) {
 	$c['module.site-scanner.files'] = [

@@ -7,16 +7,16 @@
       0 => 'backup/dashboard.css',
       1 => 'backup/dashboard.js',
     ),
-    'hash' => '091763d10de79c55eb486c2ea1ff48b8',
+    'hash' => 'e484a70c146c63f0cd2507c9a5d7d0f8',
     'contentHash' => 
     array (
-      'css/mini-extract' => '619194f0aef1b674e9f4',
-      'javascript' => '2c53334991b4a7a98c01',
+      'css/mini-extract' => '285e81ba6db559b17790',
+      'javascript' => '1ea806c8b7c6ad0245c4',
     ),
     'vendors' => 
     array (
-      0 => 'vendors/backup/dashboard--admin-notices-api--api----f77e2e21',
-      1 => 'backup/dashboard',
+      0 => 'backup/dashboard',
+      1 => '991',
     ),
     'dependencies' => 
     array (
@@ -39,11 +39,11 @@
       0 => 'core/admin-notices.css',
       1 => 'core/admin-notices.js',
     ),
-    'hash' => 'f8b36c8737c071cf95bb21d3e1daf7b3',
+    'hash' => '3954396f780f2aa86397c01ad533f05c',
     'contentHash' => 
     array (
-      'css/mini-extract' => 'f837b039f5bcfecb0d4a',
-      'javascript' => '40d3bad77b28772eefac',
+      'css/mini-extract' => '83dca243573f6e2edf95',
+      'javascript' => 'fb256c5966acea3244e9',
     ),
     'vendors' => 
     array (
@@ -69,16 +69,14 @@
     array (
       0 => 'core/admin-notices-api.js',
     ),
-    'hash' => '6dbd89266ad3f0316b40b861a7508388',
+    'hash' => 'a7ac03310313d9c0ac977f3d1658f64e',
     'contentHash' => 
     array (
-      'css/mini-extract' => '31d6cfe0d16ae931b73c',
-      'javascript' => 'c05d9ab9657d5dbaaa9d',
+      'javascript' => '2e61e4a6f24f2b3c7af6',
     ),
     'vendors' => 
     array (
-      0 => 'vendors/backup/dashboard--admin-notices-api--api----f77e2e21',
-      1 => 'core/admin-notices-api',
+      0 => 'core/admin-notices-api',
     ),
     'dependencies' => 
     array (
@@ -98,11 +96,11 @@
       0 => 'core/admin-notices-dashboard-admin-bar.css',
       1 => 'core/admin-notices-dashboard-admin-bar.js',
     ),
-    'hash' => '455fb67e6065f1bf1256443b00cea473',
+    'hash' => 'c29882e45a938380efa4b211bbef8570',
     'contentHash' => 
     array (
-      'css/mini-extract' => '31504e596293b38a2fc1',
-      'javascript' => 'f722c52262ab5673a5d2',
+      'css/mini-extract' => '12e026a9d838857fb394',
+      'javascript' => '33f6c43c328b0593f4c6',
     ),
     'vendors' => 
     array (
@@ -130,11 +128,11 @@
       0 => 'core/packages/components/site-scan-results/style.css',
       1 => 'core/packages/components/site-scan-results/style.js',
     ),
-    'hash' => '7dd67ca5d86333fe383fe009426ac946',
+    'hash' => 'b366e27c50f638c0749cbd3ffd47aadb',
     'contentHash' => 
     array (
-      'css/mini-extract' => 'cc7af4c542b875b0b733',
-      'javascript' => '925a51036df5b8ad5cf4',
+      'css/mini-extract' => '03918c51dc22ec11e509',
+      'javascript' => 'c6a82c6311df61517baf',
     ),
     'vendors' => 
     array (
@@ -152,11 +150,11 @@
       0 => 'core/settings.css',
       1 => 'core/settings.js',
     ),
-    'hash' => 'e53770bda944e72dbe7a7976ab00fa9a',
+    'hash' => 'f0ebf0e8ce46f4e073cea68461122d3b',
     'contentHash' => 
     array (
-      'css/mini-extract' => '31504e596293b38a2fc1',
-      'javascript' => '53030e4b99f6ffd78b84',
+      'css/mini-extract' => '12e026a9d838857fb394',
+      'javascript' => '2899cd0397d051e3bc11',
     ),
     'vendors' => 
     array (
@@ -183,16 +181,15 @@
     array (
       0 => 'dashboard/api.js',
     ),
-    'hash' => '990a653297993f5323d5b32d76570df9',
+    'hash' => '435d0f3853a8916de88fb78c6805c4d4',
     'contentHash' => 
     array (
-      'css/mini-extract' => '31d6cfe0d16ae931b73c',
-      'javascript' => 'af94a55e8ef4468fa8ee',
+      'javascript' => '14aa64785b91ce3174e6',
     ),
     'vendors' => 
     array (
-      0 => 'vendors/backup/dashboard--admin-notices-api--api----f77e2e21',
-      1 => 'dashboard/api',
+      0 => 'dashboard/api',
+      1 => '469',
     ),
     'dependencies' => 
     array (
@@ -215,23 +212,25 @@
       0 => 'dashboard/dashboard.css',
       1 => 'dashboard/dashboard.js',
     ),
-    'hash' => 'bd126a15180b006b59d85a649f7e39ab',
+    'hash' => '02a417f490c520d2cbaeaeed7b6ddf3e',
     'contentHash' => 
     array (
-      'css/mini-extract' => 'd3368d2f644336504341',
-      'javascript' => 'b175cc65360000ab9ee3',
+      'css/mini-extract' => '63cf1062debef9f7608f',
+      'javascript' => '8fbb2b2eac6874971aaa',
     ),
     'vendors' => 
     array (
-      0 => 'vendors/backup/dashboard--admin-notices-api--api----f77e2e21',
-      1 => 'vendors/dashboard/dashboard--settings--go-pro',
-      2 => 'dashboard/dashboard--settings--go-pro',
-      3 => 'vendors/routing',
-      4 => 'dashboard/dashboard--settings',
-      5 => 'vendors/dashboard/dashboard--settings',
-      6 => 'dashboard/dashboard',
-      7 => 'vendors/dashboard/dashboard',
-      8 => 'vendors/recharts',
+      0 => 'dashboard/dashboard',
+      1 => 'vendors/routing',
+      2 => 'vendors/recharts',
+      3 => '655',
+      4 => '363',
+      5 => '96',
+      6 => '639',
+      7 => '904',
+      8 => '991',
+      9 => '144',
+      10 => '783',
     ),
     'dependencies' => 
     array (
@@ -258,48 +257,6 @@
       20 => 'wp-url',
     ),
   ),
-  'dashboard/dashboard--settings' => 
-  array (
-    'runtime' => false,
-    'files' => 
-    array (
-      0 => 'dashboard/dashboard--settings.css',
-      1 => 'dashboard/dashboard--settings.js',
-    ),
-    'hash' => 'ce75efeee61b363ba8a8d9c91d466054',
-    'contentHash' => 
-    array (
-      'css/mini-extract' => '6e667999baef62719894',
-      'javascript' => 'f481a3e3eee16f35f58f',
-    ),
-    'vendors' => 
-    array (
-    ),
-    'dependencies' => 
-    array (
-    ),
-  ),
-  'dashboard/dashboard--settings--go-pro' => 
-  array (
-    'runtime' => false,
-    'files' => 
-    array (
-      0 => 'dashboard/dashboard--settings--go-pro.css',
-      1 => 'dashboard/dashboard--settings--go-pro.js',
-    ),
-    'hash' => '666622c78ae538885a0ecba32bf73d5c',
-    'contentHash' => 
-    array (
-      'css/mini-extract' => 'e23890facfef842f0039',
-      'javascript' => '6cf9b42641e21024facd',
-    ),
-    'vendors' => 
-    array (
-    ),
-    'dependencies' => 
-    array (
-    ),
-  ),
   'file-permissions/settings' => 
   array (
     'runtime' => false,
@@ -308,11 +265,11 @@
       0 => 'file-permissions/settings.css',
       1 => 'file-permissions/settings.js',
     ),
-    'hash' => 'c87a7b012c89f0115ae0c3c18ecd00ad',
+    'hash' => '1296f84e131e35761fc39a839e614f75',
     'contentHash' => 
     array (
-      'css/mini-extract' => '98af2e6472b50c92a681',
-      'javascript' => 'a4ae44f95abbc7fa8f34',
+      'css/mini-extract' => 'f556f559b072d0ebaf8e',
+      'javascript' => 'e77721b7268f29bce774',
     ),
     'vendors' => 
     array (
@@ -336,16 +293,16 @@
       0 => 'file-writing/settings.css',
       1 => 'file-writing/settings.js',
     ),
-    'hash' => 'bf34c68c45dea00f9b30ebe90a45c995',
+    'hash' => '557e7a6a96837aff0e522f44286df2cb',
     'contentHash' => 
     array (
-      'css/mini-extract' => '9054297eaac4fe10545a',
-      'javascript' => '48f7c8aa365c625769bd',
+      'css/mini-extract' => '1703bb98f706392df646',
+      'javascript' => 'de75f0ee89da40886efa',
     ),
     'vendors' => 
     array (
-      0 => 'vendors/backup/dashboard--admin-notices-api--api----f77e2e21',
-      1 => 'file-writing/settings',
+      0 => 'file-writing/settings',
+      1 => '991',
     ),
     'dependencies' => 
     array (
@@ -367,21 +324,22 @@
       0 => 'global/settings.css',
       1 => 'global/settings.js',
     ),
-    'hash' => '20c283f6ae9ad43a0828326b07231a5e',
+    'hash' => 'd714e4c3628f034d55470821d4c7f75a',
     'contentHash' => 
     array (
-      'css/mini-extract' => 'f2f55603e58943c188a0',
-      'javascript' => '81a8fe8707a9fd8ea29e',
+      'css/mini-extract' => 'ff9191e403b0ff436fa8',
+      'javascript' => '1c591ec54cfb778b4390',
     ),
     'vendors' => 
     array (
-      0 => 'vendors/backup/dashboard--admin-notices-api--api----f77e2e21',
-      1 => 'vendors/dashboard/dashboard--settings--go-pro',
-      2 => 'dashboard/dashboard--settings--go-pro',
-      3 => 'vendors/routing',
-      4 => 'dashboard/dashboard--settings',
-      5 => 'vendors/dashboard/dashboard--settings',
-      6 => 'global/settings',
+      0 => 'global/settings',
+      1 => 'vendors/routing',
+      2 => '655',
+      3 => '96',
+      4 => '639',
+      5 => '991',
+      6 => '144',
+      7 => '155',
     ),
     'dependencies' => 
     array (
@@ -411,21 +369,22 @@
       0 => 'network-brute-force/settings.css',
       1 => 'network-brute-force/settings.js',
     ),
-    'hash' => 'db18676b4fd14b7edd024f6ab25128cb',
+    'hash' => '4432cb34f88c6fd507d8645d99fcca58',
     'contentHash' => 
     array (
-      'css/mini-extract' => 'dd99784259070127f55c',
-      'javascript' => '1ab2af9575d7f55ffd4f',
+      'css/mini-extract' => 'cf6a1d7431b4b61d80f8',
+      'javascript' => '4bc96da4c606a5c48fa4',
     ),
     'vendors' => 
     array (
-      0 => 'vendors/backup/dashboard--admin-notices-api--api----f77e2e21',
-      1 => 'vendors/dashboard/dashboard--settings--go-pro',
-      2 => 'dashboard/dashboard--settings--go-pro',
-      3 => 'vendors/routing',
-      4 => 'dashboard/dashboard--settings',
-      5 => 'vendors/dashboard/dashboard--settings',
-      6 => 'network-brute-force/settings',
+      0 => 'network-brute-force/settings',
+      1 => 'vendors/routing',
+      2 => '655',
+      3 => '96',
+      4 => '639',
+      5 => '991',
+      6 => '144',
+      7 => '155',
     ),
     'dependencies' => 
     array (
@@ -455,20 +414,20 @@
       0 => 'notification-center/settings.css',
       1 => 'notification-center/settings.js',
     ),
-    'hash' => '255a701334ad6714e226cd6900e7110c',
+    'hash' => '417777bd11927105f95fbbc006a5e925',
     'contentHash' => 
     array (
-      'css/mini-extract' => '82bfc7d5c1593e81b971',
-      'javascript' => '172deb1096b50b4a1c85',
+      'css/mini-extract' => '8be6d148b84f1ddec39f',
+      'javascript' => '87772e27fff339f164b2',
     ),
     'vendors' => 
     array (
-      0 => 'vendors/backup/dashboard--admin-notices-api--api----f77e2e21',
-      1 => 'vendors/dashboard/dashboard--settings--go-pro',
-      2 => 'dashboard/dashboard--settings--go-pro',
-      3 => 'vendors/routing',
-      4 => 'dashboard/dashboard--settings',
-      5 => 'notification-center/settings',
+      0 => 'notification-center/settings',
+      1 => 'vendors/routing',
+      2 => '655',
+      3 => '363',
+      4 => '991',
+      5 => '144',
     ),
     'dependencies' => 
     array (
@@ -498,16 +457,15 @@
     array (
       0 => 'packages/data.js',
     ),
-    'hash' => '32cdf834e20abcd370750e6ba835e562',
+    'hash' => '69aaaf3f30073f638bcba493f7cc8051',
     'contentHash' => 
     array (
-      'css/mini-extract' => '31d6cfe0d16ae931b73c',
-      'javascript' => 'd17f7a4f727278ac470e',
+      'javascript' => '238ac258879c2874b967',
     ),
     'vendors' => 
     array (
-      0 => 'vendors/backup/dashboard--admin-notices-api--api----f77e2e21',
-      1 => 'packages/data',
+      0 => 'packages/data',
+      1 => '469',
     ),
     'dependencies' => 
     array (
@@ -526,11 +484,10 @@
     array (
       0 => 'packages/preload.js',
     ),
-    'hash' => 'ee66e31c9cb0f260600fa21b35695d4e',
+    'hash' => '8bc78d1db27daf81c7b47f271971cab5',
     'contentHash' => 
     array (
-      'css/mini-extract' => '31d6cfe0d16ae931b73c',
-      'javascript' => '9113a1b9844c0a0dfaed',
+      'javascript' => '287bf42ce32d91efb46a',
     ),
     'vendors' => 
     array (
@@ -548,19 +505,21 @@
       0 => 'pages/go-pro.css',
       1 => 'pages/go-pro.js',
     ),
-    'hash' => 'c753c95e9a2741285e7a9a7a82e61733',
+    'hash' => '6d1dde01ad2ba19a889e9cac0cd7880a',
     'contentHash' => 
     array (
-      'css/mini-extract' => '62a1043f3cb5b10f9578',
-      'javascript' => '9c3a9d8c9ecf1619feb5',
+      'css/mini-extract' => 'fa01223e7182887b72cb',
+      'javascript' => '2b88534ab91f4eebf7c9',
     ),
     'vendors' => 
     array (
-      0 => 'vendors/backup/dashboard--admin-notices-api--api----f77e2e21',
-      1 => 'vendors/dashboard/dashboard--settings--go-pro',
-      2 => 'dashboard/dashboard--settings--go-pro',
-      3 => 'vendors/routing',
-      4 => 'pages/go-pro',
+      0 => 'pages/go-pro',
+      1 => 'vendors/routing',
+      2 => '655',
+      3 => '363',
+      4 => '991',
+      5 => '144',
+      6 => '783',
     ),
     'dependencies' => 
     array (
@@ -589,23 +548,25 @@
       0 => 'pages/settings.css',
       1 => 'pages/settings.js',
     ),
-    'hash' => '7ee8a355baffdac840164863d80f8bdb',
+    'hash' => 'deb35b06a74753000b5fde74412bd9f4',
     'contentHash' => 
     array (
-      'css/mini-extract' => 'a2abad058eca81672d27',
-      'javascript' => '880983a346fc1e18e796',
+      'css/mini-extract' => 'ccc2c53a446d7469639a',
+      'javascript' => '95474ae7749759f1f527',
     ),
     'vendors' => 
     array (
-      0 => 'vendors/backup/dashboard--admin-notices-api--api----f77e2e21',
-      1 => 'vendors/dashboard/dashboard--settings--go-pro',
-      2 => 'dashboard/dashboard--settings--go-pro',
-      3 => 'vendors/routing',
-      4 => 'dashboard/dashboard--settings',
-      5 => 'vendors/dashboard/dashboard--settings',
-      6 => 'vendors//user-groups--pages/settings',
-      7 => 'pages/settings',
-      8 => 'vendors/pages/settings',
+      0 => 'pages/settings',
+      1 => 'vendors/routing',
+      2 => '655',
+      3 => '363',
+      4 => '96',
+      5 => '639',
+      6 => '434',
+      7 => '986',
+      8 => '991',
+      9 => '144',
+      10 => '783',
     ),
     'dependencies' => 
     array (
@@ -637,11 +598,11 @@
       0 => 'password-requirements/settings.css',
       1 => 'password-requirements/settings.js',
     ),
-    'hash' => '157ab17bd7452c0c667aa7c42dc14f84',
+    'hash' => '5eb5a2b7b9e778d5c50dc7c025ebc714',
     'contentHash' => 
     array (
-      'css/mini-extract' => '9e64471763eaaf5f3b9c',
-      'javascript' => '50b5f7202c52ff6e9a01',
+      'css/mini-extract' => 'fb5dcc8d579f366264dc',
+      'javascript' => '4c05eb868c85a3504adf',
     ),
     'vendors' => 
     array (
@@ -662,19 +623,20 @@
       0 => 'promos/dashboard.css',
       1 => 'promos/dashboard.js',
     ),
-    'hash' => '27fe1f59c02478d306acaa175e986e42',
+    'hash' => '920f5659121da7e3db1e18e5754a4926',
     'contentHash' => 
     array (
-      'css/mini-extract' => '0690ba7298c1b8a1437b',
-      'javascript' => '30a0d8d162375bc16db9',
+      'css/mini-extract' => '9e981435a1beab5f977b',
+      'javascript' => '34e5de61a193fea06b10',
     ),
     'vendors' => 
     array (
-      0 => 'vendors/backup/dashboard--admin-notices-api--api----f77e2e21',
-      1 => 'vendors/dashboard/dashboard--settings--go-pro',
-      2 => 'dashboard/dashboard--settings--go-pro',
-      3 => 'vendors/routing',
-      4 => 'promos/dashboard',
+      0 => 'promos/dashboard',
+      1 => 'vendors/routing',
+      2 => '655',
+      3 => '991',
+      4 => '144',
+      5 => '783',
     ),
     'dependencies' => 
     array (
@@ -705,19 +667,21 @@
       0 => 'promos/settings.css',
       1 => 'promos/settings.js',
     ),
-    'hash' => 'd8aef5b0d21629ee165af0532af5d826',
+    'hash' => '00e713bff4804e5e8a3ae640d2044f4b',
     'contentHash' => 
     array (
-      'css/mini-extract' => 'f1fdbd7ca82e57aeabf2',
-      'javascript' => '4003b8834f6b9e438f71',
+      'css/mini-extract' => 'cb2526ab88463f3fac3a',
+      'javascript' => 'd4c5eaae69f6f50accb1',
     ),
     'vendors' => 
     array (
-      0 => 'vendors/backup/dashboard--admin-notices-api--api----f77e2e21',
-      1 => 'vendors/dashboard/dashboard--settings--go-pro',
-      2 => 'dashboard/dashboard--settings--go-pro',
-      3 => 'vendors/routing',
-      4 => 'promos/settings',
+      0 => 'promos/settings',
+      1 => 'vendors/routing',
+      2 => '655',
+      3 => '363',
+      4 => '991',
+      5 => '144',
+      6 => '783',
     ),
     'dependencies' => 
     array (
@@ -746,11 +710,10 @@
     array (
       0 => 'runtime.js',
     ),
-    'hash' => '97fdfedbb4f1a02ccf351e38967f98e4',
+    'hash' => 'f68a2c1cc2b68f6bcdfbe6ebdd29a53f',
     'contentHash' => 
     array (
-      'css/mini-extract' => '31d6cfe0d16ae931b73c',
-      'javascript' => 'ed8779efccc4963f8c7e',
+      'javascript' => '38d5dd8bce8ddc6f94a7',
     ),
     'vendors' => 
     array (
@@ -767,19 +730,19 @@
       0 => 'site-scanner/dashboard.css',
       1 => 'site-scanner/dashboard.js',
     ),
-    'hash' => '6f648a97c0b046f68f66cdf2602f7842',
+    'hash' => 'ac3f79af746124b6c98e6d0f0729187d',
     'contentHash' => 
     array (
-      'css/mini-extract' => '419280025062f84c8ce1',
-      'javascript' => 'f88c29711a6bf93a1f8b',
+      'css/mini-extract' => '8ebe5652eeed1ebbf181',
+      'javascript' => '5a000676cb1db9ba1798',
     ),
     'vendors' => 
     array (
-      0 => 'vendors/backup/dashboard--admin-notices-api--api----f77e2e21',
-      1 => 'vendors/dashboard/dashboard--settings--go-pro',
-      2 => 'dashboard/dashboard--settings--go-pro',
-      3 => 'vendors/routing',
-      4 => 'site-scanner/dashboard',
+      0 => 'site-scanner/dashboard',
+      1 => 'vendors/routing',
+      2 => '655',
+      3 => '991',
+      4 => '144',
     ),
     'dependencies' => 
     array (
@@ -809,16 +772,15 @@
     array (
       0 => 'user-groups/api.js',
     ),
-    'hash' => '3dd4622233311b3936a9abbf27bd6d91',
+    'hash' => '284d950484b20bc29192fb216db61e28',
     'contentHash' => 
     array (
-      'css/mini-extract' => '31d6cfe0d16ae931b73c',
-      'javascript' => '7dff5dcab0c2015e8b91',
+      'javascript' => 'dd8320095836ea83c69d',
     ),
     'vendors' => 
     array (
-      0 => 'vendors/backup/dashboard--admin-notices-api--api----f77e2e21',
-      1 => 'user-groups/api',
+      0 => 'user-groups/api',
+      1 => '680',
     ),
     'dependencies' => 
     array (
@@ -839,22 +801,23 @@
       0 => 'user-groups/settings.css',
       1 => 'user-groups/settings.js',
     ),
-    'hash' => 'ac51769c8ddab1509424e545456ff29f',
+    'hash' => 'f3ef75da5a78c69d15b4eadfa826bc7f',
     'contentHash' => 
     array (
-      'css/mini-extract' => '689e1829bdf9efc9b4de',
-      'javascript' => 'dc4fdf3112e777431aa5',
+      'css/mini-extract' => '0cb2bf216c2fc66a6103',
+      'javascript' => 'cd6fa78d52627d7d64d9',
     ),
     'vendors' => 
     array (
-      0 => 'vendors/backup/dashboard--admin-notices-api--api----f77e2e21',
-      1 => 'vendors/dashboard/dashboard--settings--go-pro',
-      2 => 'dashboard/dashboard--settings--go-pro',
-      3 => 'vendors/routing',
-      4 => 'dashboard/dashboard--settings',
-      5 => 'vendors/dashboard/dashboard--settings',
-      6 => 'vendors//user-groups--pages/settings',
-      7 => 'user-groups/settings',
+      0 => 'user-groups/settings',
+      1 => 'vendors/routing',
+      2 => '655',
+      3 => '363',
+      4 => '96',
+      5 => '434',
+      6 => '991',
+      7 => '144',
+      8 => '783',
     ),
     'dependencies' => 
     array (
@@ -880,127 +843,6 @@
       19 => 'wp-url',
     ),
   ),
-  'vendors//user-groups--pages/settings' => 
-  array (
-    'runtime' => false,
-    'files' => 
-    array (
-      0 => 'vendors//user-groups--pages/settings.js',
-    ),
-    'hash' => '9e5b02d15f991e23e26f39a12ee7e7c5',
-    'contentHash' => 
-    array (
-      'css/mini-extract' => '31d6cfe0d16ae931b73c',
-      'javascript' => 'c4ae2e9b13ea43f74ef7',
-    ),
-    'vendors' => 
-    array (
-    ),
-    'dependencies' => 
-    array (
-    ),
-  ),
-  'vendors/backup/dashboard--admin-notices-api--api----f77e2e21' => 
-  array (
-    'runtime' => false,
-    'files' => 
-    array (
-      0 => 'vendors/backup/dashboard--admin-notices-api--api----f77e2e21.js',
-    ),
-    'hash' => 'c472e73a62b2782157a90e03b764e892',
-    'contentHash' => 
-    array (
-      'css/mini-extract' => '31d6cfe0d16ae931b73c',
-      'javascript' => 'fcdabe6b13afc22e28e9',
-    ),
-    'vendors' => 
-    array (
-    ),
-    'dependencies' => 
-    array (
-    ),
-  ),
-  'vendors/dashboard/dashboard' => 
-  array (
-    'runtime' => false,
-    'files' => 
-    array (
-      0 => 'vendors/dashboard/dashboard.css',
-      1 => 'vendors/dashboard/dashboard.js',
-    ),
-    'hash' => '98929f03890e56df817bc7a44533e0ed',
-    'contentHash' => 
-    array (
-      'css/mini-extract' => '6707aefcb707a4e9f260',
-      'javascript' => 'e2f4d9e18bdad0fa9247',
-    ),
-    'vendors' => 
-    array (
-    ),
-    'dependencies' => 
-    array (
-    ),
-  ),
-  'vendors/dashboard/dashboard--settings' => 
-  array (
-    'runtime' => false,
-    'files' => 
-    array (
-      0 => 'vendors/dashboard/dashboard--settings.js',
-    ),
-    'hash' => '96c20dc70b9d8ca4e607030658fe3793',
-    'contentHash' => 
-    array (
-      'css/mini-extract' => '31d6cfe0d16ae931b73c',
-      'javascript' => '70128ccd7d8fb8ebf0dc',
-    ),
-    'vendors' => 
-    array (
-    ),
-    'dependencies' => 
-    array (
-    ),
-  ),
-  'vendors/dashboard/dashboard--settings--go-pro' => 
-  array (
-    'runtime' => false,
-    'files' => 
-    array (
-      0 => 'vendors/dashboard/dashboard--settings--go-pro.js',
-    ),
-    'hash' => 'c67dba1c095ca34dd4298a08127ee123',
-    'contentHash' => 
-    array (
-      'css/mini-extract' => '31d6cfe0d16ae931b73c',
-      'javascript' => 'b6324c5f4738c6dc67c3',
-    ),
-    'vendors' => 
-    array (
-    ),
-    'dependencies' => 
-    array (
-    ),
-  ),
-  'vendors/pages/settings' => 
-  array (
-    'runtime' => false,
-    'files' => 
-    array (
-      0 => 'vendors/pages/settings.js',
-    ),
-    'hash' => '779b9885490b1f050aee6578d361d6e7',
-    'contentHash' => 
-    array (
-      'css/mini-extract' => '31d6cfe0d16ae931b73c',
-      'javascript' => '6ff9306ea3196032db96',
-    ),
-    'vendors' => 
-    array (
-    ),
-    'dependencies' => 
-    array (
-    ),
-  ),
   'vendors/recharts' => 
   array (
     'runtime' => false,
@@ -1008,11 +850,10 @@
     array (
       0 => 'vendors/recharts.js',
     ),
-    'hash' => '859f87a4b7d86451f440f196ef5cc8fb',
+    'hash' => '0280ef61f14b6adc018e6d741e8405e7',
     'contentHash' => 
     array (
-      'css/mini-extract' => '31d6cfe0d16ae931b73c',
-      'javascript' => 'fea5b533b21fc0549c4e',
+      'javascript' => 'd0190bae57f25588c709',
     ),
     'vendors' => 
     array (
@@ -1028,11 +869,278 @@
     array (
       0 => 'vendors/routing.js',
     ),
-    'hash' => '04e61eb3d5bfb0a3fc5413625984d32c',
+    'hash' => 'b003bae76a2b7c84fa06356b49c3f942',
     'contentHash' => 
     array (
-      'css/mini-extract' => '31d6cfe0d16ae931b73c',
-      'javascript' => '816d441941dc9ed8b3fb',
+      'javascript' => '7a102f8f84059845ae84',
+    ),
+    'vendors' => 
+    array (
+    ),
+    'dependencies' => 
+    array (
+    ),
+  ),
+  96 => 
+  array (
+    'runtime' => false,
+    'files' => 
+    array (
+      0 => '96.js',
+    ),
+    'hash' => '5f9ad8c744702e9a3a90acdef13fba13',
+    'contentHash' => 
+    array (
+      'javascript' => '6a6842a9b8db02dc776c',
+    ),
+    'vendors' => 
+    array (
+    ),
+    'dependencies' => 
+    array (
+    ),
+  ),
+  144 => 
+  array (
+    'runtime' => false,
+    'files' => 
+    array (
+      0 => '144.js',
+    ),
+    'hash' => '27a20aec2a2ae6f2641551e355889463',
+    'contentHash' => 
+    array (
+      'javascript' => 'eba36e88a6d4ef2fc265',
+    ),
+    'vendors' => 
+    array (
+    ),
+    'dependencies' => 
+    array (
+    ),
+  ),
+  155 => 
+  array (
+    'runtime' => false,
+    'files' => 
+    array (
+      0 => '155.css',
+      1 => '155.js',
+    ),
+    'hash' => 'fe7de03680f10ed9f0c5b9060b2ff42f',
+    'contentHash' => 
+    array (
+      'css/mini-extract' => '0c16eaad80b7f8a872a1',
+      'javascript' => 'ab47d6a1871b4344b863',
+    ),
+    'vendors' => 
+    array (
+    ),
+    'dependencies' => 
+    array (
+    ),
+  ),
+  363 => 
+  array (
+    'runtime' => false,
+    'files' => 
+    array (
+      0 => '363.js',
+    ),
+    'hash' => '6c88ad601a5722c752f23d32c2fd180d',
+    'contentHash' => 
+    array (
+      'javascript' => 'caeb675c7f729ca13cf6',
+    ),
+    'vendors' => 
+    array (
+    ),
+    'dependencies' => 
+    array (
+    ),
+  ),
+  434 => 
+  array (
+    'runtime' => false,
+    'files' => 
+    array (
+      0 => '434.js',
+    ),
+    'hash' => '0d386d4c4ba70d202bd3ec728cf02ece',
+    'contentHash' => 
+    array (
+      'javascript' => 'b55f838edee8e3fbe526',
+    ),
+    'vendors' => 
+    array (
+    ),
+    'dependencies' => 
+    array (
+    ),
+  ),
+  469 => 
+  array (
+    'runtime' => false,
+    'files' => 
+    array (
+      0 => '469.js',
+    ),
+    'hash' => '0974055375d259ce548d25d108f2d158',
+    'contentHash' => 
+    array (
+      'javascript' => '116983bb010cd055cc78',
+    ),
+    'vendors' => 
+    array (
+    ),
+    'dependencies' => 
+    array (
+    ),
+  ),
+  582 => 
+  array (
+    'runtime' => false,
+    'files' => 
+    array (
+      0 => '582.js',
+    ),
+    'hash' => '46cfd85e27a221d4c4e4ae50d168c47e',
+    'contentHash' => 
+    array (
+      'javascript' => '9498d7a1f2fd5f12a25f',
+    ),
+    'vendors' => 
+    array (
+    ),
+    'dependencies' => 
+    array (
+    ),
+  ),
+  639 => 
+  array (
+    'runtime' => false,
+    'files' => 
+    array (
+      0 => '639.js',
+    ),
+    'hash' => '74b38f0d426b4c66fb252e61aea93dee',
+    'contentHash' => 
+    array (
+      'javascript' => 'ec000f08194011d15cd2',
+    ),
+    'vendors' => 
+    array (
+    ),
+    'dependencies' => 
+    array (
+    ),
+  ),
+  655 => 
+  array (
+    'runtime' => false,
+    'files' => 
+    array (
+      0 => '655.js',
+    ),
+    'hash' => '47fc1e81ae018f8688605b11818f8c9e',
+    'contentHash' => 
+    array (
+      'javascript' => 'ef59960413ae2e485355',
+    ),
+    'vendors' => 
+    array (
+    ),
+    'dependencies' => 
+    array (
+    ),
+  ),
+  680 => 
+  array (
+    'runtime' => false,
+    'files' => 
+    array (
+      0 => '680.js',
+    ),
+    'hash' => '464dc9b14d2fd358b5530ac84bc6478a',
+    'contentHash' => 
+    array (
+      'javascript' => 'd6c4493b7cb9ca586a20',
+    ),
+    'vendors' => 
+    array (
+    ),
+    'dependencies' => 
+    array (
+    ),
+  ),
+  783 => 
+  array (
+    'runtime' => false,
+    'files' => 
+    array (
+      0 => '783.js',
+    ),
+    'hash' => '9b802cb0c24e170c7388136f78bf5d17',
+    'contentHash' => 
+    array (
+      'javascript' => '82972ca8991c353be112',
+    ),
+    'vendors' => 
+    array (
+    ),
+    'dependencies' => 
+    array (
+    ),
+  ),
+  904 => 
+  array (
+    'runtime' => false,
+    'files' => 
+    array (
+      0 => '904.js',
+    ),
+    'hash' => '84ce95efad749ede7dd62a58b701b04a',
+    'contentHash' => 
+    array (
+      'javascript' => 'ca5dba74b6835ff965f5',
+    ),
+    'vendors' => 
+    array (
+    ),
+    'dependencies' => 
+    array (
+    ),
+  ),
+  986 => 
+  array (
+    'runtime' => false,
+    'files' => 
+    array (
+      0 => '986.js',
+    ),
+    'hash' => 'a946c0e2700ede57771ea573f446591f',
+    'contentHash' => 
+    array (
+      'javascript' => '6da16962acf3882db6c7',
+    ),
+    'vendors' => 
+    array (
+    ),
+    'dependencies' => 
+    array (
+    ),
+  ),
+  991 => 
+  array (
+    'runtime' => false,
+    'files' => 
+    array (
+      0 => '991.js',
+    ),
+    'hash' => '8ecbb793a73da8e4efe3de7c6ab91961',
+    'contentHash' => 
+    array (
+      'javascript' => '36fb7526c0ad0fb240a6',
     ),
     'vendors' => 
     array (

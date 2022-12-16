@@ -1,8 +1,9 @@
 <?php
+
 /**
  * Class for creating a backup codes provider.
  *
- * @since 0.1-dev
+ * @since   0.1-dev
  *
  * @package Two_Factor
  */
@@ -10,6 +11,7 @@ class Two_Factor_Backup_Codes extends Two_Factor_Provider implements ITSEC_Two_F
 
 	/**
 	 * The user meta backup codes key.
+	 *
 	 * @type string
 	 */
 	const BACKUP_CODES_META_KEY = '_two_factor_backup_codes';
@@ -17,6 +19,7 @@ class Two_Factor_Backup_Codes extends Two_Factor_Provider implements ITSEC_Two_F
 
 	/**
 	 * The number backup codes.
+	 *
 	 * @type int
 	 */
 	const NUMBER_OF_CODES = 10;
@@ -32,6 +35,7 @@ class Two_Factor_Backup_Codes extends Two_Factor_Provider implements ITSEC_Two_F
 		if ( ! is_a( $instance, $class ) ) {
 			$instance = new $class;
 		}
+
 		return $instance;
 	}
 
@@ -70,9 +74,9 @@ class Two_Factor_Backup_Codes extends Two_Factor_Provider implements ITSEC_Two_F
 		<div class="error">
 			<p>
 				<span><?php printf( // WPCS: XSS OK.
-					__( 'Two-Factor: You are out of backup codes and need to <a href="%s">regenerate!</a>', 'better-wp-security' ),
-					esc_url( get_edit_user_link( $user->ID ) . '#two-factor-backup-codes' )
-				); ?><span>
+						__( 'Two-Factor: You are out of backup codes and need to <a href="%s">regenerate!</a>', 'better-wp-security' ),
+						esc_url( get_edit_user_link( $user->ID ) . '#two-factor-backup-codes' )
+					); ?><span>
 			</p>
 		</div>
 		<?php
@@ -93,6 +97,7 @@ class Two_Factor_Backup_Codes extends Two_Factor_Provider implements ITSEC_Two_F
 	 * @since 0.1-dev
 	 *
 	 * @param WP_User $user WP_User object of the logged-in user.
+	 *
 	 * @return boolean
 	 */
 	public function is_available_for_user( $user ) {
@@ -100,6 +105,7 @@ class Two_Factor_Backup_Codes extends Two_Factor_Provider implements ITSEC_Two_F
 		if ( 0 < self::codes_remaining_for_user( $user ) ) {
 			return true;
 		}
+
 		return false;
 	}
 
@@ -112,7 +118,7 @@ class Two_Factor_Backup_Codes extends Two_Factor_Provider implements ITSEC_Two_F
 	 */
 	public function user_options( $user ) {
 		$ajax_nonce = wp_create_nonce( 'two-factor-backup-codes-generate-json-' . $user->ID );
-		$count = self::codes_remaining_for_user( $user );
+		$count      = self::codes_remaining_for_user( $user );
 		?>
 		<p></p>
 		<p id="two-factor-backup-codes">
@@ -126,23 +132,23 @@ class Two_Factor_Backup_Codes extends Two_Factor_Provider implements ITSEC_Two_F
 			<p class="description"><?php esc_html_e( 'Write these down!  Once you navigate away from this page, you will not be able to view these codes again.', 'better-wp-security' ); ?></p>
 		</div>
 		<script type="text/javascript">
-			jQuery( document ).ready( function( $ ) {
-				$( '.button-two-factor-backup-codes-generate' ).click( function() {
+			jQuery( document ).ready( function ( $ ) {
+				$( '.button-two-factor-backup-codes-generate' ).click( function () {
 					$.ajax( {
-						method: 'POST',
-						url: ajaxurl,
-						data: {
-							action: 'two_factor_backup_codes_generate',
+						method  : 'POST',
+						url     : ajaxurl,
+						data    : {
+							action : 'two_factor_backup_codes_generate',
 							user_id: '<?php echo esc_js( $user->ID ); ?>',
-							nonce: '<?php echo esc_js( $ajax_nonce ); ?>'
+							nonce  : '<?php echo esc_js( $ajax_nonce ); ?>'
 						},
 						dataType: 'JSON',
-						success: function( response ) {
+						success : function ( response ) {
 							$( '.two-factor-backup-codes-wrapper' ).show();
 							$( '.two-factor-backup-codes-unused-codes' ).html( '' );
 
 							// Append the codes.
-							$.each( response.data.codes, function( key, val ) {
+							$.each( response.data.codes, function ( key, val ) {
 								$( '.two-factor-backup-codes-unused-codes' ).append( '<li>' + val + '</li>' );
 							} );
 
@@ -167,7 +173,7 @@ class Two_Factor_Backup_Codes extends Two_Factor_Provider implements ITSEC_Two_F
 	 * @return string[]
 	 */
 	public function generate_codes( $user, $args = '' ) {
-		$codes = array();
+		$codes        = array();
 		$codes_hashed = array();
 
 		// Check for arguments.
@@ -182,10 +188,10 @@ class Two_Factor_Backup_Codes extends Two_Factor_Provider implements ITSEC_Two_F
 			$codes_hashed = (array) get_user_meta( $user->ID, self::BACKUP_CODES_META_KEY, true );
 		}
 
-		for ( $i = 0; $i < $num_codes; $i++ ) {
-			$code = $this->get_code();
+		for ( $i = 0; $i < $num_codes; $i ++ ) {
+			$code           = $this->get_code();
 			$codes_hashed[] = wp_hash_password( $code );
-			$codes[] = $code;
+			$codes[]        = $code;
 			unset( $code );
 		}
 
@@ -207,7 +213,7 @@ class Two_Factor_Backup_Codes extends Two_Factor_Provider implements ITSEC_Two_F
 		// Setup the return data.
 		$codes = $this->generate_codes( $user );
 		$count = self::codes_remaining_for_user( $user );
-		$i18n = esc_html( sprintf( _n( '%s unused code remaining.', '%s unused codes remaining.', $count, 'better-wp-security' ), $count ) );
+		$i18n  = esc_html( sprintf( _n( '%s unused code remaining.', '%s unused codes remaining.', $count, 'better-wp-security' ), $count ) );
 
 		// Send the response.
 		wp_send_json_success( array( 'codes' => $codes, 'i18n' => $i18n ) );
@@ -217,6 +223,7 @@ class Two_Factor_Backup_Codes extends Two_Factor_Provider implements ITSEC_Two_F
 	 * Returns the number of unused codes for the specified user
 	 *
 	 * @param WP_User $user WP_User object of the logged-in user.
+	 *
 	 * @return int $int  The number of unused codes remaining
 	 */
 	public static function codes_remaining_for_user( $user ) {
@@ -224,6 +231,7 @@ class Two_Factor_Backup_Codes extends Two_Factor_Provider implements ITSEC_Two_F
 		if ( is_array( $backup_codes ) && ! empty( $backup_codes ) ) {
 			return count( $backup_codes );
 		}
+
 		return 0;
 	}
 
@@ -235,22 +243,23 @@ class Two_Factor_Backup_Codes extends Two_Factor_Provider implements ITSEC_Two_F
 	 * @param WP_User $user WP_User object of the logged-in user.
 	 */
 	public function authentication_page( $user ) {
-		require_once( ABSPATH .  '/wp-admin/includes/template.php' );
+		require_once( ABSPATH . '/wp-admin/includes/template.php' );
 		?>
 		<p style="padding-bottom:1em;"><?php esc_html_e( 'Enter a backup Authentication Code.', 'better-wp-security' ); ?></p><br/>
 		<p>
 			<label for="authcode"><?php esc_html_e( 'Authentication Code:', 'better-wp-security' ); ?></label>
-			<input type="tel" name="two-factor-backup-code" id="authcode" class="input" value="" size="20" pattern="[0-9]*" />
+			<input type="tel" name="two-factor-backup-code" id="authcode" class="input" value="" size="20" pattern="[0-9]*"/>
 		</p>
 		<script type="text/javascript">
-			setTimeout( function(){
+			setTimeout( function () {
 				var d;
-				try{
-					d = document.getElementById('authcode');
+				try {
+					d = document.getElementById( 'authcode' );
 					d.value = '';
 					d.focus();
-				} catch(e){}
-			}, 200);
+				} catch ( e ) {
+				}
+			}, 200 );
 		</script>
 		<?php
 		submit_button( __( 'Submit', 'better-wp-security' ) );
@@ -264,6 +273,7 @@ class Two_Factor_Backup_Codes extends Two_Factor_Provider implements ITSEC_Two_F
 	 * @since 0.1-dev
 	 *
 	 * @param WP_User $user WP_User object of the logged-in user.
+	 *
 	 * @return boolean
 	 */
 	public function validate_authentication( $user ) {
@@ -279,6 +289,7 @@ class Two_Factor_Backup_Codes extends Two_Factor_Provider implements ITSEC_Two_F
 	 *
 	 * @param WP_User $user WP_User object of the logged-in user.
 	 * @param int     $code The backup code.
+	 *
 	 * @return boolean
 	 */
 	public function validate_code( $user, $code ) {
@@ -287,9 +298,11 @@ class Two_Factor_Backup_Codes extends Two_Factor_Provider implements ITSEC_Two_F
 		foreach ( $backup_codes as $code_index => $code_hashed ) {
 			if ( wp_check_password( $code, $code_hashed, $user->ID ) ) {
 				$this->delete_code( $user, $code_hashed );
+
 				return true;
 			}
 		}
+
 		return false;
 	}
 
@@ -298,7 +311,7 @@ class Two_Factor_Backup_Codes extends Two_Factor_Provider implements ITSEC_Two_F
 	 *
 	 * @since 0.1-dev
 	 *
-	 * @param WP_User $user WP_User object of the logged-in user.
+	 * @param WP_User $user        WP_User object of the logged-in user.
 	 * @param string  $code_hashed The hashed the backup code.
 	 */
 	public function delete_code( $user, $code_hashed ) {
@@ -393,6 +406,21 @@ class Two_Factor_Backup_Codes extends Two_Factor_Provider implements ITSEC_Two_F
 			WP_CLI::log( sprintf( 'Backup Codes: %s', $as_string ) );
 		} else {
 			WP_CLI::log( $as_string );
+		}
+	}
+
+	public function get_config_for_cli( WP_User $user, array $args ) {
+		$codes = get_user_meta( $user->ID, self::BACKUP_CODES_META_KEY, true );
+		$count = is_array( $codes ) ? count( $codes ) : 0;
+
+		if ( empty( $args['porcelain'] ) ) {
+			WP_CLI::log(
+				$count === 1 ?
+					'1 code remaining' :
+					sprintf( '%d codes remaining', $count )
+			);
+		} else {
+			WP_CLI::log( $count );
 		}
 	}
 }

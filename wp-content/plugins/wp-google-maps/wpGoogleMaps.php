@@ -3,7 +3,7 @@
 Plugin Name: WP Go Maps (formerly WP Google Maps)
 Plugin URI: https://www.wpgmaps.com
 Description: The easiest to use Google Maps plugin! Create custom Google Maps with high quality markers containing locations, descriptions, images and links. Add your customized map to your WordPress posts and/or pages quickly and easily with the supplied shortcode. No fuss.
-Version: 9.0.11
+Version: 9.0.14
 Author: WP Go Maps
 Author URI: https://www.wpgmaps.com
 Text Domain: wp-google-maps
@@ -12,6 +12,35 @@ Domain Path: /languages
 
 
 /*
+ * 9.0.14 - 2022-12-14
+ * Improved PHP8.1 compatibility by introducing "#[\ReturnTypeWillChange]" to classes which extend without return types
+ * Improved overall stability of Gutenberg modules
+ * Improved settings area styling (Atlas Novus)
+ * Fixed issue where some panel/component layouts would be visible outside of container during initialization
+ * Fixed issue where updateOffset would fail on Google Markers in some older installations
+ * Fixed issue where styling page had a typo for the phrase "effect" (Atlas Novus)
+ * Fixed issue where some (most) translations would include "1" before the radius selection unit
+ * Fixed issue where remove duplicate would delete duplicates from different maps (Thanks Nicoletta Maia)
+ * Fixed issue where shape hit regions would be calculated incorrectly at alternate broswer zoom levels and retina displays (OpenLayers)
+ * Fixed issue where some older themes would throw a warning in widget area due to Gutenberg integration
+ * Fixed issue where some installations would cause an activation error which could cause some automated test systems to falsely flag the plugin as not compatible with a PHP version (Example: WP Hive)
+ * 
+ * 9.0.13 - 2022-11-01
+ * Fixed issue where map would not initialize in some AMP environments, even when AMP is disabled, due to prototype overrides
+ * Fixed issue where Google Maps API would not load correctly for zn_CN locale users
+ * Fixed issue where Upgrader class did not assert validity of the fromVersion, which could lead to errors 
+ * Fixed issue where Settings class would not properly correct corrupted settings objects
+ * Update Atlas Novus install ratio to split based on the day in the month, this should be more consistent 
+ * Updated all translation files to include missing string definitions 
+ * Updated all translation definitions to not be "fuzzy"
+ * Update it_IT translation file (Thanks to updownbikes)
+ * Tested up to WordPress 6.1
+ * 
+ * 9.0.12 - 2022-10-13
+ * Fixed issue where minified library files were being loaded when in developer mode only
+ * Fixed issue with CRUD class KSES processing
+ * Updated Atlas Novus install ratio probability calculations to use a larger sample range
+ * 
  * 9.0.11 - 2022-09-20 
  * Added various supports for Pro add-on settings
  * Fixed issue with country code module where it was using TLD instead of ISO 3166-1 alpha-2 

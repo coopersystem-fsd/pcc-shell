@@ -38,8 +38,10 @@ final class RequestIntegration implements \Sentry\Integration\IntegrationInterfa
     /**
      * This constant is a map of maximum allowed sizes for each value of the
      * `max_request_body_size` option.
+     *
+     * @deprecated The 'none' option is deprecated since version 3.10, to be removed in 4.0
      */
-    private const MAX_REQUEST_BODY_SIZE_OPTION_TO_MAX_LENGTH_MAP = ['none' => 0, 'small' => self::REQUEST_BODY_SMALL_MAX_CONTENT_LENGTH, 'medium' => self::REQUEST_BODY_MEDIUM_MAX_CONTENT_LENGTH, 'always' => -1];
+    private const MAX_REQUEST_BODY_SIZE_OPTION_TO_MAX_LENGTH_MAP = ['none' => 0, 'never' => 0, 'small' => self::REQUEST_BODY_SMALL_MAX_CONTENT_LENGTH, 'medium' => self::REQUEST_BODY_MEDIUM_MAX_CONTENT_LENGTH, 'always' => -1];
     /**
      * This constant defines the default list of headers that may contain
      * sensitive data and that will be sanitized if sending PII is disabled.
@@ -128,13 +130,15 @@ final class RequestIntegration implements \Sentry\Integration\IntegrationInterfa
     /**
      * Removes headers containing potential PII.
      *
-     * @param array<string, string[]> $headers Array containing request headers
+     * @param array<array-key, string[]> $headers Array containing request headers
      *
      * @return array<string, string[]>
      */
     private function sanitizeHeaders(array $headers) : array
     {
         foreach ($headers as $name => $values) {
+            // Cast the header name into a string, to avoid errors on numeric headers
+            $name = (string) $name;
             if (!\in_array(\strtolower($name), $this->options['pii_sanitize_headers'], \true)) {
                 continue;
             }
@@ -204,7 +208,7 @@ final class RequestIntegration implements \Sentry\Integration\IntegrationInterfa
         if ($requestBodySize <= 0) {
             return \false;
         }
-        if ('none' === $maxRequestBodySize) {
+        if ('none' === $maxRequestBodySize || 'never' === $maxRequestBodySize) {
             return \false;
         }
         if ('small' === $maxRequestBodySize && $requestBodySize > self::REQUEST_BODY_SMALL_MAX_CONTENT_LENGTH) {

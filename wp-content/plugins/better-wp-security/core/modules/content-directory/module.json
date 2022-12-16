@@ -1,5 +1,5 @@
 {
-  "id": "admin-user",
+  "id": "content-directory",
   "type": "tool",
   "status": "default-inactive",
   "deprecated": "8.0.0",

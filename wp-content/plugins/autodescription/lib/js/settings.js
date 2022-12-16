@@ -465,9 +465,9 @@ window.tsfSettings = function( $ ) {
 			let examples = document.querySelectorAll( '.tsf-site-title-js' ),
 				newVal   = tsf.decodeEntities( tsf.sDoubleSpace( event.target.value.trim() ) );
 
-			newVal = newVal || tsf.decodeEntities( event.target.placeholder );
+			newVal ||= tsf.decodeEntities( event.target.placeholder );
 
-	   		tsfTitle.updateStateOf( homeTitleId, 'defaultTitle', newVal );
+			tsfTitle.updateStateOf( homeTitleId, 'defaultTitle', newVal );
 			tsfTitle.updateStateAll( 'additionValue', newVal, homeTitleId );
 
 			let htmlVal = tsf.escapeString( newVal );
@@ -494,6 +494,8 @@ window.tsfSettings = function( $ ) {
 		const titleInput    = document.getElementById( _titleId ),
 			  taglineInput  = document.getElementById( _getSettingsId( 'homepage_title_tagline' ) ),
 			  taglineToggle = document.getElementById( _getSettingsId( 'homepage_tagline' ) );
+
+		if ( ! titleInput ) return;
 
 		tsfTitle.setInputElement( titleInput );
 
@@ -803,7 +805,7 @@ window.tsfSettings = function( $ ) {
 	 * @access private
 	 *
 	 * @param {string|undefined} postType
-	 * @return {Object<string,{label:string,url:string,hasPosts:boolean}>}
+	 * @return {{label:string,url:string,hasPosts:boolean}}
 	 */
 	const _getPtaData = () => _cachedPtaData ||= JSON.parse(
 		document.getElementById( 'tsf-post-type-archive-data' )?.dataset.postTypes || 0
@@ -960,10 +962,12 @@ window.tsfSettings = function( $ ) {
 	 */
 	 const _initPtaTitleSettings = postType => {
 
-		const _titleId = _getPtaInputId( postType, 'doctitle' ),
-			  _inputEl = document.getElementById( _titleId );
+		const _titleId   = _getPtaInputId( postType, 'doctitle' ),
+			  titleInput = document.getElementById( _titleId );
 
-		tsfTitle.setInputElement( _inputEl );
+		if ( ! titleInput ) return;
+
+		tsfTitle.setInputElement( titleInput );
 
 		const state = JSON.parse(
 			document.getElementById( `tsf-title-data_${_titleId}` )?.dataset.state || 0
@@ -993,7 +997,7 @@ window.tsfSettings = function( $ ) {
 
 			tsfTitle.updateStateOf( _titleId, 'showPrefix', showPrefix );
 		}
-		_inputEl.addEventListener( 'input', updateTitlePrefix );
+		titleInput.addEventListener( 'input', updateTitlePrefix );
 
 		/**
 		 * Updates title additions, based on singular settings change.
@@ -1048,9 +1052,12 @@ window.tsfSettings = function( $ ) {
 	 */
 	const _initPtaDescriptionSettings = postType => {
 
-		const _descId = _getPtaInputId( postType, 'description' );
+		const _descId   = _getPtaInputId( postType, 'description' ),
+			  descInput = document.getElementById( _descId );
 
-		tsfDescription.setInputElement( document.getElementById( _descId ) );
+		if ( ! descInput ) return;
+
+		tsfDescription.setInputElement( descInput );
 
 		const state = JSON.parse(
 			document.getElementById( `tsf-description-data_${_descId}` )?.dataset.state || 0

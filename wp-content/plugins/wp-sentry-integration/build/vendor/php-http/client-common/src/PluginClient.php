@@ -105,7 +105,6 @@ final class PluginClient implements \WPSentry\ScopedVendor\Http\Client\HttpClien
      */
     private function createPluginChain(array $plugins, callable $clientCallable) : callable
     {
-        /** @var callable(RequestInterface): Promise */
         return new \WPSentry\ScopedVendor\Http\Client\Common\PluginChain($plugins, $clientCallable, $this->options);
     }
 }

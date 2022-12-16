@@ -218,7 +218,7 @@ final class Page extends Main {
 				}
 			}
 
-			if ( static::$tsf->has_yoast_syntax( $title_part ) ) {
+			if ( static::$tsf->has_unprocessed_syntax( $title_part ) ) {
 				$item['status']           = \The_SEO_Framework\Interpreters\SEOBar::STATE_BAD;
 				$item['reason']           = $cache['reason']['syntax'];
 				$item['assess']['syntax'] = $cache['assess']['syntax'];
@@ -436,7 +436,7 @@ final class Page extends Main {
 				}
 			}
 
-			if ( static::$tsf->has_yoast_syntax( $desc ) ) {
+			if ( static::$tsf->has_unprocessed_syntax( $desc ) ) {
 				$item['status']           = \The_SEO_Framework\Interpreters\SEOBar::STATE_BAD;
 				$item['reason']           = $cache['reason']['syntax'];
 				$item['assess']['syntax'] = $cache['assess']['syntax'];
@@ -474,10 +474,11 @@ final class Page extends Main {
 
 				// No description is found. There's no need to continue parsing.
 				return $item;
-			} else {
-				if ( ! empty( $this->query_cache['post']->post_excerpt ) ) {
-					$item['assess']['base'] = $cache['assess']['excerpt'];
-				}
+			} elseif ( ! empty( $this->query_cache['post']->post_excerpt ) ) {
+				// FIXME: This is not necessarily true if the field is filtered...
+				// TODO test if filter "the_seo_framework_fetched_description_excerpt" is used?
+				// Use something like the robots generator...? Ugh, here we go again.
+				$item['assess']['base'] = $cache['assess']['excerpt'];
 			}
 		}
 
@@ -518,6 +519,7 @@ final class Page extends Main {
 		$guidelines      = static::$tsf->get_input_guidelines( $this->query_cache['states']['locale'] )['description']['search']['chars'];
 		$guidelines_i18n = static::get_cache( 'general/i18n/inputguidelines' );
 
+		// TODO FIXME: Use s_description() instead of s_description_raw()? E.g, hellip gets converted to dot dot dot..
 		$desc_len = mb_strlen(
 			html_entity_decode(
 				\wp_specialchars_decode( static::$tsf->s_description_raw( $desc ), ENT_QUOTES ),

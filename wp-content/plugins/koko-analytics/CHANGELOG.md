@@ -1,5 +1,23 @@
 # Changelog
 
+### 1.0.37 - Dec 07, 2022
+
+- Fix potential issue in tracking script causing incorrect stats collection.
+
+
+### 1.0.36 - Dec 06, 2022
+
+- Shrink size of tracking script to 985 bytes (when using gzip compression).
+
+
+### 1.0.35 - Oct 21, 2022
+
+- You can now call `koko_analytics.trackPageview( postId )` to manually track a pageview. This is especially useful for Single Page Applications.
+- Update referrer blocklist.
+- If referrer URL is on referrer blocklist, the entire request is now ignored (vs. just the referrer part).
+- Update JavaScript dependencies.
+
+
 #### 1.0.34 - Sep 19, 2022
 
 - Track visits to front page (if not a static page) as well.

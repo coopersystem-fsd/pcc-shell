@@ -184,7 +184,7 @@ class ITSEC_Site_Scanner_Mail {
 			$mail->add_large_text( esc_html__( 'What Actions Should I Take?', 'better-wp-security' ) );
 			$mail->add_text(
 				esc_html__( 'Vulnerable WordPress plugins and themes are the #1 reason WordPress sites get hacked.', 'better-wp-security' ) .
-				' <b>' . esc_html__( 'Either quickly update the vulnerable theme, plugin or WordPress version immediately to the newest version or immediately deactivate the plugin or theme until a fix is available.', 'better-wp-security' ) . '</b>',
+				' <b>' . esc_html__( 'Either quickly update the vulnerable theme, plugin or WordPress version immediately to the newest version or immediately deactivate and delete the plugin or theme from your WordPress installation until a fix is available.', 'better-wp-security' ) . '</b>',
 				'dark'
 			);
 

@@ -4,16 +4,7 @@ class EasyWPSMTP_Admin {
 
 	public function __construct() {
 		add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts' ) );
-		add_action( 'admin_menu', array( $this, 'admin_menu' ) );
-	}
-
-	public function remove_conflicting_scripts() {
-		$html = ob_get_clean();
-		if ( defined( 'CLICKY_PLUGIN_DIR_URL' ) ) {
-			$expr = '/^(.*)' . preg_quote( CLICKY_PLUGIN_DIR_URL, '/' ) . '(.*)$/m';
-			$html = preg_replace( $expr, '', $html );
-		}
-		echo $html;
+		add_action( 'admin_menu', array( $this, 'admin_menu' ) );		
 	}
 
 	public function admin_enqueue_scripts( $hook ) {
@@ -46,13 +37,6 @@ class EasyWPSMTP_Admin {
 		);
 		wp_localize_script( 'swpsmtp_admin_js', 'easywpsmtp', $params );
 		wp_enqueue_script( 'swpsmtp_admin_js' );
-
-		// `Clicky by Yoast` plugin's admin-side scripts should be removed from settings page to prevent JS errors
-		// https://wordpress.org/support/topic/plugin-causing-conflicts-on-admin-side/
-		if ( class_exists( 'Clicky_Admin' ) ) {
-			ob_start();
-			add_action( 'admin_print_scripts', array( $this, 'remove_conflicting_scripts' ), 10000 );
-		}
 	}
 
 	public function admin_menu() {
@@ -134,16 +118,16 @@ function swpsmtp_settings() {
 			$swpsmtp_options['email_ignore_list'] = sanitize_text_field( $_POST['swpsmtp_email_ignore_list'] );
 		}
 
-		$swpsmtp_options['smtp_settings']['host']            = stripslashes( $_POST['swpsmtp_smtp_host'] );
+		$swpsmtp_options['smtp_settings']['host']            = sanitize_text_field( stripslashes( $_POST['swpsmtp_smtp_host'] ) );
 		$swpsmtp_options['smtp_settings']['type_encryption'] = ( isset( $_POST['swpsmtp_smtp_type_encryption'] ) ) ? sanitize_text_field( $_POST['swpsmtp_smtp_type_encryption'] ) : 'none';
 		$swpsmtp_options['smtp_settings']['autentication']   = ( isset( $_POST['swpsmtp_smtp_autentication'] ) ) ? sanitize_text_field( $_POST['swpsmtp_smtp_autentication'] ) : 'yes';
-		$swpsmtp_options['smtp_settings']['username']        = stripslashes( $_POST['swpsmtp_smtp_username'] );
+		$swpsmtp_options['smtp_settings']['username']        = sanitize_text_field( stripslashes( $_POST['swpsmtp_smtp_username'] ) );
 
 		$swpsmtp_options['smtp_settings']['enable_debug'] = isset( $_POST['swpsmtp_enable_debug'] ) ? 1 : false;
 		$swpsmtp_options['smtp_settings']['insecure_ssl'] = isset( $_POST['swpsmtp_insecure_ssl'] ) ? 1 : false;
 		$swpsmtp_options['smtp_settings']['encrypt_pass'] = isset( $_POST['swpsmtp_encrypt_pass'] ) ? 1 : false;
 
-		$smtp_password = $_POST['swpsmtp_smtp_password'];
+		$smtp_password = sanitize_text_field( $_POST['swpsmtp_smtp_password'] );
 		if ( $smtp_password !== $gag_password ) {
 			$swpsmtp_options['smtp_settings']['password'] = $easy_wp_smtp->encrypt_password( $smtp_password );
 		}
@@ -165,7 +149,7 @@ function swpsmtp_settings() {
 
 		/* Check value from "SMTP port" option */
 		if ( isset( $_POST['swpsmtp_smtp_port'] ) ) {
-			if ( empty( $_POST['swpsmtp_smtp_port'] ) || 1 > intval( $_POST['swpsmtp_smtp_port'] ) || ( ! preg_match( '/^\d+$/', $_POST['swpsmtp_smtp_port'] ) ) ) {
+			if ( empty( $_POST['swpsmtp_smtp_port'] ) || 1 > intval( $_POST['swpsmtp_smtp_port'] ) || ( ! preg_match( '/^\d+$/', intval($_POST['swpsmtp_smtp_port'] ) ) ) ) {
 				$swpsmtp_options['smtp_settings']['port'] = '25';
 				$error                                   .= ' ' . __( "Please enter a valid port in the 'SMTP Port' field.", 'easy-wp-smtp' );
 			} else {
@@ -427,16 +411,10 @@ function swpsmtp_settings() {
 						<div class="inside">
 							<p><?php esc_html_e( 'Actions in this section can (and some of them will) erase or mess up your settings. Use it with caution.', 'easy-wp-smtp' ); ?></p>
 							<table class="form-table">
-								<tr valign="top">
-									<th scope="row"><?php esc_html_e( 'Export\Import Settings', 'easy-wp-smtp' ); ?></th>
-									<td>
-										<button id="swpsmtp_export_settings_btn" type="button" class="button"><?php esc_html_e( 'Export Settings', 'easy-wp-smtp' ); ?></button>
-										<p class="description"><?php esc_html_e( 'Use this to export plugin settings to a file.', 'easy-wp-smtp' ); ?></p>
-										<p></p>
-										<button id="swpsmtp_import_settings_btn" type="button" class="button"><?php esc_html_e( 'Import Settings', 'easy-wp-smtp' ); ?></button>
-										<p class="description"><?php esc_html_e( 'Use this to import plugin settings from a file. Note this would replace all your existing settings, so use with caution.', 'easy-wp-smtp' ); ?></p>
-									</td>
-								</tr>
+								
+								<!-- Requires plugin: easy-wp-smtp-export-import-settings -->
+								<?php do_action("easy_wp_smtp_export_import_settings"); ?>
+
 								<tr valign="top">
 									<th scope="row"><?php esc_html_e( 'Delete Settings and Deactivate Plugin', 'easy-wp-smtp' ); ?></th>
 									<td>
@@ -451,16 +429,8 @@ function swpsmtp_settings() {
 				</div>
 			</form>
 
-			<form id="swpsmtp_export_settings_frm" style="display: none;" method="POST">
-				<input type="hidden" name="swpsmtp_export_settings" value="1">
-				<?php wp_nonce_field( 'easy_wp_smtp_export_settings', 'easy_wp_smtp_export_settings_nonce' ); ?>
-			</form>
-
-			<form id="swpsmtp_import_settings_frm" style="display: none;" method="POST" enctype="multipart/form-data">
-				<input type="hidden" name="swpsmtp_import_settings" value="1">
-				<input id="swpsmtp_import_settings_select_file" type="file" name="swpsmtp_import_settings_file">
-				<?php wp_nonce_field( 'easy_wp_smtp_import_settings', 'easy_wp_smtp_import_settings_nonce' ); ?>
-			</form>
+			<!-- Requires plugin: easy-wp-smtp-export-import-settings -->
+			<?php do_action("easy_wp_smtp_export_import_hidden_forms_settings"); ?>
 
 			<div class="swpsmtp-tab-container" data-tab-name="testemail">
 				<div class="postbox">

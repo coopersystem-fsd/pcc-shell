@@ -315,6 +315,7 @@ final class ITSEC_Debug_Page {
 			'ITSEC_ENABLE_BACKUPS',
 			'ITSEC_FORCE_UNINSTALL',
 			'ITSEC_IGNORE_MODULE_REQUIREMENTS',
+			'ITSEC_FORCE_INSTALL_TYPE',
 		);
 
 		ITSEC_Lib::load( 'feature-flags' );

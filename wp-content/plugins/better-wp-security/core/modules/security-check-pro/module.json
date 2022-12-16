@@ -1,6 +1,6 @@
 {
   "id": "security-check-pro",
-  "status":{
+  "status": {
     "free": "default-inactive",
     "pro": "always-active"
   },
@@ -31,6 +31,22 @@
         ],
         "minimum": 0,
         "default": null,
+        "readonly": true
+      },
+      "ip_header": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "position_from_end": {
+            "type": "integer"
+          }
+        },
+        "default": {
+          "name": "",
+          "position_from_end": -1
+        },
         "readonly": true
       },
       "remote_ip_index": {

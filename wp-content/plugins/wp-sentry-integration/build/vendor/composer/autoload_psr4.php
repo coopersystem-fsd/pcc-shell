@@ -23,7 +23,6 @@ return array(
     'WPSentry\\ScopedVendor\\GuzzleHttp\\Promise\\' => array($vendorDir . '/guzzlehttp/promises/src'),
     'WPSentry\\ScopedVendor\\Composer\\Installers\\' => array($vendorDir . '/composer/installers/src/Composer/Installers'),
     'WPSentry\\ScopedVendor\\Clue\\StreamFilter\\' => array($vendorDir . '/clue/stream-filter/src'),
-    'Symfony\\Polyfill\\Uuid\\' => array($vendorDir . '/symfony/polyfill-uuid'),
     'Symfony\\Polyfill\\Php80\\' => array($vendorDir . '/symfony/polyfill-php80'),
     'Sentry\\' => array($vendorDir . '/sentry/sentry/src'),
 );

@@ -35,7 +35,7 @@ final class ContentTypePlugin implements \WPSentry\ScopedVendor\Http\Client\Comm
      *
      * Configuration options:
      *   - skip_detection: true skip detection if stream size is bigger than $size_limit
-     *   - size_limit: size stream limit for which the detection as to be skipped.
+     *   - size_limit: size stream limit for which the detection as to be skipped
      */
     public function __construct(array $config = [])
     {

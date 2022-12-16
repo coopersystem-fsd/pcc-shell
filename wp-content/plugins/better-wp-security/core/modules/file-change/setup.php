@@ -300,7 +300,7 @@ class ITSEC_File_Change_Setup {
 			ITSEC_File_Change_Scanner::schedule_start( false );
 		}
 
-		if ( $itsec_old_version > 4114 ) {
+		if ( $itsec_old_version < 4114 ) {
 			if ( ! ITSEC_Modules::get_setting( 'file-change', 'notify_admin' ) ) {
 				ITSEC_Lib::load( 'highlighted-logs' );
 				ITSEC_Lib_Highlighted_Logs::mute( 'file-change-report' );

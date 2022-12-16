@@ -10,7 +10,8 @@ class ITSEC_REST {
 	public function run() {
 		add_action( 'rest_api_init', array( $this, 'rest_api_init' ), 0 );
 		add_filter( 'rest_response_link_curies', array( $this, 'register_curie' ) );
-		add_filter( 'rest_namespace_index', array( $this, 'modify_index' ) );
+		add_filter( 'rest_index', array( $this, 'modify_global_index' ) );
+		add_filter( 'rest_namespace_index', array( $this, 'modify_index' ), 10, 2 );
 		add_filter( 'rest_user_collection_params', [ $this, 'register_global_users_query' ] );
 		add_filter( 'rest_user_query', [ $this, 'apply_global_users_query' ], 10, 2 );
 		add_filter( 'rest_request_from_url', [ $this, 'retain_auth_header_from_embeds' ] );
@@ -72,13 +73,31 @@ class ITSEC_REST {
 	}
 
 	/**
-	 * Modify the ithemes-security/v1 index to include some additional global information we need.
+	 * Modifies the global `/wp-json` index.
 	 *
 	 * @param WP_REST_Response $response
 	 *
 	 * @return WP_REST_Response
 	 */
-	public function modify_index( $response ) {
+	public function modify_global_index( $response ) {
+		$response->data['multisite'] = is_multisite();
+
+		return $response;
+	}
+
+	/**
+	 * Modify the ithemes-security/v1 index to include some additional global information we need.
+	 *
+	 * @param WP_REST_Response $response
+	 * @param WP_REST_Request  $request
+	 *
+	 * @return WP_REST_Response
+	 */
+	public function modify_index( $response, $request ) {
+		if ( $request['namespace'] !== 'ithemes-security/v1' ) {
+			return $response;
+		}
+
 		if (
 			ITSEC_Core::current_user_can_manage() ||
 			current_user_can( 'create_users' ) ||
@@ -95,6 +114,10 @@ class ITSEC_REST {
 			}
 
 			$response->data['roles'] = $roles;
+		}
+
+		if ( ITSEC_Core::current_user_can_manage() ) {
+			$response->data['requirements_info'] = ITSEC_Lib::get_requirements_info();
 		}
 
 		$response->data['supports'] = apply_filters( 'itsec_rest_supports', [] );

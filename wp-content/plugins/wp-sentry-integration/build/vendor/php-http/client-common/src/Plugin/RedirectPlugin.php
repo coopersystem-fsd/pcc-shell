@@ -3,14 +3,20 @@
 declare (strict_types=1);
 namespace WPSentry\ScopedVendor\Http\Client\Common\Plugin;
 
+use WPSentry\ScopedVendor\GuzzleHttp\Psr7\Utils;
 use WPSentry\ScopedVendor\Http\Client\Common\Exception\CircularRedirectionException;
 use WPSentry\ScopedVendor\Http\Client\Common\Exception\MultipleRedirectionException;
 use WPSentry\ScopedVendor\Http\Client\Common\Plugin;
 use WPSentry\ScopedVendor\Http\Client\Exception\HttpException;
+use WPSentry\ScopedVendor\Http\Discovery\Psr17FactoryDiscovery;
 use WPSentry\ScopedVendor\Http\Promise\Promise;
+use WPSentry\ScopedVendor\Nyholm\Psr7\Factory\Psr17Factory;
 use WPSentry\ScopedVendor\Psr\Http\Message\RequestInterface;
 use WPSentry\ScopedVendor\Psr\Http\Message\ResponseInterface;
+use WPSentry\ScopedVendor\Psr\Http\Message\StreamFactoryInterface;
+use WPSentry\ScopedVendor\Psr\Http\Message\StreamInterface;
 use WPSentry\ScopedVendor\Psr\Http\Message\UriInterface;
+use WPSentry\ScopedVendor\Symfony\Component\OptionsResolver\Options;
 use WPSentry\ScopedVendor\Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * Follow redirections.
@@ -52,25 +58,34 @@ final class RedirectPlugin implements \WPSentry\ScopedVendor\Http\Client\Common\
      */
     private $circularDetection = [];
     /**
+     * @var StreamFactoryInterface|null
+     */
+    private $streamFactory;
+    /**
      * @param array{'preserve_header'?: bool|string[], 'use_default_for_multiple'?: bool, 'strict'?: bool} $config
      *
      * Configuration options:
      *   - preserve_header: True keeps all headers, false remove all of them, an array is interpreted as a list of header names to keep
      *   - use_default_for_multiple: Whether the location header must be directly used for a multiple redirection status code (300)
-     *   - strict: When true, redirect codes 300, 301, 302 will not modify request method and body.
+     *   - strict: When true, redirect codes 300, 301, 302 will not modify request method and body
+     *   - stream_factory: If set, must be a PSR-17 StreamFactoryInterface - if not set, we try to discover one
      */
     public function __construct(array $config = [])
     {
         $resolver = new \WPSentry\ScopedVendor\Symfony\Component\OptionsResolver\OptionsResolver();
-        $resolver->setDefaults(['preserve_header' => \true, 'use_default_for_multiple' => \true, 'strict' => \false]);
+        $resolver->setDefaults(['preserve_header' => \true, 'use_default_for_multiple' => \true, 'strict' => \false, 'stream_factory' => null]);
         $resolver->setAllowedTypes('preserve_header', ['bool', 'array']);
         $resolver->setAllowedTypes('use_default_for_multiple', 'bool');
         $resolver->setAllowedTypes('strict', 'bool');
+        $resolver->setAllowedTypes('stream_factory', [\WPSentry\ScopedVendor\Psr\Http\Message\StreamFactoryInterface::class, 'null']);
         $resolver->setNormalizer('preserve_header', function (\WPSentry\ScopedVendor\Symfony\Component\OptionsResolver\OptionsResolver $resolver, $value) {
             if (\is_bool($value) && \false === $value) {
                 return [];
             }
             return $value;
+        });
+        $resolver->setDefault('stream_factory', function (\WPSentry\ScopedVendor\Symfony\Component\OptionsResolver\Options $options) : ?StreamFactoryInterface {
+            return $this->guessStreamFactory();
         });
         $options = $resolver->resolve($config);
         $this->preserveHeader = $options['preserve_header'];
@@ -80,6 +95,7 @@ final class RedirectPlugin implements \WPSentry\ScopedVendor\Http\Client\Common\
             $this->redirectCodes[301]['switch'] = \false;
             $this->redirectCodes[302]['switch'] = \false;
         }
+        $this->streamFactory = $options['stream_factory'];
     }
     /**
      * {@inheritdoc}
@@ -105,7 +121,7 @@ final class RedirectPlugin implements \WPSentry\ScopedVendor\Http\Client\Common\
                 $this->circularDetection[$chainIdentifier] = [];
             }
             $this->circularDetection[$chainIdentifier][] = (string) $request->getUri();
-            if (\in_array((string) $redirectRequest->getUri(), $this->circularDetection[$chainIdentifier])) {
+            if (\in_array((string) $redirectRequest->getUri(), $this->circularDetection[$chainIdentifier], \true)) {
                 throw new \WPSentry\ScopedVendor\Http\Client\Common\Exception\CircularRedirectionException('Circular redirection detected', $request, $response);
             }
             if ($this->redirectCodes[$statusCode]['permanent']) {
@@ -115,16 +131,56 @@ final class RedirectPlugin implements \WPSentry\ScopedVendor\Http\Client\Common\
             return $first($redirectRequest)->wait();
         });
     }
+    /**
+     * The default only needs to be determined if no value is provided.
+     */
+    public function guessStreamFactory() : ?\WPSentry\ScopedVendor\Psr\Http\Message\StreamFactoryInterface
+    {
+        if (\class_exists(\WPSentry\ScopedVendor\Http\Discovery\Psr17FactoryDiscovery::class)) {
+            try {
+                return \WPSentry\ScopedVendor\Http\Discovery\Psr17FactoryDiscovery::findStreamFactory();
+            } catch (\Throwable $t) {
+                // ignore and try other options
+            }
+        }
+        if (\class_exists(\WPSentry\ScopedVendor\Nyholm\Psr7\Factory\Psr17Factory::class)) {
+            return new \WPSentry\ScopedVendor\Nyholm\Psr7\Factory\Psr17Factory();
+        }
+        if (\class_exists(\WPSentry\ScopedVendor\GuzzleHttp\Psr7\Utils::class)) {
+            return new class implements \WPSentry\ScopedVendor\Psr\Http\Message\StreamFactoryInterface
+            {
+                public function createStream(string $content = '') : \WPSentry\ScopedVendor\Psr\Http\Message\StreamInterface
+                {
+                    return \WPSentry\ScopedVendor\GuzzleHttp\Psr7\Utils::streamFor($content);
+                }
+                public function createStreamFromFile(string $filename, string $mode = 'r') : \WPSentry\ScopedVendor\Psr\Http\Message\StreamInterface
+                {
+                    throw new \RuntimeException('Internal error: this method should not be needed');
+                }
+                public function createStreamFromResource($resource) : \WPSentry\ScopedVendor\Psr\Http\Message\StreamInterface
+                {
+                    throw new \RuntimeException('Internal error: this method should not be needed');
+                }
+            };
+        }
+        return null;
+    }
     private function buildRedirectRequest(\WPSentry\ScopedVendor\Psr\Http\Message\RequestInterface $originalRequest, \WPSentry\ScopedVendor\Psr\Http\Message\UriInterface $targetUri, int $statusCode) : \WPSentry\ScopedVendor\Psr\Http\Message\RequestInterface
     {
         $originalRequest = $originalRequest->withUri($targetUri);
-        if (\false !== $this->redirectCodes[$statusCode]['switch'] && !\in_array($originalRequest->getMethod(), $this->redirectCodes[$statusCode]['switch']['unless'])) {
+        if (\false !== $this->redirectCodes[$statusCode]['switch'] && !\in_array($originalRequest->getMethod(), $this->redirectCodes[$statusCode]['switch']['unless'], \true)) {
             $originalRequest = $originalRequest->withMethod($this->redirectCodes[$statusCode]['switch']['to']);
+            if ('GET' === $this->redirectCodes[$statusCode]['switch']['to'] && $this->streamFactory) {
+                // if we found a stream factory, remove the request body. otherwise leave the body there.
+                $originalRequest = $originalRequest->withoutHeader('content-type');
+                $originalRequest = $originalRequest->withoutHeader('content-length');
+                $originalRequest = $originalRequest->withBody($this->streamFactory->createStream());
+            }
         }
         if (\is_array($this->preserveHeader)) {
             $headers = \array_keys($originalRequest->getHeaders());
             foreach ($headers as $name) {
-                if (!\in_array($name, $this->preserveHeader)) {
+                if (!\in_array($name, $this->preserveHeader, \true)) {
                     $originalRequest = $originalRequest->withoutHeader($name);
                 }
             }
@@ -147,10 +203,35 @@ final class RedirectPlugin implements \WPSentry\ScopedVendor\Http\Client\Common\
         }
         $location = $redirectResponse->getHeaderLine('Location');
         $parsedLocation = \parse_url($location);
-        if (\false === $parsedLocation) {
-            throw new \WPSentry\ScopedVendor\Http\Client\Exception\HttpException(\sprintf('Location %s could not be parsed', $location), $originalRequest, $redirectResponse);
+        if (\false === $parsedLocation || '' === $location) {
+            throw new \WPSentry\ScopedVendor\Http\Client\Exception\HttpException(\sprintf('Location "%s" could not be parsed', $location), $originalRequest, $redirectResponse);
         }
         $uri = $originalRequest->getUri();
+        // Redirections can either use an absolute uri or a relative reference https://www.rfc-editor.org/rfc/rfc3986#section-4.2
+        // If relative, we need to check if we have an absolute path or not
+        $path = \array_key_exists('path', $parsedLocation) ? $parsedLocation['path'] : '';
+        if (!\array_key_exists('host', $parsedLocation) && '/' !== $location[0]) {
+            // the target is a relative-path reference, we need to merge it with the base path
+            $originalPath = $uri->getPath();
+            if ('' === $path) {
+                $path = $originalPath;
+            } elseif (($pos = \strrpos($originalPath, '/')) !== \false) {
+                $path = \substr($originalPath, 0, $pos + 1) . $path;
+            } else {
+                $path = '/' . $path;
+            }
+            /* replace '/./' or '/foo/../' with '/' */
+            $re = ['#(/\\./)#', '#/(?!\\.\\.)[^/]+/\\.\\./#'];
+            for ($n = 1; $n > 0; $path = \preg_replace($re, '/', $path, -1, $n)) {
+                if (null === $path) {
+                    throw new \WPSentry\ScopedVendor\Http\Client\Exception\HttpException(\sprintf('Failed to resolve Location %s', $location), $originalRequest, $redirectResponse);
+                }
+            }
+        }
+        if (null === $path) {
+            throw new \WPSentry\ScopedVendor\Http\Client\Exception\HttpException(\sprintf('Failed to resolve Location %s', $location), $originalRequest, $redirectResponse);
+        }
+        $uri = $uri->withPath($path)->withQuery(\array_key_exists('query', $parsedLocation) ? $parsedLocation['query'] : '')->withFragment(\array_key_exists('fragment', $parsedLocation) ? $parsedLocation['fragment'] : '');
         if (\array_key_exists('scheme', $parsedLocation)) {
             $uri = $uri->withScheme($parsedLocation['scheme']);
         }
@@ -159,19 +240,8 @@ final class RedirectPlugin implements \WPSentry\ScopedVendor\Http\Client\Common\
         }
         if (\array_key_exists('port', $parsedLocation)) {
             $uri = $uri->withPort($parsedLocation['port']);
-        }
-        if (\array_key_exists('path', $parsedLocation)) {
-            $uri = $uri->withPath($parsedLocation['path']);
-        }
-        if (\array_key_exists('query', $parsedLocation)) {
-            $uri = $uri->withQuery($parsedLocation['query']);
-        } else {
-            $uri = $uri->withQuery('');
-        }
-        if (\array_key_exists('fragment', $parsedLocation)) {
-            $uri = $uri->withFragment($parsedLocation['fragment']);
-        } else {
-            $uri = $uri->withFragment('');
+        } elseif (\array_key_exists('host', $parsedLocation)) {
+            $uri = $uri->withPort(null);
         }
         return $uri;
     }

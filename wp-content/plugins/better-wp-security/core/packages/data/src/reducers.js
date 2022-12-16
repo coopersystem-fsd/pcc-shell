@@ -1,4 +1,9 @@
 /**
+ * External dependencies
+ */
+import { omit } from 'lodash';
+
+/**
  * Internal dependencies
  */
 import {
@@ -16,6 +21,8 @@ const DEFAULT_STATE = {
 	users: {
 		currentId: 0,
 		byId: {},
+		saving: [],
+		optimisticEdits: {},
 	},
 	index: null,
 	actors: {
@@ -33,6 +40,31 @@ export default function reducer( state = DEFAULT_STATE, action ) {
 			return {
 				...state,
 				index: action.index,
+			};
+		case 'START_SAVING_USER':
+			return {
+				...state,
+				users: {
+					...state.users,
+					saving: [
+						...state.users.saving,
+						action.id,
+					],
+					optimisticEdits: action.optimistic ? {
+						...state.users.optimisticEdits,
+						[ action.id ]: action.data,
+					} : state.users.optimisticEdits,
+				},
+			};
+		case 'FINISH_SAVING_USER':
+		case 'FAILED_SAVING_USER':
+			return {
+				...state,
+				users: {
+					...state.users,
+					saving: state.users.saving.filter( ( id ) => id !== action.id ),
+					optimisticEdits: omit( state.users.optimisticEdits, action.id ),
+				},
 			};
 		case RECEIVE_USER:
 			return {

@@ -76,12 +76,13 @@ class User_Data extends Term_Data {
 	 * Memoizes the return value for the current request.
 	 *
 	 * @since 4.1.4
-	 * @TODO Throw this away? We do not use it... never have.
+	 * @since 4.2.7 Removed redundant memoization.
+	 * @ignore Unused locally. Public API.
 	 *
 	 * @return array The current author meta.
 	 */
 	public function get_current_post_author_meta() {
-		return memo() ?? memo( $this->get_user_meta( $this->get_current_post_author_id() ) );
+		return $this->get_user_meta( $this->get_current_post_author_id() );
 	}
 
 	/**
@@ -93,7 +94,7 @@ class User_Data extends Term_Data {
 	 * @since 4.1.4 1. Now returns default values when custom values are missing.
 	 *              2. Now listens to headlessness.
 	 *              3. Deprecated the third argument, and moved it to the second.
-	 * @todo Send deprecation warning for 3rd parameter
+	 * @todo deprecate: Send deprecation warning for 3rd parameter -> Does anybody actually use this??
 	 *
 	 * @param int  $user_id   The user ID.
 	 * @param bool $use_cache Whether to store and use options from cache, or bypass it.

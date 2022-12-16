@@ -159,6 +159,10 @@ final class Module_Config {
 		return $this->get_config()['import-export']['exclude-settings'] ?? [];
 	}
 
+	public function get_encrypted_user_meta_keys(): array {
+		return $this->get_config()['encryption']['user-meta'] ?? [];
+	}
+
 	/**
 	 * Translates user-facing strings and returns a new
 	 * config instance with those translations applied.

@@ -3,6 +3,7 @@
 declare (strict_types=1);
 namespace Sentry\Tracing;
 
+use Sentry\Util\SentryUid;
 /**
  * This class represents an span ID.
  */
@@ -29,7 +30,7 @@ final class SpanId implements \Stringable
      */
     public static function generate() : self
     {
-        return new self(\substr(\str_replace('-', '', \uuid_create(\UUID_TYPE_RANDOM)), 0, 16));
+        return new self(\substr(\Sentry\Util\SentryUid::generate(), 0, 16));
     }
     /**
      * Compares whether two objects are equals.

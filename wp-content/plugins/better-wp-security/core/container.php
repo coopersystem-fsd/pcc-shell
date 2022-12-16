@@ -5,7 +5,7 @@ namespace iThemesSecurity;
 use iThemesSecurity\Lib\REST;
 use iThemesSecurity\Lib\Site_Types;
 use ITSEC_Lib_Upgrader;
-use Pimple\Container;
+use iThemesSecurity\Strauss\Pimple\Container;
 use wpdb;
 
 return static function ( Container $c ) {

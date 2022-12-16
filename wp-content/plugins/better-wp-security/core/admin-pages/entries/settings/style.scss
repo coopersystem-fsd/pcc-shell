@@ -74,14 +74,14 @@ ul#adminmenu > li.current#toplevel_page_itsec > a.current:after {
     box-sizing: border-box;
 }
 
-.itsec-settings h1 {
+:where(.itsec-settings) h1 {
     font-weight: 600;
     font-size: 1.6rem;
     line-height: 1;
     margin: .75rem 0;
 }
 
-.itsec-settings h2 {
+:where(.itsec-settings) h2 {
     color: $medium-text;
     font-weight: normal;
     font-size: 1.25rem;
@@ -89,49 +89,49 @@ ul#adminmenu > li.current#toplevel_page_itsec > a.current:after {
     margin: .75rem 0;
 }
 
-.itsec-settings h3 {
+:where(.itsec-settings) h3 {
     font-size: 1rem;
     font-weight: 400;
     margin: .5rem 0;
 }
 
-.itsec-settings h4 {
+:where(.itsec-settings) h4 {
     font-size: 1rem;
     font-weight: 700;
     text-transform: uppercase;
     margin: .5rem 0;
 }
 
-.itsec-settings p,
-.itsec-settings ul,
-.itsec-settings ol,
-.itsec-settings dl {
+:where(.itsec-settings) p,
+:where(.itsec-settings) ul,
+:where(.itsec-settings) ol,
+:where(.itsec-settings) dl {
     color: $medium-text;
 }
 
-.itsec-settings h1:first-child,
-.itsec-settings h2:first-child,
-.itsec-settings h3:first-child,
-.itsec-settings h4:first-child,
-.itsec-settings h5:first-child,
-.itsec-settings h6:first-child {
+:where(.itsec-settings) h1:first-child,
+:where(.itsec-settings) h2:first-child,
+:where(.itsec-settings) h3:first-child,
+:where(.itsec-settings) h4:first-child,
+:where(.itsec-settings) h5:first-child,
+:where(.itsec-settings) h6:first-child {
     margin-top: 0;
 }
 
-.itsec-settings p:first-child {
+:where(.itsec-settings) p:first-child {
     margin-top: 0;
 }
 
-.itsec-settings p:last-child {
+:where(.itsec-settings) p:last-child {
     margin-bottom: 0;
 }
 
-.itsec-settings label,
-.itsec-settings legend {
+:where(.itsec-settings) label,
+:where(.itsec-settings) legend {
     color: $dark-text;
 }
 
-.itsec-settings .components-checkbox-control__input-container {
+:where(.itsec-settings) .components-checkbox-control__input-container {
     margin-right: 8px;
 }
 

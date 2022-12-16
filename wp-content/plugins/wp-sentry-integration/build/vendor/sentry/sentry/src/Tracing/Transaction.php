@@ -21,6 +21,14 @@ final class Transaction extends \Sentry\Tracing\Span
      */
     private $name;
     /**
+     * @var Transaction The transaction
+     */
+    protected $transaction;
+    /**
+     * @var TransactionMetadata
+     */
+    protected $metadata;
+    /**
      * Span constructor.
      *
      * @param TransactionContext $context The context to create the transaction with
@@ -33,6 +41,7 @@ final class Transaction extends \Sentry\Tracing\Span
         parent::__construct($context);
         $this->hub = $hub ?? \Sentry\SentrySdk::getCurrentHub();
         $this->name = $context->getName();
+        $this->metadata = $context->getMetadata();
         $this->transaction = $this;
     }
     /**
@@ -50,6 +59,25 @@ final class Transaction extends \Sentry\Tracing\Span
     public function setName(string $name) : void
     {
         $this->name = $name;
+    }
+    /**
+     * Gets the transaction metadata.
+     */
+    public function getMetadata() : \Sentry\Tracing\TransactionMetadata
+    {
+        return $this->metadata;
+    }
+    /**
+     * Gets the transaction dynamic sampling context.
+     */
+    public function getDynamicSamplingContext() : \Sentry\Tracing\DynamicSamplingContext
+    {
+        if (null !== $this->metadata->getDynamicSamplingContext()) {
+            return $this->metadata->getDynamicSamplingContext();
+        }
+        $samplingContext = \Sentry\Tracing\DynamicSamplingContext::fromTransaction($this->transaction, $this->hub);
+        $this->getMetadata()->setDynamicSamplingContext($samplingContext);
+        return $samplingContext;
     }
     /**
      * Attaches a {@see SpanRecorder} to the transaction itself.
@@ -91,6 +119,8 @@ final class Transaction extends \Sentry\Tracing\Span
         $event->setTags($this->tags);
         $event->setTransaction($this->name);
         $event->setContext('trace', $this->getTraceContext());
+        $event->setSdkMetadata('dynamic_sampling_context', $this->getDynamicSamplingContext());
+        $event->setSdkMetadata('transaction_metadata', $this->getMetadata());
         return $this->hub->captureEvent($event);
     }
 }

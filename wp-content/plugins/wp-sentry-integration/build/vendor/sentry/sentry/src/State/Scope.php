@@ -150,6 +150,13 @@ final class Scope
         return $this;
     }
     /**
+     * Get the user context.
+     */
+    public function getUser() : ?\Sentry\UserDataBag
+    {
+        return $this->user;
+    }
+    /**
      * Merges the given data in the user context.
      *
      * @param array<string, mixed>|UserDataBag $user The user data

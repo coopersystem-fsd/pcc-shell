@@ -49,8 +49,8 @@ final class Result {
 		return $self;
 	}
 
-	public static function combine( Result ...$results ): self {
-		return self::combine_with_success_data( null, ...$results );
+	public static function combine( ?Result ...$results ): self {
+		return self::combine_with_success_data( null, ...array_filter( $results ) );
 	}
 
 	/**
@@ -149,7 +149,12 @@ final class Result {
 
 	public function as_rest_response(): \WP_REST_Response {
 		if ( $this->is_success() ) {
-			$data     = $this->get_data();
+			$data = $this->get_data();
+
+			if ( $data instanceof \JsonSerializable ) {
+				$data = $data->jsonSerialize();
+			}
+
 			$response = new \WP_REST_Response( $data, $data ? 200 : 204 );
 		} else {
 			$response = \ITSEC_Lib_REST::error_to_response( $this->get_error() );

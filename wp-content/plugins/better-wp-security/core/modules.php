@@ -9,8 +9,9 @@ use iThemesSecurity\Import_Export\Export\Export;
 use iThemesSecurity\Import_Export\Import\Import_Context;
 use iThemesSecurity\Lib\Result;
 use iThemesSecurity\Module_Config;
-use Pimple\Container;
-use Psr\Container\ContainerInterface;
+use iThemesSecurity\Strauss\Pimple\Container;
+use iThemesSecurity\Strauss\Pimple\Psr11\Container as Psr11Container;
+use iThemesSecurity\Strauss\Psr\Container\ContainerInterface;
 
 final class ITSEC_Modules implements Import_Export_Source {
 	const DEPRECATED = [
@@ -57,7 +58,7 @@ final class ITSEC_Modules implements Import_Export_Source {
 		add_action( 'itsec-lib-clear-caches', array( $this, 'reload_settings' ), 0 );
 
 		$this->pimple    = new Container();
-		$this->container = new Pimple\Psr11\Container( $this->pimple );
+		$this->container = new Psr11Container( $this->pimple );
 
 		$this->pimple[ ContainerInterface::class ] = $this->container;
 	}
@@ -972,6 +973,17 @@ final class ITSEC_Modules implements Import_Export_Source {
 
 		if ( isset( $requirements['feature-flags'] ) && ( $mode === 'activate' || $requirements['feature-flags']['validate'] === $mode ) ) {
 			$check['feature-flags'] = $requirements['feature-flags']['flags'];
+		}
+
+		if ( isset( $requirements['multisite'] ) && ( $mode === 'activate' || $requirements['multisite']['validate'] === $mode ) ) {
+			$check['multisite'] = $requirements['multisite']['status'];
+		}
+
+		if ( isset( $requirements['server'] ) && ( $mode === 'activate' || $requirements['server']['validate'] === $mode ) ) {
+			$check['server'] = [
+				'php'        => $requirements['server']['php'] ?? null,
+				'extensions' => $requirements['server']['extensions'] ?? [],
+			];
 		}
 
 		return ITSEC_Lib::evaluate_requirements( $check );

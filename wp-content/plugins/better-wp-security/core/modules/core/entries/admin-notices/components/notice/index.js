@@ -9,6 +9,7 @@ import { isEmpty, size, map } from 'lodash';
 import { Fragment } from '@wordpress/element';
 import { autop } from '@wordpress/autop';
 import { Button } from '@wordpress/components';
+import { useSelect, useDispatch } from '@wordpress/data';
 
 /**
  * Internal dependencies
@@ -33,9 +34,7 @@ export default function Notice( { notice } ) {
 						notice.actions,
 						( action, slug ) =>
 							action.style === 'primary' && (
-								<Button key={ slug } href={ action.uri }>
-									{ action.title }
-								</Button>
+								<PrimaryAction key={ slug } notice={ notice } action={ action } />
 							)
 					) }
 				</div>
@@ -75,6 +74,47 @@ export default function Notice( { notice } ) {
 				</footer>
 			) }
 		</article>
+	);
+}
+
+function PrimaryAction( { notice, action } ) {
+	const isInProgress = useSelect( ( select ) =>
+		select( 'ithemes-security/admin-notices' )
+			.getInProgressActions( notice.id )
+			.includes( action.id ),
+	[ notice.id, action.id ]
+	);
+	const { doNoticeAction } = useDispatch( 'ithemes-security/admin-notices' );
+	// Intentionally uses string-based API because we only want to refresh modules if they are in use.
+	const { fetchModules } = useDispatch( 'ithemes-security/modules' ) || {};
+
+	const onClick = async ( e ) => {
+		if ( ! action.uri ) {
+			e.preventDefault();
+			await doNoticeAction( notice.id, action.id );
+			fetchModules?.();
+		}
+	};
+
+	// We don't want to cause a dependency on the settings page entry.
+	if ( action.route && window.itsec?.pages?.settings?.history ) {
+		return <PrimaryRouteAction route={ action.route } title={ action.title } history={ window.itsec?.pages?.settings?.history } />;
+	}
+
+	return (
+		<Button href={ action.uri } onClick={ onClick } isBusy={ isInProgress }>
+			{ action.title }
+		</Button>
+	);
+}
+
+function PrimaryRouteAction( { title, route, history } ) {
+	const onClick = () => history.push( route );
+
+	return (
+		<Button onClick={ onClick } href={ history.createHref( route ) }>
+			{ title }
+		</Button>
 	);
 }
 

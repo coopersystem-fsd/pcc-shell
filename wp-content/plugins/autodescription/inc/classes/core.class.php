@@ -241,7 +241,7 @@ class Core {
 	 * @return string The view location.
 	 */
 	public function get_view_location( $file ) {
-		return THE_SEO_FRAMEWORK_DIR_PATH_VIEWS . $file . '.php';
+		return THE_SEO_FRAMEWORK_DIR_PATH_VIEWS . "$file.php";
 	}
 
 	/**
@@ -417,7 +417,7 @@ class Core {
 	 * @return string The converted time. Empty string if no $time is given.
 	 */
 	public function gmt2date( $format = 'Y-m-d', $time = '' ) {
-		return $time ? gmdate( $format, strtotime( $time . ' GMT' ) ) : '';
+		return $time ? gmdate( $format, strtotime( "$time GMT" ) ) : '';
 	}
 
 	/**
@@ -456,29 +456,68 @@ class Core {
 	}
 
 	/**
+	 * Flattens multidimensional lists into a single dimensional list.
+	 * Deeply nested lists are merged as well. Won't dig associative arrays.
+	 *
+	 * E.g., this [ [ 'one' => 1 ], [ [ 'two' => 2 ], [ 'three' => [ 3, 4 ] ] ] ]
+	 * becomes    [ [ 'one' => 1 ], [ 'two', => 2 ], [ 'three' => [ 3, 4 ] ] ];
+	 *
+	 * @link <https://3v4l.org/XBSFa>, test it here.
+	 *
+	 * @since 4.2.7
+	 * @access private
+	 * @ignore This will move to new "helper" classes in a future update, becoming public then.
+	 *
+	 * @param array $array The array to flatten. If input is not an array, it'll be casted.
+	 * @return array The flattened array.
+	 */
+	public function array_flatten_list( $array ) {
+
+		// We can later use `!array_is_list()`.
+		// This is 350x faster than a polyfill for `!array_is_list()`.
+		if ( [] === $array || array_values( $array ) !== $array ) return $array;
+
+		$ret = [];
+
+		foreach ( $array as $key => $value ) {
+			// We can later use `array_is_list()`.
+			if ( \is_array( $value ) && [] !== $value && array_values( $value ) === $value ) {
+				$ret = array_merge( $ret, $this->array_flatten_list( $value ) );
+			} else {
+				array_push( $ret, $value );
+			}
+		}
+
+		return $ret;
+	}
+
+	/**
 	 * Merges arrays distinctly, much like `array_merge()`, but then for multidimensionals.
 	 * Unlike PHP's `array_merge_recursive()`, this method doesn't convert non-unique keys as sequential.
 	 *
-	 * A do-while is faster than while. Sorry for the legibility.
-	 * TODO instead of calling thyself, would a goto not be better?
+	 * @link <https://3v4l.org/9pnW1#v8.1.8> Test it here.
 	 *
 	 * @since 4.1.4
+	 * @since 4.2.7 1. Now supports a single array entry without causing issues.
+	 *              2. Reduced number of opcodes by roughly 27% by reworking it.
+	 *              3. Now no longer throws warnings with qubed+ arrays.
+	 *              4. Now no longer prevents scalar values overwriting arrays.
 	 *
 	 * @param array ...$arrays The arrays to merge. The rightmost array's values are dominant.
 	 * @return array The merged arrays.
 	 */
-	public function array_merge_recursive_distinct( array ...$arrays ) {
+	public function array_merge_recursive_distinct( ...$arrays ) {
 
 		$i = \count( $arrays );
 
-		if ( 2 === $i ) foreach ( $arrays[1] as $key => $value ) {
-			$arrays[0][ $key ] = \is_array( $arrays[0][ $key ] ?? null )
-				? $this->array_merge_recursive_distinct( $arrays[0][ $key ], $value )
-				: $value;
-		} else do {
-			// phpcs:ignore -- Imagine assigning from right to left, but also left to right. Yes:
-			$arrays[ --$i - 1 ] = $this->array_merge_recursive_distinct( $arrays[ $i - 1 ], $arrays[ $i ] );
-		} while ( $i > 1 );
+		while ( --$i ) {
+			$p = $i - 1;
+
+			foreach ( $arrays[ $i ] as $key => $value )
+				$arrays[ $p ][ $key ] = isset( $arrays[ $p ][ $key ] ) && \is_array( $value )
+					? $this->array_merge_recursive_distinct( $arrays[ $p ][ $key ], $value )
+					: $value;
+		}
 
 		return $arrays[0];
 	}
@@ -535,6 +574,7 @@ class Core {
 
 		if ( ! $string ) return [];
 
+		// Not if-function-exists; we're going for speed over accuracy. Hosts must do their job correctly.
 		$use_mb = memo( null, 'use_mb' ) ?? memo( \extension_loaded( 'mbstring' ), 'use_mb' );
 
 		$word_list = preg_split(
@@ -592,19 +632,21 @@ class Core {
 	 * @link https://www.w3.org/TR/2008/REC-WCAG20-20081211/#visual-audio-contrast-contrast
 	 * @link https://www.w3.org/WAI/GL/wiki/Relative_luminance
 	 *
-	 * @param string $hex The 3 to 6 character RGB hex. The '#' prefix may be added.
-	 *                    RRGGBBAA is supported, but the Alpha channels won't be returned.
+	 * @param string $hex The 3 to 6+ character RGB hex. The '#' prefix may be added.
+	 *                    RGBA/RRGGBBAA is supported, but the Alpha channels won't be returned.
 	 * @return string The hexadecimal RGB relative font color, without '#' prefix.
 	 */
 	public function get_relative_fontcolor( $hex = '' ) {
 
+		// TODO: To support RGBA, we must fill to 4 or 8 via sprintf `%0{1,2}x`
+		// But doing this will add processing requirements for something we do not need... yet.
 		$hex = ltrim( $hex, '#' );
 
 		// Convert hex to usable numerics.
 		[ $r, $g, $b ] = array_map(
 			'hexdec',
 			str_split(
-				// rgb == rrggbb.
+				// rgb[..] == rrggbb[..].
 				\strlen( $hex ) >= 6 ? $hex : "$hex[0]$hex[0]$hex[1]$hex[1]$hex[2]$hex[2]",
 				2
 			)

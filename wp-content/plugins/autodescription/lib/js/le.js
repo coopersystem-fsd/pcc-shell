@@ -88,7 +88,7 @@ window.tsfLe = function() {
 				// Do `sprintf( 'Default (%s)', x.default )`.
 				let _default = element.querySelector( '[value="0"]' );
 				if ( _default )
-					_default.innerHTML = _default.innerHTML.replace( '%s', tsf.decodeEntities( data[ option ].default ) );
+					_default.innerHTML = _default.innerHTML.replace( '%s', tsf.escapeString( tsf.decodeEntities( data[ option ].default ) ) );
 			} else {
 				element.value = tsf.decodeEntities( data[ option ].value );
 
@@ -210,6 +210,8 @@ window.tsfLe = function() {
 		const titleId    = 'autodescription-quick[doctitle]',
 			  titleInput = document.getElementById( titleId );
 
+		if ( ! titleInput ) return;
+
 		// Reset and rebuild. Map won't be affected.
 		tsfTitle.setInputElement( titleInput );
 
@@ -273,6 +275,8 @@ window.tsfLe = function() {
 
 		const descId    = 'autodescription-quick[description]',
 			  descInput = document.getElementById( descId );
+
+		if ( ! descInput ) return;
 
 		// Reset and rebuild. Map won't be affected.
 		tsfDescription.setInputElement( descInput );

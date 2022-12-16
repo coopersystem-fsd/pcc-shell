@@ -3,18 +3,20 @@
  */
 import { sortBy, filter } from 'lodash';
 import { useParams } from 'react-router-dom';
+import styled from '@emotion/styled';
 
 /**
  * WordPress dependencies
  */
 import { __, sprintf } from '@wordpress/i18n';
-import { Card, Button, Flex, FlexItem } from '@wordpress/components';
+import { Card, Flex, FlexItem, createSlotFill } from '@wordpress/components';
 import { useSelect, useDispatch } from '@wordpress/data';
-import {
-	useMemo,
-	useState,
-	createInterpolateElement,
-} from '@wordpress/element';
+import { useMemo, useState } from '@wordpress/element';
+
+/**
+ * iThemes dependencies
+ */
+import { Button } from '@ithemes/ui';
 
 /**
  * Internal dependencies
@@ -22,11 +24,16 @@ import {
 import { useSingletonEffect } from '@ithemes/security-hocs';
 import { Accordion, Spinner } from '@ithemes/security-components';
 import { MODULES_STORE_NAME } from '@ithemes/security.packages.data';
-import { useGlobalNavigationUrl } from '@ithemes/security-utils';
 import { PageHeader } from '../../components';
 import { ONBOARD_STORE_NAME } from '../../stores';
-import ToughGuy from './tough-guy.svg';
+import HeadingContainer from './heading';
+import ResourcesCard from './resources';
+import ImprovementsList from './list';
 import './style.scss';
+
+const { Slot: SecureSiteEndSlot, Fill: SecureSiteEndFill } = createSlotFill( 'secureSiteEnd' );
+
+export { SecureSiteEndFill };
 
 export default function SecureSite() {
 	useCompletionSteps();
@@ -76,76 +83,51 @@ function OverviewScreen( { goToEnd } ) {
 
 			<Flex justify="right">
 				<FlexItem>
-					{ currentStep === true ? (
-						<Button isPrimary onClick={ goToEnd }>
-							{ __( 'Finish', 'better-wp-security' ) }
-						</Button>
-					) : (
-						<Button
-							isPrimary
-							onClick={ () => completeOnboarding( { root } ) }
-							disabled={ currentStep !== false }
-						>
-							{ __( 'Secure Site', 'better-wp-security' ) }
-						</Button>
-					) }
+					{ currentStep === true ? ( <Button isPrimary onClick={ goToEnd }>
+						{ __( 'Finish', 'better-wp-security' ) }
+					</Button> ) : ( <Button
+						isPrimary
+						onClick={ () => completeOnboarding( { root } ) }
+						disabled={ currentStep !== false }
+					>
+						{ __( 'Secure Site', 'better-wp-security' ) }
+					</Button> ) }
 				</FlexItem>
 			</Flex>
 		</>
 	);
 }
 
-function EndScreen() {
-	const dashboardLink = useGlobalNavigationUrl( 'dashboard' ),
-		settingsLink = useGlobalNavigationUrl( 'settings' );
+const DesktopContainer = styled.div`
+	display: grid;
+	gap: 1rem 2rem;
+	grid-template-columns: 1fr;
 
+	@media (min-width: ${ ( { theme } ) => theme.breaks.huge }px ) {
+		grid-template-columns: 4fr 1fr;
+	}
+`;
+
+const PrimaryContent = styled.div`
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+`;
+
+function EndScreen() {
 	return (
 		<>
-			<PageHeader
-				align="center"
-				title={ __(
-					'Good work! Your site is more secure than ever.',
-					'better-wp-security'
-				) }
-				subtitle={ __(
-					'You can now move on with other things in your life.',
-					'better-wp-security'
-				) }
-				breadcrumbs={ false }
-			/>
+			<div className="itsec-secure-site-page-container">
+				<DesktopContainer>
+					<PrimaryContent>
+						<HeadingContainer />
+						<ImprovementsList />
+					</PrimaryContent>
+					<ResourcesCard />
+				</DesktopContainer>
+			</div>
 
-			<figure className="itsec-secure-site-end-graphic">
-				<ToughGuy />
-			</figure>
-
-			<p className="itsec-secure-site-end-content">
-				{ createInterpolateElement(
-					__(
-						'If you want to dig into your site’s security further, checkout your <dashboard>security dashboard</dashboard>, and make changes via <settings>settings</settings>.',
-						'better-wp-security'
-					),
-					{
-						// eslint-disable-next-line jsx-a11y/anchor-has-content
-						dashboard: <a href={ dashboardLink } />,
-						// eslint-disable-next-line jsx-a11y/anchor-has-content
-						settings: <a href={ settingsLink } />,
-					}
-				) }
-			</p>
-
-			<Flex justify="center">
-				<FlexItem>
-					<Button isPrimary href={ dashboardLink }>
-						{ __( 'Dashboard', 'better-wp-security' ) }
-					</Button>
-				</FlexItem>
-
-				<FlexItem>
-					<Button isPrimary href={ settingsLink }>
-						{ __( 'Settings', 'better-wp-security' ) }
-					</Button>
-				</FlexItem>
-			</Flex>
+			<SecureSiteEndSlot />
 		</>
 	);
 }
@@ -165,8 +147,7 @@ function Steps( { steps, currentStep } ) {
 			).map( ( { render: Component, ...step } ) => {
 				const isCurrent = step.id === currentStep?.id;
 				const isDone = step.priority < ( currentStep?.priority || 0 );
-				const isPending =
-					step.priority > ( currentStep?.priority || 0 );
+				const isPending = step.priority > ( currentStep?.priority || 0 );
 
 				return {
 					name: step.id,
@@ -235,10 +216,7 @@ function useCompletionSteps() {
 				if ( ! modules.length ) {
 					return (
 						<p>
-							{ __(
-								'No additional security features have been selected.',
-								'better-wp-security'
-							) }
+							{ __( 'No additional security features have been selected.', 'better-wp-security' ) }
 						</p>
 					);
 				}
@@ -246,15 +224,10 @@ function useCompletionSteps() {
 				return (
 					<>
 						<p>
-							{ __(
-								'The following security features will be enabled:',
-								'better-wp-security'
-							) }
+							{ __( 'The following security features will be enabled:', 'better-wp-security' ) }
 						</p>
 						<ul>
-							{ modules.map( ( module ) => (
-								<li key={ module.id }>{ module.title }</li>
-							) ) }
+							{ modules.map( ( module ) => ( <li key={ module.id }>{ module.title }</li> ) ) }
 						</ul>
 					</>
 				);
@@ -315,10 +288,7 @@ function useCompletionSteps() {
 				if ( ! settings.length ) {
 					return (
 						<p>
-							{ __(
-								'No settings have been configured.',
-								'better-wp-security'
-							) }
+							{ __( 'No settings have been configured.', 'better-wp-security' ) }
 						</p>
 					);
 				}
@@ -326,15 +296,10 @@ function useCompletionSteps() {
 				return (
 					<>
 						<p>
-							{ __(
-								'The following settings will be configured:',
-								'better-wp-security'
-							) }
+							{ __( 'The following settings will be configured:', 'better-wp-security' ) }
 						</p>
 						<ul>
-							{ settings.map( ( setting, i ) => (
-								<li key={ i }>{ setting }</li>
-							) ) }
+							{ settings.map( ( setting, i ) => ( <li key={ i }>{ setting }</li> ) ) }
 						</ul>
 					</>
 				);

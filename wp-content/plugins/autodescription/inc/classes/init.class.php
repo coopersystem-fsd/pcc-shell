@@ -479,7 +479,7 @@ class Init extends Query {
 	 * @since 4.0.4 1. Now sets timezone to UTC to fix WP 5.3 bug <https://core.trac.wordpress.org/ticket/48623>
 	 *              2. Now always sets timezone regardless of settings, because, again, bug.
 	 * @since 4.2.0 No longer sets timezone.
-	 * @access private
+	 * @since 4.2.7 No longer marked as private.
 	 */
 	public function html_output() {
 
@@ -719,6 +719,8 @@ class Init extends Query {
 		// It's not a bridge, don't treat it like one: So, submit hooks here... But, clean me up?
 		\add_filter( 'wp_sitemaps_add_provider', [ Builders\CoreSitemaps\Main::class, '_filter_add_provider' ], 9, 2 );
 		\add_filter( 'wp_sitemaps_max_urls', [ Builders\CoreSitemaps\Main::class, '_filter_max_urls' ], 9 );
+		// We miss the proper hooks. https://github.com/sybrew/the-seo-framework/issues/610#issuecomment-1300191500
+		\add_filter( 'wp_sitemaps_posts_query_args', [ Builders\CoreSitemaps\Main::class, '_trick_filter_doing_sitemap' ], 11 );
 	}
 
 	/**
@@ -728,7 +730,7 @@ class Init extends Query {
 	 * @access private
 	 */
 	public function _init_feed() {
-		\is_feed() and Bridges\Feed::get_instance()->_init();
+		\is_feed() and new Bridges\Feed;
 	}
 
 	/**
@@ -1066,6 +1068,8 @@ class Init extends Query {
 	 *              2. Added taxonomy-supported lookups.
 	 *              3. Added WP Rest checks for the Block Editor.
 	 * @since 4.2.0 Improved supported taxonomy loop.
+	 * @since 4.2.6 Added check for `did_action( 'wp_loaded' )` early, before queries are tested and cached.
+	 * @since 4.2.7 No longer affects the sitemap query.
 	 *
 	 * @param \WP_Query $wp_query WP_Query object.
 	 * @return bool
@@ -1089,6 +1093,9 @@ class Init extends Query {
 				return true;
 		}
 
+		if ( ! \did_action( 'wp_loaded' ) )
+			return true;
+
 		if ( \defined( 'REST_REQUEST' ) && REST_REQUEST ) {
 			$referer = \wp_get_referer();
 			if ( false !== strpos( $referer, 'post.php' ) || false !== strpos( $referer, 'post-new.php' ) ) {
@@ -1105,7 +1112,11 @@ class Init extends Query {
 			}
 		}
 
-		// This primarily affects 'terms'.
+		// If doing sitemap, don't adjust query via query settings.
+		if ( $this->is_sitemap() )
+			return true;
+
+		// This should primarily affect 'terms'. Test if TSF is blocked from supporting said terms.
 		if ( ! empty( $wp_query->tax_query->queries ) ) :
 			$supported = true;
 
@@ -1134,12 +1145,12 @@ class Init extends Query {
 	 * @access private
 	 *
 	 * @param array    $data   The response data.
-	 * @param \WP_Post $post   The post object. May not be its placeholder `null`.
+	 * @param \WP_Post $post   The post object.
 	 * @param int      $width  The requested width.
 	 * @param int      $height The calculated height.
 	 * @return array Possibly altered $data.
 	 */
-	public function _alter_oembed_response_data( $data = [], $post = null, $width = 0, $height = 0 ) {
+	public function _alter_oembed_response_data( $data, $post, $width, $height ) {
 
 		// Don't use cache. See @WARNING in doc comment.
 		if ( $this->get_option( 'oembed_use_og_title', false ) )

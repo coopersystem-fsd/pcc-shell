@@ -47,6 +47,14 @@ final class ITSEC_Security_Check_Pro {
 	 * @return bool
 	 */
 	public function build_detector( $configured, ITSEC_IP_Detector $detector ) {
+		$ip_header = ITSEC_Modules::get_setting( 'security-check-pro', 'ip_header' );
+
+		if ( $ip_header['name'] ) {
+			$detector->add_header( $ip_header['name'], $ip_header['position_from_end'], ITSEC_IP_Detector::FROM_RIGHT );
+
+			return true;
+		}
+
 		$index = ITSEC_Modules::get_setting( 'security-check-pro', 'remote_ip_index' );
 
 		if ( ! $index ) {

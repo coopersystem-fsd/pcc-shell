@@ -672,6 +672,8 @@ class Detect extends Render {
 	 * the homepage is not a blog, then this query is malformed. Otherwise, however, it's a good query.
 	 *
 	 * @since 4.0.5
+	 * @since 4.2.7 1. Added detection `not_home_as_page`, specifically for query variable `search`.
+	 *              2. Improved detection for `cat` and `author`, where the value may only be numeric above 0.
 	 * @global \WP_Query $wp_query
 	 *
 	 * @return bool Whether the query is (accidentally) exploited.
@@ -701,11 +703,12 @@ class Detect extends Render {
 		/**
 		 * @since 4.0.5
 		 * @param array $exploitables The exploitable endpoints by type.
+		 * @since 4.2.7 Added index `not_home_as_page` with value `search`.
 		 */
 		$exploitables = \apply_filters(
 			'the_seo_framework_exploitable_query_endpoints',
 			[
-				'numeric'       => [
+				'numeric'          => [
 					'page_id',
 					'attachment_id',
 					'year',
@@ -720,12 +723,17 @@ class Detect extends Render {
 					'second',
 					'subpost_id',
 				],
-				'numeric_array' => [
+				'numeric_array'    => [
 					'cat',
 					'author',
 				],
-				'requires_s'    => [
+				'requires_s'       => [
 					'sentence',
+				],
+				'not_home_as_page' => [
+					// No public application registered in WP for this, yet it is a public variable.
+					// Having any other valid query mitigates.
+					'search',
 				],
 			]
 		);
@@ -749,12 +757,19 @@ class Detect extends Render {
 
 						// If WordPress didn't canonical_redirect() the user yet, it's exploited.
 						// WordPress mitigates this via a 404 query when a numeric value is found.
-						if ( ! preg_match( '/[0-9]/', $query[ $qv ] ) )
+						if ( ! preg_match( '/^[1-9][0-9]*$/', $query[ $qv ] ) )
 							return memo( true );
 						break;
 
 					case 'requires_s':
 						if ( ! isset( $query['s'] ) )
+							return memo( true );
+						break;
+
+					case 'not_home_as_page':
+						// isset($query[$qv]) is already executed. Just test if homepage ID still works.
+						// !$this->get_the_real_ID() is already executed. Just test if home is a page.
+						if ( $this->is_home_as_page() )
 							return memo( true );
 						break;
 
@@ -1246,28 +1261,204 @@ class Detect extends Render {
 	}
 
 	/**
+	 * Determines whether the text has recognizable transformative syntax.
+	 *
+	 * It tests Yoast SEO before Rank Math because
+	 *
+	 * @todo test all [ 'extension', 'yoast', 'aioseo', 'rankmath', 'seopress' ]
+	 * @since 4.2.7
+	 *
+	 * @param string $text The text to evaluate
+	 * @return bool
+	 */
+	public function has_unprocessed_syntax( $text ) {
+
+		foreach ( [ 'yoast', 'rankmath' ] as $type )
+			if ( $this->{"has_{$type}_syntax"}( $text ) ) return true;
+
+		return false;
+	}
+
+	/**
 	 * Determines if the input text has transformative Yoast SEO syntax.
 	 *
+	 * TODO rename to yoast_seo?
+	 *
 	 * @since 4.0.5
-	 * @link <https://yoast.com/help/list-available-snippet-variables-yoast-seo/>
+	 * @since 4.2.7 1. Added wildcard `ct_`, and `cf_` detection.
+	 *              2. Added detection for various other types
+	 *              2. Removed wildcard `cs_` detection.
+	 * @link <https://yoast.com/help/list-available-snippet-variables-yoast-seo/> (This list containts false information)
+	 * @link <https://theseoframework.com/extensions/transport/#faq/what-data-is-transformed>
 	 *
 	 * @param string $text The text to evaluate.
 	 * @return bool
 	 */
 	public function has_yoast_syntax( $text ) {
 
-		if ( false === strpos( $text, '%%' ) ) return false;
+		// %%id%% is the shortest valid tag... ish. Let's stop at 6.
+		if ( \strlen( $text ) < 6 || false === strpos( $text, '%%' ) )
+			return false;
 
-		$tags_simple = [ 'date', 'title', 'parent_title', 'archive_title', 'sitename', 'sitedesc', 'excerpt', 'excerpt_only', 'tag', 'category', 'primary_category', 'category_description', 'tag_description', 'term_description', 'term_title', 'searchphrase', 'sep', 'pt_single', 'pt_plural', 'modified', 'id', 'name', 'user_description', 'page', 'pagetotal', 'pagenumber', 'caption', 'focuskw', 'term404', 'ct_product_cat', 'ct_product_tag', 'wc_shortdesc', 'wc_sku', 'wc_brand', 'wc_price' ];
-		$_regex      = sprintf( '%%%s%%', implode( '|', $tags_simple ) );
+		$tags = umemo( __METHOD__ . '/tags' );
 
-		if ( preg_match( "/$_regex/i", $text ) ) return true;
+		if ( ! $tags ) {
+			$tags = umemo(
+				__METHOD__ . '/tags',
+				[
+					'simple'       => implode(
+						'|',
+						[
+							// These are Preserved by Transport. Test first, for they are more likely in text.
+							'focuskw',
+							'page',
+							'pagenumber',
+							'pagetotal',
+							'primary_category',
+							'searchphrase',
+							'term404',
+							'wc_brand',
+							'wc_price',
+							'wc_shortdesc',
+							'wc_sku',
 
-		$tags_wildcard_end = [ 'cs_', 'ct_desc_', 'ct_pa_' ];
-		$_regex            = sprintf( '%%(%s)[^\s]*?%%', implode( '|', $tags_wildcard_end ) );
+							// These are transformed by Transport
+							'archive_title',
+							'author_first_name',
+							'author_last_name',
+							'caption',
+							'category',
+							'category_description',
+							'category_title',
+							'currentdate',
+							'currentday',
+							'currentmonth',
+							'currentyear',
+							'date',
+							'excerpt',
+							'excerpt_only',
+							'id',
+							'modified',
+							'name',
+							'parent_title',
+							'permalink',
+							'post_content',
+							'post_year',
+							'post_month',
+							'post_day',
+							'pt_plural',
+							'pt_single',
+							'sep',
+							'sitedesc',
+							'sitename',
+							'tag',
+							'tag_description',
+							'term_description',
+							'term_title',
+							'title',
+							'user_description',
+							'userid',
+						]
+					),
+					'wildcard_end' => implode( '|', [ 'ct_', 'cf_' ] ),
+				]
+			);
+		}
 
-		if ( preg_match( "/$_regex/", $text ) ) return true;
+		// https://en.wikipedia.org/wiki/Leaning_toothpick_syndrome... crap.
+		return preg_match( sprintf( '/%%%%(?:%s)%%%%/', $tags['simple'] ), $text )
+			|| preg_match( sprintf( '/%%%%(?:%s)[^%%]+?%%%%/', $tags['wildcard_end'] ), $text );
+	}
 
-		return false;
+	/**
+	 * Determines if the input text has transformative Rank Math syntax.
+	 *
+	 * @since 4.2.7
+	 * @link <https://theseoframework.com/extensions/transport/#faq/what-data-is-transformed>
+	 *       Rank Math has no documentation on this list.
+	 *
+	 * @param string $text The text to evaluate.
+	 * @return bool
+	 */
+	public function has_rankmath_syntax( $text ) {
+
+		// %id% is the shortest valid tag... ish. Let's stop at 4.
+		if ( \strlen( $text ) < 4 || false === strpos( $text, '%' ) )
+			return false;
+
+		$tags = umemo( __METHOD__ . '/tags' );
+
+		if ( ! $tags ) {
+			$tags = umemo(
+				__METHOD__ . '/tags',
+				[
+					'simple'       => implode(
+						'|',
+						[
+							// These are Preserved by Transport. Test first, for they are more likely in text.
+							'currenttime', // Rank Math has two currenttime, this one is simple.
+							'filename',
+							'focuskw',
+							'org_name',
+							'org_logo',
+							'org_url',
+							'page',
+							'pagenumber',
+							'pagetotal',
+							'primary_category',
+							'searchphrase',
+							'term404',
+							'wc_brand',
+							'wc_price',
+							'wc_shortdesc',
+							'wc_sku',
+
+							// These are transformed by Transport
+							'archive_title',
+							'author_first_name',
+							'author_last_name',
+							'caption',
+							'category',
+							'category_description',
+							'category_title',
+							'currentdate',
+							'currentday',
+							'currentmonth',
+							'currentyear',
+							'date',
+							'excerpt',
+							'excerpt_only',
+							'id',
+							'modified',
+							'name',
+							'parent_title',
+							'permalink',
+							'post_content',
+							'post_year',
+							'post_month',
+							'post_day',
+							'pt_plural',
+							'pt_single',
+							'sep',
+							'sitedesc',
+							'sitename',
+							'tag',
+							'tag_description',
+							'term_description',
+							'term',
+							'title',
+							'user_description',
+							'userid',
+						]
+					),
+					// See RankMath\Replace_Variables\Replacer::set_up_replacements();
+					'wildcard_end' => implode( '|', [ 'count', 'currenttime', 'customfield', 'customterm' ] ),
+				]
+			);
+		}
+
+		// https://en.wikipedia.org/wiki/Leaning_toothpick_syndrome... crap.
+		return preg_match( sprintf( '/%%(?:%s)%%/', $tags['simple'] ), $text )
+			|| preg_match( sprintf( '/%%(?:%s)\([^\)]+?\)%%/', $tags['wildcard_end'] ), $text );
 	}
 }

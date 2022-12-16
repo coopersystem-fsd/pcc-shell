@@ -87,7 +87,7 @@ abstract class AbstractSerializer
                 return $this->serializeValue($value);
             }
             try {
-                if (\is_callable($value)) {
+                if (@\is_callable($value)) {
                     return $this->serializeCallable($value);
                 }
             } catch (\Throwable $exception) {

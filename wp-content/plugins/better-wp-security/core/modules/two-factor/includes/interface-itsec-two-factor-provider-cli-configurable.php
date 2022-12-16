@@ -16,4 +16,14 @@ interface ITSEC_Two_Factor_Provider_CLI_Configurable {
 	 * @return void
 	 */
 	public function configure_via_cli( WP_User $user, array $args );
+
+	/**
+	 * Gets the current configuration for WP-CLI.
+	 *
+	 * @param WP_User $user
+	 * @param array   $args
+	 *
+	 * @return void
+	 */
+	public function get_config_for_cli( WP_User $user, array $args );
 }

@@ -63,6 +63,10 @@ $side-padding: 20px;
         background: white;
         border-radius: 5px;
         padding: calc(#{$side-padding} / 2);
+
+        .components-button:not(:last-child) {
+            margin-right: .5rem;
+        }
     }
 
     .itsec-admin-notice__header h4 {

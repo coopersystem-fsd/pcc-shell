@@ -4,10 +4,6 @@ add_action( 'admin_enqueue_scripts', function () {
 		'/ithemes-security/v1/site-types'                    => [
 			'route' => '/ithemes-security/v1/site-types',
 		],
-		'/ithemes-security/v1?context=help'                  => [
-			'route' => '/ithemes-security/v1',
-			'query' => [ 'context' => 'help' ],
-		],
 		'/ithemes-security/v1/user-matchables?_embed=1'      => [
 			'route' => '/ithemes-security/v1/user-matchables',
 			'embed' => true,
@@ -38,6 +34,17 @@ add_action( 'admin_enqueue_scripts', function () {
 		if ( wp_style_is( $handle, 'registered' ) ) {
 			wp_enqueue_style( $handle );
 		}
+	}
+
+	$request = new WP_REST_Request( 'GET', '/ithemes-security/v1' );
+	$request->set_query_params( [ 'context' => 'help' ] );
+	$site_info = rest_do_request( $request );
+
+	if ( ! $site_info->is_error() ) {
+		wp_add_inline_script( 'itsec-packages-data', sprintf(
+			"wp.data.dispatch( 'ithemes-security/core' ).receiveIndex( %s );",
+			wp_json_encode( $site_info->get_data() )
+		) );
 	}
 
 	remove_action( 'admin_head', 'wp_admin_canonical_url' );

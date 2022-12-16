@@ -75,7 +75,7 @@ class ITSEC_Hide_Backend {
 	 * @return void
 	 */
 	public function handle_specific_page_requests() {
-		if ( ITSEC_Core::is_api_request() ) {
+		if ( ITSEC_Core::is_api_request() || wp_doing_cron() ) {
 			return;
 		}
 
@@ -251,7 +251,7 @@ class ITSEC_Hide_Backend {
 		// Preserve existing query vars and add access token query arg.
 		$query_vars                     = $_GET;
 		$query_vars[ $this->token_var ] = $this->get_access_token( $type );
-		$query                          = http_build_query( $query_vars, null, '&' );
+		$query                          = http_build_query( $query_vars, '', '&' );
 
 		// Disable the Hide Backend URL filters to prevent infinite loops when calling site_url().
 		$this->disable_filters = true;

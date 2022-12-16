@@ -1,6 +1,6 @@
 <?php
 
-use Pimple\Container;
+use iThemesSecurity\Strauss\Pimple\Container;
 
 return static function ( Container $c ) {
 	ITSEC_Lib::extend_if_able( $c, 'dashboard.cards', function ( $cards ) {

@@ -139,7 +139,7 @@ final class Options
      */
     public function isTracingEnabled() : bool
     {
-        return 0 != $this->options['traces_sample_rate'] || null !== $this->options['traces_sampler'];
+        return null !== $this->options['traces_sample_rate'] || null !== $this->options['traces_sampler'];
     }
     /**
      * Gets whether the stacktrace will be attached on captureMessage.
@@ -336,6 +336,48 @@ final class Options
     public function setBeforeSendCallback(callable $callback) : void
     {
         $options = \array_merge($this->options, ['before_send' => $callback]);
+        $this->options = $this->resolver->resolve($options);
+    }
+    /**
+     * Gets a callback that will be invoked before an transaction is sent to the server.
+     * If `null` is returned it won't be sent.
+     *
+     * @psalm-return callable(Event, ?EventHint): ?Event
+     */
+    public function getBeforeSendTransactionCallback() : callable
+    {
+        return $this->options['before_send_transaction'];
+    }
+    /**
+     * Sets a callable to be called to decide whether an transaction should
+     * be captured or not.
+     *
+     * @param callable $callback The callable
+     *
+     * @psalm-param callable(Event, ?EventHint): ?Event $callback
+     */
+    public function setBeforeSendTransactionCallback(callable $callback) : void
+    {
+        $options = \array_merge($this->options, ['before_send_transaction' => $callback]);
+        $this->options = $this->resolver->resolve($options);
+    }
+    /**
+     * Gets an allow list of trace propagation targets.
+     *
+     * @return string[]
+     */
+    public function getTracePropagationTargets() : array
+    {
+        return $this->options['trace_propagation_targets'];
+    }
+    /**
+     * Set an allow list of trace propagation targets.
+     *
+     * @param string[] $tracePropagationTargets Trace propagation targets
+     */
+    public function setTracePropagationTargets(array $tracePropagationTargets) : void
+    {
+        $options = \array_merge($this->options, ['trace_propagation_targets' => $tracePropagationTargets]);
         $this->options = $this->resolver->resolve($options);
     }
     /**
@@ -655,15 +697,17 @@ final class Options
      */
     private function configureOptions(\WPSentry\ScopedVendor\Symfony\Component\OptionsResolver\OptionsResolver $resolver) : void
     {
-        $resolver->setDefaults(['integrations' => [], 'default_integrations' => \true, 'send_attempts' => 0, 'prefixes' => \array_filter(\explode(\PATH_SEPARATOR, \get_include_path() ?: '')), 'sample_rate' => 1, 'traces_sample_rate' => 0, 'traces_sampler' => null, 'attach_stacktrace' => \false, 'context_lines' => 5, 'enable_compression' => \true, 'environment' => $_SERVER['SENTRY_ENVIRONMENT'] ?? null, 'logger' => 'php', 'release' => $_SERVER['SENTRY_RELEASE'] ?? null, 'dsn' => $_SERVER['SENTRY_DSN'] ?? null, 'server_name' => \gethostname(), 'before_send' => static function (\Sentry\Event $event) : Event {
+        $resolver->setDefaults(['integrations' => [], 'default_integrations' => \true, 'send_attempts' => 0, 'prefixes' => \array_filter(\explode(\PATH_SEPARATOR, \get_include_path() ?: '')), 'sample_rate' => 1, 'traces_sample_rate' => null, 'traces_sampler' => null, 'attach_stacktrace' => \false, 'context_lines' => 5, 'enable_compression' => \true, 'environment' => $_SERVER['SENTRY_ENVIRONMENT'] ?? null, 'logger' => 'php', 'release' => $_SERVER['SENTRY_RELEASE'] ?? null, 'dsn' => $_SERVER['SENTRY_DSN'] ?? null, 'server_name' => \gethostname(), 'before_send' => static function (\Sentry\Event $event) : Event {
             return $event;
-        }, 'tags' => [], 'error_types' => null, 'max_breadcrumbs' => self::DEFAULT_MAX_BREADCRUMBS, 'before_breadcrumb' => static function (\Sentry\Breadcrumb $breadcrumb) : Breadcrumb {
+        }, 'before_send_transaction' => static function (\Sentry\Event $transaction) : Event {
+            return $transaction;
+        }, 'trace_propagation_targets' => [], 'tags' => [], 'error_types' => null, 'max_breadcrumbs' => self::DEFAULT_MAX_BREADCRUMBS, 'before_breadcrumb' => static function (\Sentry\Breadcrumb $breadcrumb) : Breadcrumb {
             return $breadcrumb;
         }, 'in_app_exclude' => [], 'in_app_include' => [], 'send_default_pii' => \false, 'max_value_length' => 1024, 'http_proxy' => null, 'http_connect_timeout' => self::DEFAULT_HTTP_CONNECT_TIMEOUT, 'http_timeout' => self::DEFAULT_HTTP_TIMEOUT, 'capture_silenced_errors' => \false, 'max_request_body_size' => 'medium', 'class_serializers' => []]);
         $resolver->setAllowedTypes('send_attempts', 'int');
         $resolver->setAllowedTypes('prefixes', 'string[]');
         $resolver->setAllowedTypes('sample_rate', ['int', 'float']);
-        $resolver->setAllowedTypes('traces_sample_rate', ['int', 'float']);
+        $resolver->setAllowedTypes('traces_sample_rate', ['null', 'int', 'float']);
         $resolver->setAllowedTypes('traces_sampler', ['null', 'callable']);
         $resolver->setAllowedTypes('attach_stacktrace', 'bool');
         $resolver->setAllowedTypes('context_lines', ['null', 'int']);
@@ -676,6 +720,8 @@ final class Options
         $resolver->setAllowedTypes('dsn', ['null', 'string', 'bool', \Sentry\Dsn::class]);
         $resolver->setAllowedTypes('server_name', 'string');
         $resolver->setAllowedTypes('before_send', ['callable']);
+        $resolver->setAllowedTypes('before_send_transaction', ['callable']);
+        $resolver->setAllowedTypes('trace_propagation_targets', 'string[]');
         $resolver->setAllowedTypes('tags', 'string[]');
         $resolver->setAllowedTypes('error_types', ['null', 'int']);
         $resolver->setAllowedTypes('max_breadcrumbs', 'int');
@@ -690,7 +736,7 @@ final class Options
         $resolver->setAllowedTypes('capture_silenced_errors', 'bool');
         $resolver->setAllowedTypes('max_request_body_size', 'string');
         $resolver->setAllowedTypes('class_serializers', 'array');
-        $resolver->setAllowedValues('max_request_body_size', ['none', 'small', 'medium', 'always']);
+        $resolver->setAllowedValues('max_request_body_size', ['none', 'never', 'small', 'medium', 'always']);
         $resolver->setAllowedValues('dsn', \Closure::fromCallable([$this, 'validateDsnOption']));
         $resolver->setAllowedValues('max_breadcrumbs', \Closure::fromCallable([$this, 'validateMaxBreadcrumbsOptions']));
         $resolver->setAllowedValues('class_serializers', \Closure::fromCallable([$this, 'validateClassSerializersOption']));

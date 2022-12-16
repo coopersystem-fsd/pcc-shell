@@ -45,6 +45,11 @@ export function* query( queryId, queryParams = {} ) {
 	return response;
 }
 
+export function *refreshQuery( queryId ) {
+	const queryParams = yield select( 'ithemes-security/bans', 'getQueryParams', queryId );
+	yield* query( queryId, queryParams );
+}
+
 export function* fetchQueryNextPage( queryId, mode = 'append' ) {
 	const link = yield select(
 		'ithemes-security/bans',

@@ -6,10 +6,15 @@
  * @package iThemes-Security
  */
 
+use iThemesSecurity\Actor\Actor;
+use iThemesSecurity\Ban_Hosts\Repository_Ban;
+use iThemesSecurity\Ban_Users;
+use iThemesSecurity\Ban_Users\Ban;
 use iThemesSecurity\Lib\Lockout;
 use iThemesSecurity\Lib\Lockout\Execute_Lock;
 use iThemesSecurity\Lib\Lockout\Execute_Lock\Source\Configurable;
 use iThemesSecurity\Lib\Lockout\Execute_Lock\Source\Lockout_Module;
+use iThemesSecurity\Lib\Result;
 
 require_once( __DIR__ . '/lib/lockout/execute-lock/source/interface-source.php' );
 require_once( __DIR__ . '/lib/lockout/execute-lock/abstract-context.php' );
@@ -76,6 +81,8 @@ final class ITSEC_Lockout {
 	}
 
 	public function run() {
+		wp_cache_add_non_persistent_groups( 'itsec-lockouts' );
+
 		add_action( 'itsec_scheduled_purge-lockouts', array( $this, 'purge_lockouts' ) );
 
 		//Check for host lockouts
@@ -695,6 +702,86 @@ final class ITSEC_Lockout {
 	}
 
 	/**
+	 * Checks if ITSEC supports ban creation from a lockout.
+	 *
+	 * @return bool True if ban users module is active.
+	 */
+	public function is_lockout_banning_available(): bool {
+		return ITSEC_Modules::is_active( 'ban-users' );
+	}
+
+	/**
+	 * Checks is specific lockout can be banned.
+	 *
+	 * @param int $lockout_id The lockout id.
+	 *
+	 * @return Result<Lockout\Lockout> Successful if lockout can be banned.
+	 */
+	public function can_create_ban_from_lockout( int $lockout_id ): Result {
+		if ( ! $this->is_lockout_banning_available() ) {
+			return Result::error( new WP_Error(
+				'itsec.lockout.persist-ban.not-supported',
+				__( 'Not supported.', 'better-wp-security' )
+			) );
+		}
+
+		try {
+			$lockout = $this->get_lockout( $lockout_id, OBJECT );
+		} catch ( Exception $e ) {
+			return Result::error( new WP_Error(
+				'itsec.lockout.persist-ban.invalid-lockout',
+				__( 'Invalid lockout.', 'better-wp-security' )
+			) );
+		}
+
+		if ( ! $lockout instanceof Lockout\Lockout ) {
+			return Result::error( new WP_Error(
+				'itsec.lockout.persist-ban.lockout-not-found',
+				__( 'Lockout not found.', 'better-wp-security' )
+			) );
+		}
+
+		if ( ! $lockout->get_host() ) {
+			return Result::error( new WP_Error(
+				'itsec.lockout.persist-ban.no-host',
+				__( 'No host.', 'better-wp-security' )
+			) );
+		}
+
+		return Result::success( $lockout );
+	}
+
+	/**
+	 * Creates a ban from a lockout
+	 *
+	 * @param int        $lockout_id The lockout id.
+	 * @param Actor|null $actor      Optionally, the actor creating the ban.
+	 *
+	 * @return Result<Repository_Ban>
+	 */
+	public function persist_ban_from_lockout( int $lockout_id, Actor $actor = null ): Result {
+
+		$can_convert = $this->can_create_ban_from_lockout( $lockout_id );
+		if ( ! $can_convert->is_success() ) {
+			return $can_convert;
+		}
+
+		$lockout    = $can_convert->get_data();
+		$module     = $lockout->get_module();
+		$comment    = $this->lockout_modules[ $module ]['reason'] ?? '';
+		$ban        = new Ban( $lockout->get_host(), $actor, $comment );
+		$repository = ITSEC_Modules::get_container()->get( Ban_Users\Database_Repository::class );
+
+		try {
+			$saved = $repository->persist( $ban );
+		} catch ( \iThemesSecurity\Exception\WP_Error $e ) {
+			return Result::error( $e->get_error() );
+		}
+
+		return Result::success( $saved );
+	}
+
+	/**
 	 * Executes lockout (locks user out)
 	 *
 	 * @param Execute_Lock\Context|array $context
@@ -787,16 +874,24 @@ final class ITSEC_Lockout {
 			$message = apply_filters( "itsec_{$slug}_lockout_message", $message, $context );
 		}
 
-		wp_clear_auth_cookie();
-
 		$current_user = wp_get_current_user();
 
-		if ( $current_user instanceof WP_User && $current_user->exists() ) {
-			wp_logout();
-		}
+		if ( headers_sent() ) {
+			wp_destroy_current_session();
+			wp_set_current_user( 0 );
 
-		@header( 'HTTP/1.0 403 Forbidden' );
-		ITSEC_Lib::no_cache();
+			if ( $current_user instanceof WP_User && $current_user->exists() ) {
+				do_action( 'wp_logout', $current_user->ID );
+			}
+		} else {
+			if ( $current_user instanceof WP_User && $current_user->exists() ) {
+				wp_logout();
+			}
+
+			wp_clear_auth_cookie();
+			status_header( 403 );
+			ITSEC_Lib::no_cache();
+		}
 
 		if ( ITSEC_Lib::is_wp_version_at_least( '5.7' ) ) {
 			add_filter( 'wp_robots', 'wp_robots_sensitive_page' );
@@ -940,6 +1035,10 @@ final class ITSEC_Lockout {
 
 		if ( $is_count && $results ) {
 			return $results[0]['COUNT'];
+		}
+
+		foreach ( $results as $result ) {
+			wp_cache_add( $result['lockout_id'], $result, 'itsec-lockouts' );
 		}
 
 		return $results;
@@ -1190,16 +1289,21 @@ final class ITSEC_Lockout {
 	public function get_lockout( $id, $return = ARRAY_A ) {
 		global $wpdb;
 
-		$results = $wpdb->get_results( $wpdb->prepare(
-			"SELECT * FROM `{$wpdb->base_prefix}itsec_lockouts` WHERE `lockout_id` = %d",
-			$id
-		), ARRAY_A );
+		$data = wp_cache_get( $id, 'itsec-lockouts' );
 
-		if ( ! is_array( $results ) || ! isset( $results[0] ) ) {
-			return false;
+		if ( ! $data ) {
+			$results = $wpdb->get_results( $wpdb->prepare(
+				"SELECT * FROM `{$wpdb->base_prefix}itsec_lockouts` WHERE `lockout_id` = %d",
+				$id
+			), ARRAY_A );
+
+			if ( ! is_array( $results ) || ! isset( $results[0] ) ) {
+				return false;
+			}
+
+			$data = $results[0];
+			wp_cache_add( $id, $data, 'itsec-lockouts' );
 		}
-
-		$data = $results[0];
 
 		if ( $return === OBJECT ) {
 			return $this->hydrate_lockout_entity( $id, $data );

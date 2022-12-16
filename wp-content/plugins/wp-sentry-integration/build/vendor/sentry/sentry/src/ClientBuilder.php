@@ -4,7 +4,6 @@ declare (strict_types=1);
 namespace Sentry;
 
 use WPSentry\ScopedVendor\Http\Discovery\Psr17FactoryDiscovery;
-use WPSentry\ScopedVendor\Jean85\PrettyVersions;
 use WPSentry\ScopedVendor\Psr\Log\LoggerInterface;
 use Sentry\HttpClient\HttpClientFactory;
 use Sentry\Serializer\RepresentationSerializerInterface;
@@ -50,7 +49,7 @@ final class ClientBuilder implements \Sentry\ClientBuilderInterface
     /**
      * @var string The SDK version of the Client
      */
-    private $sdkVersion;
+    private $sdkVersion = \Sentry\Client::SDK_VERSION;
     /**
      * Class constructor.
      *
@@ -59,7 +58,6 @@ final class ClientBuilder implements \Sentry\ClientBuilderInterface
     public function __construct(\Sentry\Options $options = null)
     {
         $this->options = $options ?? new \Sentry\Options();
-        $this->sdkVersion = \WPSentry\ScopedVendor\Jean85\PrettyVersions::getVersion('sentry/sentry')->getPrettyVersion();
     }
     /**
      * {@inheritdoc}

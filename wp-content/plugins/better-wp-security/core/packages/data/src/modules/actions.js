@@ -82,7 +82,7 @@ export function* saveModules( modules = true ) {
 			errors[ module ] = response.body;
 		} else {
 			success.push( module );
-			yield receiveModule( module, response.body );
+			yield receiveModule( response.body );
 		}
 	}
 

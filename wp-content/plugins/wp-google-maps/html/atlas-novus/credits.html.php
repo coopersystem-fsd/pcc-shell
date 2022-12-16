@@ -166,6 +166,7 @@
 			<li title="Optimization | GitHub: @Lowwebtech">Lowwebtech</li>
 			<li title="Localization Improvements | GitHub: @garretthyder">Garrett Hyder</li>
 			<li title="Stability Improvements | GitHub: @KZeni">Kurt Zenisek</li>
+			<li title="Core Improvements | GitHub: @nicoletta-maia">Nicoletta Maia</li>
 
 			<!-- Issue Reporters -->
 			<li title="Issue Reporter | GitHub: @AmitT">Amit Tal</li>
@@ -181,6 +182,8 @@
 			<li title="Issue Reporter | GitHub: @Tanmccuin">Tanner McCuin</li>
 			<li title="Issue Reporter | GitHub: @stephangriesel">Stephan Griesel</li>
 			<li title="Issue Reporter | GitHub: @nickw108">Nick Weisser</li>
+			<li title="Issue Reporter | GitHub: @waded">Wade Dorrell</li>
+			<li title="Issue Reporter">Dani Haberer</li>
 
 			<!-- Issue Reporters - Internal -->
 			<li title="Issue Reporter | GitHub: @patdumond">Patricia Dumond</li>
@@ -220,6 +223,7 @@
 			<li>Michik1712</li>
 			<li>Alejandro Catalán</li>
 			<li>Petr Aubrecht</li>
+			<li>Updownbikes</li>
 		</ul>
 
 	</div>

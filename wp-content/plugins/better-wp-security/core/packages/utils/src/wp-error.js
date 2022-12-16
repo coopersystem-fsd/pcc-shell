@@ -49,12 +49,19 @@ export default class WPError {
 	static fromApiError( object ) {
 		const error = new WPError();
 		error.#errors[ object.code ] = [ object.message ];
-		error.#errorData[ object.code ] = object.data;
+		error.#errorData[ object.code ] = [ object.data ];
 
 		if ( object.additional_errors ) {
 			for ( const additional of object.additional_errors ) {
 				error.#errors[ additional.code ] = [ additional.message ];
-				error.#errorData[ additional.code ] = additional.data;
+
+				if ( additional.data ) {
+					if ( ! error.#errorData ) {
+						error.#errorData = [];
+					}
+
+					error.#errorData[ additional.code ].push( additional.data );
+				}
 			}
 		}
 
@@ -66,14 +73,23 @@ export default class WPError {
 	 *
 	 * @param {string} code
 	 * @param {string} message
+	 * @param {*}      [data]
 	 * @return {WPError} The modified error object.
 	 */
-	add = ( code, message ) => {
+	add = ( code, message, data ) => {
 		if ( ! this.#errors[ code ] ) {
 			this.#errors[ code ] = [];
 		}
 
 		this.#errors[ code ].push( message );
+
+		if ( data ) {
+			if ( ! this.#errorData[ code ] ) {
+				this.#errorData[ code ] = [];
+			}
+
+			this.#errorData[ code ].push( data );
+		}
 
 		return this;
 	};

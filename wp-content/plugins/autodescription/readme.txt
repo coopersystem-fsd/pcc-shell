@@ -3,21 +3,21 @@ Contributors: Cybr
 Donate link: https://github.com/sponsors/sybrew
 Tags: seo, xml sitemap, google search, open graph, schema.org, twitter card, performance, headless
 Requires at least: 5.5
-Tested up to: 6.0
+Tested up to: 6.1
 Requires PHP: 7.2.0
-Stable tag: 4.2.5
+Stable tag: 4.2.7.1
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
-Purely professional, feature-complete, and the ad-free WordPress SEO plugin. Secure, fast, automated, and white-hat SEO. Do less; get better results.
+The fastest feature-complete SEO plugin for professional WordPress websites. Secure, fast, automated, and ethical SEO. Do less; get better results.
 
 == Description ==
 
-**The only feature-complete SEO plugin that follows the white-hat guidelines and rules imposed by WordPress and search engines.**
+**The fastest and only feature-complete SEO plugin that follows the guidelines and rules imposed by WordPress and search engines.**
 
 Start using proven methods to optimize your website for SEO. Clean, dedicated, extensible, unrestricted, ad-free, and no strings attached.
 
-To top it off, this is the fastest full-featured SEO plugin, and it blends right into your WordPress website, without leaving you in the dark.
+To top it off, this is the [fastest full-featured SEO plugin](https://twitter.com/TheSEOFramework/status/1493352649445580804/photo/1), and it blends right into your WordPress website, without leaving you in the dark.
 
 It's easy to get started. Activate this plugin, and your site's instantly protected against prominent SEO attacks. The SEO Framework will also prefill all critical meta tags for you. A real time-saver. Ingenious.
 
@@ -79,6 +79,7 @@ For additional functionality, check out our free companion plugin [Extension Man
 
 * [Focus](https://theseoframework.com/?p=2305) guides you through the process of writing targeted content that ranks with **focus keywords and synonyms**.
 * [Articles](https://theseoframework.com/?p=2303) **enhances your published posts** by automatically adding important Structured Data.
+* [Transport](https://theseoframework.com/?p=3962) **migrates and transforms metadata** from Rank Math and Yoast SEO to this plugin.
 * [Honeypot](https://theseoframework.com/?p=2300) **catches comment spammers** through four lightweight yet powerful ways.
 * [Cord](https://theseoframework.com/?p=3404) helps you connect your website to **Google Analytics and Facebook Pixel**.
 * [Local](https://theseoframework.com/?p=2306) lets you set up **important local business information** for search engines to consume.
@@ -247,6 +248,18 @@ If you wish to display breadcrumbs, then your theme should provide this. Alterna
 
 == Changelog ==
 
+= 4.2.7 =
+
+This minor update brings you a revamped HTML parser and a new option for tuning its accuracy for descriptions. First-time installers are now notified when metadata can be transported from other SEO plugins, the SEO Bar recognizes syntax from Rank Math, and Advanced Query Protection blocks new SEO attacks that could tank your rankings. We also [fixed a couple of bugs](https://theseoframework.com/?p=4021).
+
+*Psst: Check out our [Cyber Sale](https://theseoframework.com/?p=3527).*
+
+*v4.7.2.1: Fixed syntax for PHP 7.2. Props [opicron](https://wordpress.org/support/topic/syntax-error-226/#post-16183422).*
+
+= 4.2.6 =
+
+This patch resolves an issue with WordPress 6.1, which queries template parts before posts are requested. This premature query causes TSF to fail in recognizing support for Custom Post Types, [preventing all meta output](https://theseoframework.com/?p=4015).
+
 = 4.2.5 =
 
 This minor update addresses a change in WordPress 6.0 that causes taxonomy sitemaps to crash, allows paginated deindexing to supersede forced indexing, and improves image cropping by [preserving metadata](https://theseoframework.com/?p=3929).
@@ -278,8 +291,6 @@ This minor update addresses a few regressions brought in v4.2.0; it fixes the ca
 * You will find that the sitemap's stylesheet now has its URLs centered; it also supports mobile devices.
 * Developers can now enjoy using the new `tsf()` function -- an alias of `the_seo_framework()`.
 * If you're a developer, you should also check out our perfectly tuned `memo()`. `umemo()`, and `fmemo()` [functions](https://github.com/sybrew/the-seo-framework/blob/4.2.0/inc/functions/api.php#L155-L335), which help make TSF so performant.
-
-*Psst: Check out our [Cyber Sale](https://theseoframework.com/?p=3527).*
 
 **Perfect**
 

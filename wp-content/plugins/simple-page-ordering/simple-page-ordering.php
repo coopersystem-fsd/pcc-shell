@@ -3,7 +3,7 @@
  * Plugin Name:       Simple Page Ordering
  * Plugin URI:        http://10up.com/plugins/simple-page-ordering-wordpress/
  * Description:       Order your pages and hierarchical post types using drag and drop on the built in page list. For further instructions, open the "Help" tab on the Pages screen.
- * Version:           2.4.2
+ * Version:           2.4.3
  * Requires at least: 3.8
  * Author:            Jake Goldman, 10up
  * Author URI:        https://10up.com
@@ -15,7 +15,7 @@
  */
 
 // Useful global constants.
-define( 'SIMPLE_PAGE_ORDERING_VERSION', '2.4.2' );
+define( 'SIMPLE_PAGE_ORDERING_VERSION', '2.4.3' );
 
 if ( ! class_exists( 'Simple_Page_Ordering' ) ) :
 
@@ -73,7 +73,17 @@ if ( ! class_exists( 'Simple_Page_Ordering' ) ) :
 		 * @return boolean
 		 */
 		private static function is_post_type_sortable( $post_type = 'post' ) {
-			return apply_filters( 'simple_page_ordering_is_sortable', post_type_supports( $post_type, 'page-attributes' ), $post_type );
+			$sortable = ( post_type_supports( $post_type, 'page-attributes' ) || is_post_type_hierarchical( $post_type ) );
+
+			/**
+			 * Change default ordering support for a post type.
+			 *
+			 * @since 2.0.0
+			 *
+			 * @param boolean $sortable Whether this post type is sortable or not.
+			 * @param string  $post_type The post type being checked.
+			 */
+			return apply_filters( 'simple_page_ordering_is_sortable', $sortable, $post_type );
 		}
 
 		/**
@@ -416,8 +426,7 @@ if ( ! class_exists( 'Simple_Page_Ordering' ) ) :
 		public static function sort_by_order_link( $views ) {
 			$class        = ( get_query_var( 'orderby' ) === 'menu_order title' ) ? 'current' : '';
 			$query_string = remove_query_arg( array( 'orderby', 'order' ) );
-			$sortable     = self::is_post_type_sortable( get_post_type() );
-			if ( $sortable ) {
+			if ( ! is_post_type_hierarchical( get_post_type() ) ) {
 				$query_string = add_query_arg( 'orderby', 'menu_order title', $query_string );
 				$query_string = add_query_arg( 'order', 'asc', $query_string );
 			}

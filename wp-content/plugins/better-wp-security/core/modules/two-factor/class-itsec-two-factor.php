@@ -54,7 +54,7 @@ class ITSEC_Two_Factor {
 
 		add_filter( 'authenticate', array( $this, 'block_xmlrpc' ), 100 );
 		add_filter( 'itsec_is_user_using_two_factor', array( $this, 'mark_user_as_using_2fa' ), 10, 2 );
-		add_action( 'itsec_passwordless_login_initialize_interstitial', array( $this, 'pwls_skip_2fa' ) );
+		add_action( 'itsec_passwordless_login_initialize_interstitial', array( $this, 'pwls_skip_2fa' ), 10, 2 );
 		add_filter( 'itsec_user_security_profile_data', array( $this, 'add_2fa_security_profile_data' ), 10, 2 );
 
 		add_action( 'ithemes_sync_register_verbs', array( $this, 'register_sync_verbs' ) );
@@ -285,9 +285,13 @@ class ITSEC_Two_Factor {
 	 * if the user's primary provider is Email.
 	 *
 	 * @param ITSEC_Login_Interstitial_Session $session
+	 * @param array                            $args
 	 */
-	public function pwls_skip_2fa( ITSEC_Login_Interstitial_Session $session ) {
-		if ( self::get_instance()->get_primary_provider_for_user( $session->get_user()->ID ) instanceof Two_Factor_Email ) {
+	public function pwls_skip_2fa( ITSEC_Login_Interstitial_Session $session, $args ) {
+		if (
+			$args['method'] === 'magic' &&
+			self::get_instance()->get_primary_provider_for_user( $session->get_user()->ID ) instanceof Two_Factor_Email
+		) {
 			$session->add_completed_interstitial( '2fa' );
 		}
 	}
