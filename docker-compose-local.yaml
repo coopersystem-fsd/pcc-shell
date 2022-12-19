@@ -1,0 +1,32 @@
+version: '3'
+
+services:
+  # Database
+  database:
+    image: mariadb:10.8.2
+    container_name: database_${ENV:-dev}
+    volumes:
+      - db_data:/var/lib/mysql
+    restart: always
+    env_file:
+      - .env
+    ports:
+      - '${MYSQL_PORT:-3306}:3306'
+
+  # Wordpress
+  app:
+    depends_on:
+      - database
+    build: .
+    container_name: app_${ENV:-dev}
+    restart: always
+    ports:
+      - '${LOCAL_WP_PORT:-8000}:80'
+    volumes: 
+      - ./:/var/www/html
+    env_file:
+      - .env
+
+volumes:
+  db_data:
+    name: db_data_${ENV:-dev}

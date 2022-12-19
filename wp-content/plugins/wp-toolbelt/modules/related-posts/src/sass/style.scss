@@ -1,0 +1,45 @@
+.toolbelt-related-posts {
+
+	clear: both;
+
+	article {
+
+		padding: 0 var(--toolbelt-spacing);
+		margin-bottom: calc(var(--toolbelt-spacing) * 1.5);
+
+	}
+
+	h3 {
+
+		width: 100%;
+		margin-bottom: 0;
+
+	}
+
+	h4 {
+
+		margin: 0;
+		word-wrap: break-word;
+
+	}
+
+	a {
+
+		display: block;
+
+	}
+
+	img {
+
+		display: block;
+		text-decoration: none;
+
+	}
+
+	.wp-caption {
+
+		display: block;
+
+	}
+
+}
